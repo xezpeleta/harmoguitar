@@ -11,6 +11,10 @@ export default defineConfig(({ command }) => ({
     alias: {
       $lib: fileURLToPath(new URL('./src/lib', import.meta.url)),
     },
+    // Activate the `browser` export condition so packages like `svelte` resolve
+    // to their client (DOM) build instead of the `default` (server) build when
+    // running in vitest's jsdom environment.
+    conditions: ['browser'],
   },
 
   // GitHub Pages serves the site at /harmoguitar/, so the production build
@@ -23,6 +27,15 @@ export default defineConfig(({ command }) => ({
     globals: true,
     setupFiles: './src/tests/setup.ts',
     include: ['src/**/*.{test,spec}.{js,ts}'],
+    // Inline `svelte` so vitest processes it through the vite pipeline (which
+    // applies the browser/client export condition). Without this, vitest loads
+    // the `default` (server) build and `mount(...)` throws "not available on
+    // the server" in component tests.
+    server: {
+      deps: {
+        inline: ['svelte'],
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

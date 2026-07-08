@@ -1,55 +1,165 @@
 # HarmoGuitar — Interactive Guitar Harmony Tutor
 
-> A static, client-side web app that teaches Western tonal harmony to
-> experienced guitarists through interactive widgets: a virtual fretboard,
+> A free, static, client-side web app that teaches Western tonal harmony to
+> experienced guitarists through interactive widgets: a playable fretboard,
 > live staff notation, reactive visualizations, and synthesized audio.
 
-**Status:** 🚧 Under construction (v1 in progress)
+**Status:** ✅ v1 released — [**Live site →**](https://xezpeleta.github.io/harmoguitar/)
+
+[![CI](https://github.com/xezpeleta/harmoguitar/actions/workflows/ci.yml/badge.svg)](https://github.com/xezpeleta/harmoguitar/actions/workflows/ci.yml)
+[![Deploy](https://github.com/xezpeleta/harmoguitar/actions/workflows/deploy.yml/badge.svg)](https://github.com/xezpeleta/harmoguitar/actions/workflows/deploy.yml)
+
+---
 
 ## What it is
 
 HarmoGuitar takes guitarists who already play but never learned theory from
-"I can play chords but don't understand them" to confidently building triads,
+*"I can play chords but don't understand them"* to confidently building triads,
 mapping diatonic harmony to a key, and recognizing common progressions —
 entirely through hands-on, audible, visual interaction.
 
 Every concept is paired with a playable widget rather than a wall of text.
 
+## Features
+
+### Interactive explorer (Home)
+
+Pick a root note and a chord or scale type; everything updates in sync:
+
+- **Playable fretboard** — click any fret to hear the note; chord/scale tones
+  are highlighted with per-note colors and text labels (never color-only)
+- **Staff notation** — VexFlow-rendered treble clef with explicit accidentals
+  (no key signature, so every sharp/flat is visible — educational)
+- **Interval wheel** — 12-segment donut rooted at your selection; click a
+  segment to hear the root → interval
+- **Circle of fifths** — clickable two-ring circle (major + relative minor);
+  select a key to see its 7 diatonic chords as Roman numerals
+- **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
+  synthesized pluck — no audio files)
+
+### Structured lessons (14 lessons)
+
+A guided path from first principles to functional harmony, each lesson
+embedding live interactive widgets:
+
+1. Notes & the fretboard
+2. Intervals
+3. The major scale
+4. Minor scales
+5. Modes of the major scale
+6. Triads
+7. Seventh chords
+8. Extended & altered chords
+9. Diatonic harmony
+10. Functional harmony
+11. Circle of fifths
+12. Progressions & Roman numerals
+13. Cadences & turnarounds
+14. The blues & ii–V–I
+
+Progress is saved to `localStorage` (optional; degrades gracefully).
+
+### Chord & scale builder
+
+A scratchpad for exploring any chord or scale: pick root + type, see the
+formula, notes, intervals, fretboard shape, staff notation, and interval wheel
+side by side, with playback controls.
+
+### Design & accessibility
+
+- **Color-blind aware** — color is always supplementary; every note is paired
+  with a text label
+- **WCAG 2.1 AA** — 0 axe-core violations; full keyboard navigation; visible
+  focus rings; ARIA labels on all interactive elements
+- **Dark mode** — follows OS `prefers-color-scheme`
+- **Responsive** — works from 360 px phones to ultrawide desktops
+- **Reduced motion** — respects `prefers-reduced-motion`
+
 ## Tech stack
 
-- **Svelte 5 + Vite + TypeScript** — component model + type-safe theory engine
-- **Tailwind CSS v4** — responsive styling
-- **VexFlow** — correct musical staff notation
-- **D3.js** — reactive diagrams (interval wheel, circle of fifths)
-- **Web Audio API** — synthesized guitar-like playback
-- **Vitest** — unit tests for the pure theory engine
-- **GitHub Pages** — static hosting
+| Layer | Technology |
+|-------|-----------|
+| Framework | Svelte 5 (runes) + Vite |
+| Language | TypeScript (strict, `noUncheckedIndexedAccess`) |
+| Styling | Tailwind CSS v4 (`@theme` design tokens) |
+| Staff notation | VexFlow 5 (lazy-loaded) |
+| Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
+| Audio | Web Audio API (synthesized, no samples) |
+| Testing | Vitest (336 tests, 91.6% statement coverage) |
+| CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
+| Hosting | GitHub Pages (static, `.nojekyll`) |
 
-## Project documents
+## Architecture
 
-- [`PROMPT.md`](./PROMPT.md) — refined prompt, scope, requirements
-- [`PROJECT.md`](./PROJECT.md) — full project definition, architecture, milestones
-- [`RESEARCH.md`](./RESEARCH.md) — content base (28 sections, foundations → jazz harmony)
-- [`PLAN.md`](./PLAN.md) — execution-ready implementation plan
+```
+src/
+├── lib/
+│   ├── theory/          # Pure, UI-agnostic theory engine (notes, intervals,
+│   │                    #   scales, chords, diatonic, fretboard, solfège, MIDI)
+│   ├── stores/          # Shared app state (Svelte 5 runes singleton)
+│   ├── services/        # Audio engine + progress tracking
+│   ├── components/      # Fretboard, Staff, IntervalWheel, CircleOfFifths,
+│   │                    #   NoteBadge, Nav, Layout, LessonView
+│   ├── content/         # Lesson schema + 14 authored lessons
+│   └── utils/           # Colors, markdown renderer, VexFlow bridge
+├── routes/              # Home, Lessons, Lesson, Builder
+├── App.svelte           # Hash-based router + route → component mapping
+└── app.css              # Design tokens (@theme) + dark mode
+```
+
+The **theory engine** (`src/lib/theory/`) is 100% pure and UI-agnostic — it
+knows nothing about Svelte, the DOM, or audio. Every function is unit-tested.
+The UI layer subscribes to a shared store that wraps the engine's output.
 
 ## Local development
 
 ```bash
+git clone https://github.com/xezpeleta/harmoguitar.git
+cd harmoguitar
 npm install
-npm run dev          # start dev server
-npm run test         # run unit tests (watch)
-npm run test:run     # run unit tests once (CI)
-npm run lint         # eslint
-npm run build        # production build to dist/
-npm run preview      # preview the production build
+npm run dev          # start dev server (http://localhost:5173)
 ```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run test` | Run unit tests (watch mode) |
+| `npm run test:run` | Run unit tests once (CI mode) |
+| `npm run coverage` | Run tests with coverage report |
+| `npm run lint` | ESLint |
+| `npm run check` | TypeScript + Svelte type checking |
 
 > Requires Node 18+ (developed on Node 24).
 
+## Project documents
+
+- [`PROMPT.md`](./PROMPT.md) — refined prompt, scope, requirements, success criteria
+- [`PROJECT.md`](./PROJECT.md) — full project definition, architecture, milestones, risks
+- [`RESEARCH.md`](./RESEARCH.md) — content base (28 sections, foundations → jazz harmony)
+- [`PLAN.md`](./PLAN.md) — execution-ready implementation plan (5 epics, 24 tasks)
+
 ## Deployment
 
-Static build deployed to GitHub Pages via GitHub Actions on push to `main`.
-The site lives at `https://xezpeleta.github.io/harmoguitar/`.
+The site auto-deploys to GitHub Pages via the [`deploy.yml`](./.github/workflows/deploy.yml)
+workflow on every push to `main`. The pipeline runs the full quality gate
+(lint → typecheck → test → build) before deploying.
+
+**Live URL:** <https://xezpeleta.github.io/harmoguitar/>
+
+## Roadmap
+
+**v1 (current)** — Foundations through functional harmony and the ii–V–I.
+
+**v1.1+ (planned):**
+- Deep jazz harmony (altered scales, tritone substitutions, drop-2/drop-3 voicings)
+- Movable-Do solfège alongside fixed-Do
+- Left-handed fretboard view
+- Save custom chord/scale presets
+- Additional tunings (Drop D, DADGAD, Open G)
 
 ## License
 

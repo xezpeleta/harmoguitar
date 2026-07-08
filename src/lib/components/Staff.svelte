@@ -136,11 +136,15 @@
   .staff-canvas {
     width: 100%;
     min-height: 60px;
+    overflow: hidden;
   }
   .staff-canvas :global(svg) {
     width: 100%;
     height: auto;
     display: block;
+    /* The staff is display-only (no interaction); let clicks pass through to
+     * any element it might overlap, and clip VexFlow overflow. */
+    pointer-events: none;
   }
   .empty {
     color: var(--color-muted);

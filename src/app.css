@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+/*
+ * HarmoGuitar design tokens (Tailwind v4 @theme).
+ * Colors are supplementary only — every note/interval is also labelled with
+ * text so the UI is never color-only (color-blind safe).
+ */
+@theme {
+  --color-bg: #faf9f7;
+  --color-surface: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-border: #e2e0db;
+  --color-accent: #b45309;
+  --color-accent-soft: #fde68a;
+
+  --font-sans:
+    system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+}
+
+/* Dark mode via OS preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #141518;
+    --color-surface: #1c1d22;
+    --color-ink: #f1f1f1;
+    --color-muted: #a0a0a0;
+    --color-border: #2c2e36;
+    --color-accent: #fbbf24;
+    --color-accent-soft: #422006;
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -10,6 +10,9 @@
   import { audio } from '$lib/services/audio'
   import Fretboard from '$lib/components/Fretboard.svelte'
   import NoteBadge from '$lib/components/NoteBadge.svelte'
+  import Staff from '$lib/components/Staff.svelte'
+  import IntervalWheel from '$lib/components/IntervalWheel.svelte'
+  import CircleOfFifths from '$lib/components/CircleOfFifths.svelte'
 
   // A curated, pedagogically useful subset for the explorer.
   const CHORD_SUBSET: ChordType[] = [
@@ -205,6 +208,21 @@
   <div class="fretboard-wrap">
     <Fretboard fretCount={12} />
   </div>
+
+  <!-- Synchronized notation + visualizations -->
+  <div class="viz-grid">
+    <div class="viz-card viz-staff">
+      <Staff />
+    </div>
+    <div class="viz-card">
+      <span class="viz-caption">Interval wheel</span>
+      <IntervalWheel size={300} />
+    </div>
+    <div class="viz-card">
+      <span class="viz-caption">Circle of fifths</span>
+      <CircleOfFifths size={300} />
+    </div>
+  </div>
 </section>
 
 <style>
@@ -323,5 +341,42 @@
   }
   .fretboard-wrap {
     margin-top: 0.5rem;
+  }
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  @media (min-width: 900px) {
+    .viz-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .viz-grid .viz-card:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+  .viz-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .viz-staff {
+    /* Staff has its own inner card; just pad on larger screens. */
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .viz-caption {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
   }
 </style>

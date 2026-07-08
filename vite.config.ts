@@ -22,6 +22,19 @@ export default defineConfig(({ command }) => ({
   // Override for a custom domain: BASE_PATH='/' npm run build
   base: command === 'build' ? (process.env.BASE_PATH ?? '/harmoguitar/') : '/',
 
+  build: {
+    rollupOptions: {
+      output: {
+        // Split the heavy viz libraries into their own chunks so the main
+        // app bundle stays small and they cache + load in parallel.
+        manualChunks(id) {
+          if (id.includes('node_modules/vexflow')) return 'vexflow'
+          if (id.includes('node_modules/d3-shape')) return 'd3'
+        },
+      },
+    },
+  },
+
   test: {
     environment: 'jsdom',
     globals: true,

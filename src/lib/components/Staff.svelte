@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Renderer, Stave, StaveNote, Voice, Formatter } from 'vexflow'
+  import { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } from 'vexflow'
   import { type NoteName } from '$lib/theory/notes'
   import { app } from '$lib/stores/app.svelte'
   import { toVexKeys } from '$lib/utils/vexflow'
@@ -65,6 +65,14 @@
     raf = requestAnimationFrame(() => draw(keys, w, h, scale))
   })
 
+  /** Attach an explicit accidental glyph when the key carries one. We use no
+   * key signature so every alteration must be drawn explicitly (educational:
+   * the reader sees exactly which notes are sharp/flat). */
+  function addAccidental(note: StaveNote, key: string, index = 0): void {
+    if (key.includes('#')) note.addModifier(new Accidental('#'), index)
+    else if (key.includes('b')) note.addModifier(new Accidental('b'), index)
+  }
+
   function draw(keys: string[], w: number, h: number, asScale: boolean): void {
     if (!container) return
     // Clear any previous render. VexFlow is an imperative library that
@@ -85,9 +93,11 @@
 
     if (asScale && keys.length > 1) {
       // A sequence of quarter notes (one per scale degree).
-      const notes = keys.map(
-        (k) => new StaveNote({ keys: [k], duration: 'q', autoStem: true }),
-      )
+      const notes = keys.map((k) => {
+        const n = new StaveNote({ keys: [k], duration: 'q', autoStem: true })
+        addAccidental(n, k)
+        return n
+      })
       const voice = new Voice({ numBeats: notes.length, beatValue: 4 })
       voice.setStrict(false)
       voice.addTickables(notes)
@@ -97,6 +107,7 @@
     } else {
       // A single stacked chord (half note, auto-stemmed).
       const note = new StaveNote({ keys, duration: 'h', autoStem: true })
+      keys.forEach((k, i) => addAccidental(note, k, i))
       const voice = new Voice({ numBeats: 2, beatValue: 4 })
       voice.setStrict(false)
       voice.addTickables([note])

@@ -42,22 +42,22 @@
   </ul>
 
   <div class="nav-tools" class:open={menuOpen}>
-    <label class="tool-toggle" title="Show fixed-Do solfège (Do Ré Mi…)">
-      <input
-        type="checkbox"
-        checked={app.showSolfege}
-        onchange={(e) => (app.showSolfege = e.currentTarget.checked)}
-      />
-      <span>Sol-fa</span>
-    </label>
-    <label class="tool-toggle" title="Spell notes with flats">
-      <input
-        type="checkbox"
-        checked={app.preferFlats}
-        onchange={(e) => (app.preferFlats = e.currentTarget.checked)}
-      />
-      <span>♭</span>
-    </label>
+    <div class="seg" role="group" aria-label="Note naming system">
+      <button
+        type="button"
+        class:active={!app.showSolfege}
+        aria-pressed={!app.showSolfege}
+        title="Alphabetic note names (C D E…)"
+        onclick={() => (app.showSolfege = false)}
+      >C D E</button>
+      <button
+        type="button"
+        class:active={app.showSolfege}
+        aria-pressed={app.showSolfege}
+        title="Fixed-Do solfège (Do Re Mi…)"
+        onclick={() => (app.showSolfege = true)}
+      >Do Re Mi</button>
+    </div>
   </div>
 </nav>
 
@@ -123,14 +123,34 @@
     gap: 0.5rem;
     align-items: center;
   }
-  .tool-toggle {
+  .seg {
     display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.8rem;
-    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .seg button {
+    background: var(--color-surface);
+    border: 0;
+    border-right: 1px solid var(--color-border);
+    padding: 0.3rem 0.55rem;
     cursor: pointer;
-    user-select: none;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    line-height: 1.2;
+  }
+  .seg button:last-child {
+    border-right: 0;
+  }
+  .seg button:hover {
+    color: var(--color-ink);
+  }
+  .seg button.active {
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-weight: 600;
   }
 
   /* Collapse to a hamburger menu on narrow screens. */

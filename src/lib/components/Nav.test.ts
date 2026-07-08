@@ -29,21 +29,26 @@ describe('Nav.svelte', () => {
     expect(lessonsLink).toHaveClass('active')
   })
 
-  it('the solfège toggle reflects and updates the store', async () => {
+  it('the note-naming switch defaults to alphabetic (C D E) and toggles solfège', async () => {
     render(Nav)
-    const toggle = screen.getByTitle('Show fixed-Do solfège (Do Ré Mi…)')
-    const checkbox = toggle.querySelector('input')!
-    expect(checkbox).not.toBeChecked()
-    await fireEvent.click(checkbox)
+    const group = screen.getByRole('group', { name: 'Note naming system' })
+    const alpha = screen.getByRole('button', { name: 'C D E' })
+    const solfa = screen.getByRole('button', { name: 'Do Re Mi' })
+    // Defaults to alphabetic.
+    expect(app.showSolfege).toBe(false)
+    expect(alpha).toHaveAttribute('aria-pressed', 'true')
+    expect(solfa).toHaveAttribute('aria-pressed', 'false')
+    // Switch to solfège.
+    await fireEvent.click(solfa)
     expect(app.showSolfege).toBe(true)
-  })
-
-  it('the flats toggle updates the store', async () => {
-    render(Nav)
-    const toggle = screen.getByTitle('Spell notes with flats')
-    const checkbox = toggle.querySelector('input')!
-    await fireEvent.click(checkbox)
-    expect(app.preferFlats).toBe(true)
+    expect(solfa).toHaveClass('active')
+    expect(alpha).not.toHaveClass('active')
+    // Switch back.
+    await fireEvent.click(alpha)
+    expect(app.showSolfege).toBe(false)
+    expect(alpha).toHaveClass('active')
+    // group still present
+    expect(group).toBeInTheDocument()
   })
 
   it('has a hamburger toggle for small screens', () => {

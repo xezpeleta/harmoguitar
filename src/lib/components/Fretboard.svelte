@@ -10,6 +10,7 @@
   } from '$lib/theory/fretboard'
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
+  import { noteColor, readableForeground } from '$lib/utils/colors'
 
   interface Props {
     /** Number of frets (excludes the open string). Falls back to the store. */
@@ -53,22 +54,38 @@
   const highlightPcs = $derived(new Set(effHighlight.map((n) => toPitchClass(n))))
   const rootPc = $derived(toPitchClass(effRoot))
 
+  /**
+   * Pitch-class → contextually-spelled note name, built from the selection.
+   * This keeps fretboard labels consistent with the summary (e.g. a C Dorian
+   * scale spells the third as "Eb", so every Eb position shows "Eb" — not "D#"
+   * — even when the global flats preference is off).
+   */
+  const pcToNoteName = $derived.by(() => {
+    const m: Record<number, NoteName> = {}
+    for (const n of effHighlight) m[toPitchClass(n)] = n
+    return m
+  })
+
   // Render high string (1) at the top → low string (6) at the bottom.
   const stringsTopToBottom = $derived([...board].reverse())
 
-  /** Re-spell a position's note for display, honouring the flats preference. */
-  function displayNote(pos: FretPosition, preferFlats: boolean): NoteName {
-    return midiToNote(pos.midi, preferFlats).note
+  /** Spelling for a highlighted position: prefer the selection's spelling. */
+  function displayNote(pos: FretPosition): NoteName {
+    const contextual = pcToNoteName[pos.pitchClass]
+    if (contextual) return contextual
+    return midiToNote(pos.midi, effFlats).note
   }
 
   /** Display label for a position: note name or fixed-Do solfège. */
-  function positionLabel(
-    pos: FretPosition,
-    preferFlats: boolean,
-    showSolfege: boolean,
-  ): string {
-    const note = displayNote(pos, preferFlats)
-    return showSolfege ? toSolfege(note) : note
+  function positionLabel(pos: FretPosition): string {
+    const note = displayNote(pos)
+    return effSolfege ? toSolfege(note) : note
+  }
+
+  /** Open-string tuning label (always natural notes, so no spelling issue). */
+  function openStringLabel(pos: FretPosition): string {
+    const note = midiToNote(pos.midi, effFlats).note
+    return effSolfege ? toSolfege(note) : note
   }
 
   function isHighlighted(pos: FretPosition): boolean {
@@ -84,8 +101,15 @@
     return fret % 12 === 0 && fret !== 0
   }
 
+  /** CSS color values for a highlighted position's dot. */
+  function dotColors(pos: FretPosition): { bg: string; fg: string } {
+    const note = displayNote(pos)
+    const bg = noteColor(note)
+    return { bg, fg: readableForeground(bg) }
+  }
+
   function handleSelect(pos: FretPosition): void {
-    const note = displayNote(pos, effFlats)
+    const note = displayNote(pos)
     audio.playNote(pos.midi, { duration: 0.9, velocity: 0.5 })
     if (onselectnote) {
       onselectnote(note, pos.midi)
@@ -102,10 +126,11 @@
 >
   <div
     class="fretboard-grid select-none"
-    style="grid-template-columns: var(--open-w) repeat({effFretCount}, var(--cell-w));"
+    style="grid-template-columns: var(--label-w) var(--open-w) repeat({effFretCount}, var(--cell-w));"
   >
     <!-- Fret numbers + inlay markers (header) -->
-    <div class="fret-number open-cell" aria-hidden="true"></div>
+    <div class="fret-number label-cell" aria-hidden="true"></div>
+    <div class="fret-number open-cell" aria-hidden="true">0</div>
     {#each Array.from({ length: effFretCount }, (_, i) => i + 1) as fret (fret)}
       <div class="fret-number" aria-hidden="true">
         <span>{fret}</span>
@@ -123,24 +148,32 @@
 
     <!-- Strings: high E (top) → low E (bottom) -->
     {#each stringsTopToBottom as stringPositions, stringIdx (stringIdx)}
+      {@const openPos = stringPositions[0]!}
+      <!-- String label gutter: number + open tuning note -->
+      <div class="string-label" aria-hidden="true">
+        <span class="str-num">{openPos.stringNumber}</span>
+        <span class="str-note">{openStringLabel(openPos)}</span>
+      </div>
       {#each stringPositions as pos (pos.midi)}
         {@const highlighted = isHighlighted(pos)}
         {@const root = isRoot(pos)}
         {@const open = pos.fret === 0}
+        {@const colors = highlighted ? dotColors(pos) : null}
         <button
           type="button"
           class="fret-cell"
           class:open-cell={open}
           class:highlighted
           class:root
-          class:root-not-root={highlighted && !root}
-          aria-label="String {pos.stringNumber} fret {pos.fret}: {displayNote(pos, effFlats)}"
+          aria-label="String {pos.stringNumber} fret {pos.fret}: {displayNote(pos)}"
           aria-pressed={highlighted}
+          style:--dot-bg={colors?.bg}
+          style:--dot-fg={colors?.fg}
           onclick={() => handleSelect(pos)}
         >
           {#if highlighted}
-            <span class="dot" class:solfege={effSolfege}>
-              {positionLabel(pos, effFlats, effSolfege)}
+            <span class="dot" class:solfege={effSolfege} class:root>
+              {positionLabel(pos)}
             </span>
           {/if}
         </button>
@@ -151,50 +184,92 @@
 
 <style>
   .fretboard-scroll {
-    --cell-w: 2.6rem;
-    --open-w: 1.8rem;
-    --string-color: var(--color-muted);
-    --dot-bg: var(--color-surface);
-    --dot-fg: var(--color-ink);
-    --root-bg: var(--color-accent);
-    --root-fg: var(--color-surface);
-    padding-bottom: 0.5rem;
+    --cell-w: 3rem;
+    --open-w: 2.1rem;
+    --label-w: 2.4rem;
+    --string-color: #9a938a;
+    --fretboard-bg: #efe9df;
+    --nut-color: #2a2a2a;
+    --fret-wire: #c9c2b8;
+    padding: 0.25rem 0 0.75rem;
+  }
+  :global(.dark) .fretboard-scroll,
+  :global([data-theme='dark']) .fretboard-scroll {
+    --string-color: #6b6660;
+    --fretboard-bg: #23251b;
+    --nut-color: #e8e2d6;
+    --fret-wire: #555049;
+  }
+  @media (prefers-color-scheme: dark) {
+    .fretboard-scroll {
+      --string-color: #6b6660;
+      --fretboard-bg: #23251b;
+      --nut-color: #e8e2d6;
+      --fret-wire: #555049;
+    }
   }
 
   .fretboard-grid {
     display: grid;
     gap: 0;
     width: max-content;
+    /* The fretted surface starts at the open column and spans all frets. */
+    background: linear-gradient(
+      to right,
+      transparent 0,
+      transparent var(--label-w),
+      var(--fretboard-bg) var(--label-w)
+    );
+    border-radius: 0.4rem;
   }
 
   /* Fret numbers + inlay header */
   .fret-number {
-    height: 1.5rem;
+    height: 1.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     color: var(--color-muted);
-    padding-bottom: 0.15rem;
+    padding-bottom: 0.2rem;
+  }
+  .fret-number.label-cell {
+    width: var(--label-w);
   }
   .inlay-row {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.4rem;
     margin-top: 0.1rem;
     min-height: 0.4rem;
   }
   .inlay-dot {
-    width: 0.35rem;
-    height: 0.35rem;
+    width: 0.38rem;
+    height: 0.38rem;
     border-radius: 9999px;
     background: var(--color-border);
+  }
+
+  /* String label gutter: number + open tuning note. */
+  .string-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    height: 2.4rem;
+    font-size: 0.68rem;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+  }
+  .str-num {
+    font-weight: 700;
+    color: var(--color-ink);
   }
 
   /* A fret cell is a clickable position on a string. */
   .fret-cell {
     position: relative;
-    height: 2.1rem;
+    height: 2.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -203,15 +278,15 @@
     cursor: pointer;
     padding: 0;
     /* The string line runs horizontally through the cell centre. */
-    border-top: 2px solid var(--string-color);
+    border-top: 3px solid var(--string-color);
   }
   /* Fret wire: a vertical divider on the left of each fretted cell. */
   .fret-cell:not(.open-cell) {
-    border-left: 1px solid var(--color-border);
+    border-left: 2px solid var(--fret-wire);
   }
   /* The nut: a thicker divider after the open-string column. */
   .open-cell + .fret-cell {
-    border-left: 3px solid var(--color-ink);
+    border-left: 4px solid var(--nut-color);
   }
 
   .dot {
@@ -220,38 +295,33 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 1.9rem;
+    height: 1.9rem;
     border-radius: 9999px;
-    background: var(--dot-bg);
-    color: var(--dot-fg);
-    border: 2px solid var(--color-ink);
-    font-size: 0.72rem;
-    font-weight: 600;
+    background: var(--dot-bg, var(--color-surface));
+    color: var(--dot-fg, var(--color-ink));
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    font-size: 0.74rem;
+    font-weight: 700;
     line-height: 1;
+    transition: transform 0.08s ease;
   }
   .dot.solfege {
-    font-size: 0.62rem;
+    font-size: 0.64rem;
   }
-
-  /* Non-root highlighted notes: outlined dot. */
-  .fret-cell.root-not-root .dot {
-    background: var(--dot-bg);
-    color: var(--color-ink);
-  }
-  /* Root note: solid accent fill. */
-  .fret-cell.root .dot {
-    background: var(--root-bg);
-    color: var(--root-fg);
-    border-color: var(--root-bg);
+  /* Root note: a bright ring around the dot for clear distinction. */
+  .dot.root {
+    box-shadow:
+      0 0 0 2px var(--fretboard-bg),
+      0 0 0 4px var(--dot-bg);
   }
 
   .fret-cell:focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-focus);
     outline-offset: -2px;
   }
   .fret-cell:hover .dot {
-    transform: scale(1.06);
+    transform: scale(1.08);
   }
 
   @media (prefers-reduced-motion: reduce) {

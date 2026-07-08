@@ -59,12 +59,12 @@ describe('Fretboard.svelte', () => {
     expect(rootCell).toHaveAttribute('aria-pressed', 'true')
   })
 
-  it('non-root highlighted notes get the root-not-root class', () => {
+  it('non-root highlighted notes are highlighted but not root', () => {
     render(Fretboard, {
       props: { fretCount: 1, highlightNotes: ['F'], rootNote: 'C' },
     })
     const cell = screen.getByLabelText('String 1 fret 1: F')
-    expect(cell).toHaveClass('highlighted', 'root-not-root')
+    expect(cell).toHaveClass('highlighted')
     expect(cell).not.toHaveClass('root')
   })
 
@@ -127,6 +127,57 @@ describe('Fretboard.svelte', () => {
       props: { fretCount: 1, highlightNotes: ['Eb'], rootNote: 'Eb', preferFlats: true },
     })
     expect(screen.getByLabelText('String 4 fret 1: Eb')).toBeInTheDocument()
+  })
+
+  it('uses the selection contextual spelling even when preferFlats is off', () => {
+    // C Dorian has an Eb (flat third). Even with preferFlats=false, the
+    // fretboard should label that pitch class as "Eb" (matching the scale),
+    // not "D#".
+    render(Fretboard, {
+      props: {
+        fretCount: 2,
+        highlightNotes: ['C', 'D', 'Eb'],
+        rootNote: 'C',
+        preferFlats: false,
+      },
+    })
+    // Fret 1 of the D string (string 4) is Eb.
+    expect(screen.getByLabelText('String 4 fret 1: Eb')).toBeInTheDocument()
+  })
+
+  it('spells solfège consistently with the selection (Mib, not Re#)', () => {
+    render(Fretboard, {
+      props: {
+        fretCount: 2,
+        highlightNotes: ['C', 'D', 'Eb'],
+        rootNote: 'C',
+        showSolfege: true,
+      },
+    })
+    // Eb → Mib in fixed-Do, not Re# (which would come from D# spelling).
+    // The dot text shows solfège; the aria-label keeps the note name.
+    expect(screen.getByText('Mib')).toBeInTheDocument()
+    expect(screen.queryByText('Re#')).toBeNull()
+    expect(screen.getByLabelText('String 4 fret 1: Eb')).toBeInTheDocument()
+  })
+
+  it('renders a string label gutter with number and open note', () => {
+    render(Fretboard, { props: { fretCount: 0, highlightNotes: [], rootNote: 'C' } })
+    // String 1 = high E, string 6 = low E.
+    expect(screen.getAllByText('1').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('6').length).toBeGreaterThan(0)
+    // Open tuning notes appear in the label gutter.
+    const eLabels = screen.getAllByText('E')
+    expect(eLabels.length).toBeGreaterThanOrEqual(2) // high E + low E
+  })
+
+  it('root dot has a distinct ring via the root class', () => {
+    render(Fretboard, {
+      props: { fretCount: 1, highlightNotes: ['F'], rootNote: 'F' },
+    })
+    const rootCell = screen.getByLabelText('String 1 fret 1: F')
+    const dot = rootCell.querySelector('.dot')
+    expect(dot).toHaveClass('root')
   })
 
   it('has a group label for the fretboard', () => {

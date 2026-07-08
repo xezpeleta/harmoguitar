@@ -13,8 +13,10 @@
   --color-ink: #16202e;
   --color-muted: #5d6b7d;
   --color-border: #cdd6e1;
-  /* Teal accent — calm, educational, complements the warm fretboard wood. */
-  --color-accent: #0d7d76;
+  /* Teal accent — calm, educational, complements the warm fretboard wood.
+   * Darkened to #0a6b64 so accent text passes WCAG AA (≥4.5:1) on both the
+   * page background and the accent-soft tint. Reference: PLAN.md Task 5.2. */
+  --color-accent: #0a6b64;
   --color-accent-soft: #cdeae6;
   --color-focus: #2563eb;
 
@@ -49,4 +51,20 @@ body {
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global keyboard-focus ring — every interactive element gets a visible
+ * 2px focus outline so keyboard navigation is always discoverable. */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Links inside prose blocks must be distinguishable without color alone
+ * (WCAG 1.4.1). Underline by default; the offset improves legibility. */
+.prose a,
+footer a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

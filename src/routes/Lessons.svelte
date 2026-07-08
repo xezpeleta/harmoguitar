@@ -46,6 +46,7 @@
       <span class="label">lessons completed</span>
     </div>
     <div class="progress-bar" role="progressbar"
+      aria-label="Lessons completed: {doneCount} of {LESSONS.length}"
       aria-valuenow={doneCount} aria-valuemin={0} aria-valuemax={LESSONS.length}>
       <div class="progress-fill" style="width: {(doneCount / LESSONS.length) * 100}%"></div>
     </div>

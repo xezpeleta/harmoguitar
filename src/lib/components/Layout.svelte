@@ -50,7 +50,11 @@
     font-size: 0.85rem;
     color: var(--color-muted);
   }
-  .footer a,
+  .footer a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   .link-button {
     color: var(--color-accent);
     text-decoration: none;

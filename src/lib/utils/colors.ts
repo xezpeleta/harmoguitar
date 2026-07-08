@@ -14,7 +14,7 @@ import { toPitchClass, type NoteName } from '$lib/theory/notes'
  * reasonable contrast on both light and dark surfaces.
  */
 export const NOTE_COLORS: readonly string[] = [
-  '#e63946', // C  – red
+  '#c1121f', // C  – red (darkened so white label text passes WCAG AA)
   '#f4a261', // C# – orange
   '#e9c46a', // D  – amber
   '#90a955', // D# – olive
@@ -49,7 +49,17 @@ export function luminance(hex: string): number {
   return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b)
 }
 
-/** A readable foreground color (dark or light) for a given background. */
+/** A readable foreground color (dark or light) for a given background.
+ * Computes the actual WCAG contrast ratio for both black and white and picks
+ * the higher one, so medium-luminance backgrounds (e.g. slate-blue, crimson)
+ * correctly get white text instead of failing with dark text. */
 export function readableForeground(hex: string): string {
-  return luminance(hex) > 0.45 ? '#1a1a1a' : '#ffffff'
+  const bg = luminance(hex)
+  const dark = '#1a1a1a'
+  const light = '#ffffff'
+  const dLum = luminance(dark)
+  const lLum = luminance(light)
+  const ratio = (a: number, b: number): number =>
+    (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+  return ratio(bg, dLum) >= ratio(bg, lLum) ? dark : light
 }

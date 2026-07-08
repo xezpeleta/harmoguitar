@@ -1,9 +1,23 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } from 'vexflow'
   import { type NoteName } from '$lib/theory/notes'
   import { app } from '$lib/stores/app.svelte'
   import { toVexKeys } from '$lib/utils/vexflow'
+
+  /**
+   * VexFlow is ~688 kB (gzip) and only needed when a stave actually draws.
+   * Lazy-load it on first render so the chunk is deferred until the Staff is
+   * visible (below the fold on Home, inline on lesson pages). The module is
+   * cached after the first load. Reference: PLAN.md Task 5.3.
+   */
+  type VexFlow = typeof import('vexflow')
+  let vexflowPromise: Promise<VexFlow> | null = null
+  function loadVexFlow(): Promise<VexFlow> {
+    if (!vexflowPromise) {
+      vexflowPromise = import('vexflow')
+    }
+    return vexflowPromise
+  }
 
   interface Props {
     /** Notes to notate. Falls back to the store highlight. */
@@ -31,6 +45,8 @@
 
   let container: HTMLDivElement
   let width = $state(640)
+  // True while the VexFlow chunk is downloading (first render only).
+  let loading = $state(true)
 
   let ro: ResizeObserver | null = null
   onMount(() => {
@@ -55,6 +71,7 @@
    * (mitigates the VexFlow redraw-perf risk flagged in PLAN.md).
    */
   let raf = 0
+  let drawSeq = 0 // guards against stale async draws racing a newer render
   $effect(() => {
     // Track these as dependencies.
     const keys = toVexKeys(effNotes)
@@ -62,25 +79,39 @@
     const h = height
     const scale = effAsScale
     cancelAnimationFrame(raf)
-    raf = requestAnimationFrame(() => draw(keys, w, h, scale))
+    raf = requestAnimationFrame(() => void draw(keys, w, h, scale))
   })
 
   /** Attach an explicit accidental glyph when the key carries one. We use no
    * key signature so every alteration must be drawn explicitly (educational:
    * the reader sees exactly which notes are sharp/flat). */
-  function addAccidental(note: StaveNote, key: string, index = 0): void {
-    if (key.includes('#')) note.addModifier(new Accidental('#'), index)
-    else if (key.includes('b')) note.addModifier(new Accidental('b'), index)
+  function addAccidental(
+    vf: VexFlow,
+    note: import('vexflow').StaveNote,
+    key: string,
+    index = 0,
+  ): void {
+    if (key.includes('#')) note.addModifier(new vf.Accidental('#'), index)
+    else if (key.includes('b')) note.addModifier(new vf.Accidental('b'), index)
   }
 
-  function draw(keys: string[], w: number, h: number, asScale: boolean): void {
+  async function draw(keys: string[], w: number, h: number, asScale: boolean): Promise<void> {
     if (!container) return
+    const mySeq = ++drawSeq
+    loading = true
+    const vf = await loadVexFlow()
+    // A newer draw may have superseded us; bail out.
+    if (mySeq !== drawSeq || !container) return
     // Clear any previous render. VexFlow is an imperative library that
     // owns its SVG output, so direct DOM manipulation is required here.
     // eslint-disable-next-line svelte/no-dom-manipulating
     container.innerHTML = ''
-    if (keys.length === 0) return
+    if (keys.length === 0) {
+      loading = false
+      return
+    }
 
+    const { Renderer, Stave, StaveNote, Voice, Formatter } = vf
     const renderer = new Renderer(container, Renderer.Backends.SVG)
     renderer.resize(w, h)
     const ctx = renderer.getContext()
@@ -95,7 +126,7 @@
       // A sequence of quarter notes (one per scale degree).
       const notes = keys.map((k) => {
         const n = new StaveNote({ keys: [k], duration: 'q', autoStem: true })
-        addAccidental(n, k)
+        addAccidental(vf, n, k)
         return n
       })
       const voice = new Voice({ numBeats: notes.length, beatValue: 4 })
@@ -107,7 +138,7 @@
     } else {
       // A single stacked chord (half note, auto-stemmed).
       const note = new StaveNote({ keys, duration: 'h', autoStem: true })
-      keys.forEach((k, i) => addAccidental(note, k, i))
+      keys.forEach((k, i) => addAccidental(vf, note, k, i))
       const voice = new Voice({ numBeats: 2, beatValue: 4 })
       voice.setStrict(false)
       voice.addTickables([note])
@@ -115,6 +146,7 @@
       voice.setStave(stave)
       voice.draw(ctx)
     }
+    loading = false
   }
 </script>
 
@@ -122,7 +154,11 @@
   {#if effCaption}
     <span class="caption">{effCaption}</span>
   {/if}
-  <div class="staff-canvas" bind:this={container} role="img" aria-label={ariaLabel()}></div>
+  <div class="staff-canvas" bind:this={container} role="img" aria-label={ariaLabel()}>
+    {#if loading && effNotes.length > 0}
+      <div class="skeleton" aria-hidden="true"></div>
+    {/if}
+  </div>
   {#if effNotes.length === 0}
     <p class="empty">Select a chord or scale to see it on the staff.</p>
   {/if}
@@ -162,5 +198,27 @@
     font-style: italic;
     margin: 0;
     padding: 0.5rem 0 0.75rem;
+  }
+  /* Loading skeleton shown while the VexFlow chunk downloads. */
+  .skeleton {
+    height: 90px;
+    background: linear-gradient(
+      90deg,
+      var(--color-raised) 0%,
+      var(--color-border) 50%,
+      var(--color-raised) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 0.4rem;
+    animation: shimmer 1.3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
   }
 </style>

@@ -6,14 +6,16 @@
  * text so the UI is never color-only (color-blind safe).
  */
 @theme {
-  --color-bg: #faf9f7;
+  /* Soft blue-gray background — a real background color, not near-white. */
+  --color-bg: #e7ecf2;
   --color-surface: #ffffff;
-  --color-raised: #f3f1ec;
-  --color-ink: #1a1a1a;
-  --color-muted: #6b6b6b;
-  --color-border: #e2e0db;
-  --color-accent: #b45309;
-  --color-accent-soft: #fde68a;
+  --color-raised: #f3f6fa;
+  --color-ink: #16202e;
+  --color-muted: #5d6b7d;
+  --color-border: #cdd6e1;
+  /* Teal accent — calm, educational, complements the warm fretboard wood. */
+  --color-accent: #0d7d76;
+  --color-accent-soft: #cdeae6;
   --color-focus: #2563eb;
 
   --font-sans:
@@ -24,15 +26,15 @@
 /* Dark mode via OS preference */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #141518;
-    --color-surface: #1c1d22;
-    --color-raised: #232529;
-    --color-ink: #f1f1f1;
-    --color-muted: #a0a0a0;
-    --color-border: #2c2e36;
-    --color-accent: #fbbf24;
-    --color-accent-soft: #422006;
-    --color-focus: #60a5fa;
+    --color-bg: #0d1218;
+    --color-surface: #161c24;
+    --color-raised: #1d242e;
+    --color-ink: #e6edf3;
+    --color-muted: #93a1b0;
+    --color-border: #2b333d;
+    --color-accent: #2dd4bf;
+    --color-accent-soft: #134e4a;
+    --color-focus: #58a6ff;
   }
 }
 

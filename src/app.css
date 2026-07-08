@@ -8,11 +8,13 @@
 @theme {
   --color-bg: #faf9f7;
   --color-surface: #ffffff;
+  --color-raised: #f3f1ec;
   --color-ink: #1a1a1a;
   --color-muted: #6b6b6b;
   --color-border: #e2e0db;
   --color-accent: #b45309;
   --color-accent-soft: #fde68a;
+  --color-focus: #2563eb;
 
   --font-sans:
     system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -24,11 +26,13 @@
   :root {
     --color-bg: #141518;
     --color-surface: #1c1d22;
+    --color-raised: #232529;
     --color-ink: #f1f1f1;
     --color-muted: #a0a0a0;
     --color-border: #2c2e36;
     --color-accent: #fbbf24;
     --color-accent-soft: #422006;
+    --color-focus: #60a5fa;
   }
 }
 

@@ -1,22 +1,102 @@
 <script lang="ts">
-  // Placeholder shell — replaced by real layout/nav in Task 2.4.
-  let count = $state(0)
+  import Layout from '$lib/components/Layout.svelte'
+  import Home from './routes/Home.svelte'
+  import { route, navigate } from '$lib/router.svelte'
 </script>
 
-<main class="mx-auto max-w-3xl px-6 py-16 text-center">
-  <h1 class="text-4xl font-semibold tracking-tight">HarmoGuitar</h1>
-  <p class="mt-3 text-lg" style="color: var(--color-muted)">
-    Interactive guitar harmony tutor
-  </p>
-  <p class="mt-8">
-    The theory engine and interactive widgets are being built. Check back soon.
-  </p>
+<Layout>
+  {#if route.path === '/' || route.path === ''}
+    <Home />
+  {:else if route.path === '/lessons'}
+    <section class="placeholder">
+      <h1>Lessons</h1>
+      <p>
+        A guided path through guitar harmony — from the notes on the fretboard to
+        functional harmony and common progressions — is coming in milestone M4.
+      </p>
+      <p class="muted">
+        The curriculum is distilled from <code>RESEARCH.md</code> §1–§14.
+      </p>
+      <button type="button" class="btn" onclick={() => navigate('/')}>
+        ← Back to the fretboard
+      </button>
+    </section>
+  {:else if route.path === '/builder'}
+    <section class="placeholder">
+      <h1>Chord &amp; Scale Builder</h1>
+      <p>
+        A dedicated builder tool (formula + intervals + fretboard + staff +
+        audio) is coming in milestone M4. For now, explore chords and scales on
+        the home page.
+      </p>
+      <button type="button" class="btn" onclick={() => navigate('/')}>
+        ← Open the explorer
+      </button>
+    </section>
+  {:else if route.path === '/about'}
+    <section class="placeholder">
+      <h1>About HarmoGuitar</h1>
+      <p>
+        HarmoGuitar is a free, static, interactive tutor that teaches Western
+        tonal harmony to experienced guitarists who play well but want the
+        theory grounding behind what they already feel.
+      </p>
+      <p>
+        Everything runs in your browser — no account, no backend. The theory
+        engine is a pure, unit-tested TypeScript library; the fretboard, staff
+        and circle-of-fifths all stay synchronized to one shared selection.
+      </p>
+      <p class="muted">
+        v1 covers foundations through functional harmony and the ii–V–I. Deep
+        jazz harmony (altered scales, tritone substitutions, drop voicings) is
+        planned for v1.1+.
+      </p>
+    </section>
+  {:else}
+    <section class="placeholder">
+      <h1>Page not found</h1>
+      <p>There's nothing at <code>{route.path}</code>.</p>
+      <button type="button" class="btn" onclick={() => navigate('/')}>
+        ← Go home
+      </button>
+    </section>
+  {/if}
+</Layout>
 
-  <button
-    class="mt-8 rounded-lg px-4 py-2 font-mono"
-    style="background: var(--color-accent-soft); color: var(--color-accent)"
-    onclick={() => count++}
-  >
-    scaffold check: {count}
-  </button>
-</main>
+<style>
+  .placeholder {
+    max-width: 42rem;
+  }
+  .placeholder h1 {
+    font-size: 1.8rem;
+    margin-top: 0;
+  }
+  .placeholder p {
+    line-height: 1.6;
+    color: var(--color-ink);
+  }
+  .muted {
+    color: var(--color-muted);
+  }
+  code {
+    font-family: var(--font-mono);
+    background: var(--color-bg);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.3rem;
+    font-size: 0.9em;
+  }
+  .btn {
+    margin-top: 1rem;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    border: 0;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+  }
+  .btn:hover {
+    filter: brightness(1.08);
+  }
+</style>

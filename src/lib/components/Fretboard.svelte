@@ -239,15 +239,16 @@
   }
   .inlay-row {
     display: flex;
-    gap: 0.4rem;
-    margin-top: 0.1rem;
-    min-height: 0.4rem;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+    min-height: 0.5rem;
   }
   .inlay-dot {
-    width: 0.38rem;
-    height: 0.38rem;
+    width: 0.45rem;
+    height: 0.45rem;
     border-radius: 9999px;
-    background: var(--color-border);
+    background: var(--string-color);
+    opacity: 0.6;
   }
 
   /* String label gutter: number + open tuning note. */

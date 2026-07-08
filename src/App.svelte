@@ -1,6 +1,9 @@
 <script lang="ts">
   import Layout from '$lib/components/Layout.svelte'
   import Home from './routes/Home.svelte'
+  import Lessons from './routes/Lessons.svelte'
+  import Lesson from './routes/Lesson.svelte'
+  import Builder from './routes/Builder.svelte'
   import { route, navigate } from '$lib/router.svelte'
 </script>
 
@@ -8,31 +11,11 @@
   {#if route.path === '/' || route.path === ''}
     <Home />
   {:else if route.path === '/lessons'}
-    <section class="placeholder">
-      <h1>Lessons</h1>
-      <p>
-        A guided path through guitar harmony — from the notes on the fretboard to
-        functional harmony and common progressions — is coming in milestone M4.
-      </p>
-      <p class="muted">
-        The curriculum is distilled from <code>RESEARCH.md</code> §1–§14.
-      </p>
-      <button type="button" class="btn" onclick={() => navigate('/')}>
-        ← Back to the fretboard
-      </button>
-    </section>
+    <Lessons />
+  {:else if route.path.startsWith('/lessons/')}
+    <Lesson />
   {:else if route.path === '/builder'}
-    <section class="placeholder">
-      <h1>Chord &amp; Scale Builder</h1>
-      <p>
-        A dedicated builder tool (formula + intervals + fretboard + staff +
-        audio) is coming in milestone M4. For now, explore chords and scales on
-        the home page.
-      </p>
-      <button type="button" class="btn" onclick={() => navigate('/')}>
-        ← Open the explorer
-      </button>
-    </section>
+    <Builder />
   {:else if route.path === '/about'}
     <section class="placeholder">
       <h1>About HarmoGuitar</h1>

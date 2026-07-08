@@ -20,6 +20,13 @@ export default ts.config(
         parser: ts.parser,
       },
     },
+    rules: {
+      // All {@html} content flows through src/lib/utils/markdown.ts, which
+      // escapes every HTML-significant character before formatting. There is
+      // no user-generated HTML anywhere in this static site, so {@html} is
+      // safe. Kept as a warning (not off) to flag any future direct use.
+      'svelte/no-at-html-tags': 'warn',
+    },
   },
   {
     // Svelte 5 runes modules (.svelte.ts/.svelte.js): the svelte plugin parses

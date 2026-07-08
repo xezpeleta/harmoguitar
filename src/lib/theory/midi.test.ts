@@ -5,6 +5,7 @@ import {
   parseNoteWithOctave,
   noteWithOctaveToMidi,
   formatNoteWithOctave,
+  notesToAscendingMidis,
 } from './midi'
 
 describe('noteToMidi', () => {
@@ -65,5 +66,34 @@ describe('parseNoteWithOctave', () => {
   it('formatNoteWithOctave', () => {
     expect(formatNoteWithOctave('E', 2)).toBe('E2')
     expect(formatNoteWithOctave('Bb', 3)).toBe('Bb3')
+  })
+})
+
+describe('notesToAscendingMidis', () => {
+  it('maps a C major scale to ascending MIDI numbers', () => {
+    // C4 D4 E4 F4 G4 A4 B4 C5
+    const midis = notesToAscendingMidis(['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C'])
+    expect(midis).toEqual([60, 62, 64, 65, 67, 69, 71, 72])
+  })
+
+  it('bumps the octave when the letter wraps', () => {
+    // A B C → A4 B4 C5
+    expect(notesToAscendingMidis(['A', 'B', 'C'])).toEqual([69, 71, 72])
+  })
+
+  it('respects the startOctave argument', () => {
+    const midis = notesToAscendingMidis(['C', 'D'], 3)
+    expect(midis).toEqual([48, 50])
+  })
+
+  it('handles accidentals (keeps the same octave until letter wraps)', () => {
+    // C C# D D# E — all letters ascend, so same octave.
+    expect(notesToAscendingMidis(['C', 'C#', 'D', 'D#', 'E'])).toEqual([
+      60, 61, 62, 63, 64,
+    ])
+  })
+
+  it('returns an empty array for no notes', () => {
+    expect(notesToAscendingMidis([])).toEqual([])
   })
 })

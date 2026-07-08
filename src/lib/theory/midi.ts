@@ -4,7 +4,13 @@
  * MIDI numbers: C-1 = 0, so middle C (C4) = 60, low E on a guitar (E2) = 40.
  * Pure & UI-agnostic.
  */
-import { type NoteName, toPitchClass, SHARPS, FLATS, parseNote } from './notes'
+import {
+  type NoteName,
+  toPitchClass,
+  SHARPS,
+  FLATS,
+  parseNote,
+} from './notes'
 
 /** A note name with its scientific octave, e.g. { note: 'E', octave: 2 }. */
 export interface NoteWithOctave {
@@ -51,4 +57,30 @@ export function noteWithOctaveToMidi(s: string): number {
 /** Format a note + octave as a string, e.g. "E2". */
 export function formatNoteWithOctave(note: NoteName, octave: number): string {
   return `${note}${octave}`
+}
+
+/**
+ * Convert an ordered list of note names to ascending MIDI numbers, bumping
+ * the octave each time the pitch class wraps around (i.e. the next note is no
+ * higher than the previous). Used to play a scale or arpeggio as a rising
+ * sequence. `startOctave` defaults to 4 (middle-C region).
+ *
+ * Pitch-class comparison (rather than letter index) correctly handles
+ * chromatic runs like C C# D D# E, where consecutive notes share a letter
+ * but still ascend within the octave.
+ */
+export function notesToAscendingMidis(
+  notes: NoteName[],
+  startOctave = 4,
+): number[] {
+  let octave = startOctave
+  let prevPc = -1
+  const midis: number[] = []
+  for (const n of notes) {
+    const pc = toPitchClass(n)
+    if (prevPc >= 0 && pc <= prevPc) octave += 1
+    midis.push(noteToMidi(n, octave))
+    prevPc = pc
+  }
+  return midis
 }

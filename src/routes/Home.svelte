@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { allNotes, type NoteName, letterIndexOf } from '$lib/theory/notes'
+  import { allNotes, type NoteName } from '$lib/theory/notes'
   import { CHORD_NAMES, type ChordType, chordSymbol } from '$lib/theory/chords'
   import {
     SCALE_NAMES,
     type ScaleType,
   } from '$lib/theory/scales'
-  import { noteToMidi } from '$lib/theory/midi'
+  import { notesToAscendingMidis } from '$lib/theory/midi'
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
   import Fretboard from '$lib/components/Fretboard.svelte'
@@ -34,20 +34,6 @@
     if (mode === 'free') return 'Free selection'
     return app.rootNote
   })
-
-  /** Convert note names to ascending MIDI numbers (bumping octave on letter wrap). */
-  function notesToAscendingMidis(notes: NoteName[], startOctave = 4): number[] {
-    let octave = startOctave
-    let prevLetter = -1
-    const midis: number[] = []
-    for (const n of notes) {
-      const li = letterIndexOf(n)
-      if (prevLetter >= 0 && li <= prevLetter) octave += 1
-      midis.push(noteToMidi(n, octave))
-      prevLetter = li
-    }
-    return midis
-  }
 
   function pickRoot(note: NoteName): void {
     app.setRoot(note)

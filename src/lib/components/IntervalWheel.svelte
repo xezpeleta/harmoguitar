@@ -56,7 +56,9 @@
 
   /** Path `d` for the segment at semitone offset `s` from the root. */
   function segmentPath(s: number): string {
-    const center = -Math.PI / 2 + s * SEG // root at 12 o'clock, clockwise
+    // d3 arc() uses the pie convention: angle 0 = 12 o'clock, increasing
+    // clockwise. (The -π/2 offset is only for the cos/sin math in labelPos.)
+    const center = s * SEG
     return arcGen({
       innerRadius: R_INNER,
       outerRadius: R_OUTER,

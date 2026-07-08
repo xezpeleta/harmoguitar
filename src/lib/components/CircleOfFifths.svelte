@@ -34,7 +34,9 @@
 
   /** Path for a ring segment at clockwise position `p`. */
   function ringPath(p: number, rIn: number, rOut: number): string {
-    const center = -Math.PI / 2 + p * SEG
+    // d3 arc() uses the pie convention: angle 0 = 12 o'clock, increasing
+    // clockwise. (The -π/2 offset is only for the cos/sin math in labelPos.)
+    const center = p * SEG
     return arcGen({
       innerRadius: rIn,
       outerRadius: rOut,

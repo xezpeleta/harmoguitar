@@ -154,7 +154,7 @@
 
 <div class="cof-wrap">
   <svg
-    viewBox="0 0 {size} {size}"
+    viewBox="{-size / 2} {-size / 2} {size} {size}"
     width={size}
     height={size}
     class="cof"
@@ -213,15 +213,15 @@
 
     <!-- Centre readout -->
     <text
-      x={size / 2}
-      y={size / 2 - 6}
+      x={0}
+      y={-6}
       class="center-label"
       text-anchor="middle"
       dominant-baseline="middle"
     >{center.label}</text>
     <text
-      x={size / 2}
-      y={size / 2 + 14}
+      x={0}
+      y={14}
       class="center-sig"
       text-anchor="middle"
       dominant-baseline="middle"

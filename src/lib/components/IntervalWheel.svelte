@@ -143,7 +143,7 @@
 
 <div class="wheel-wrap">
   <svg
-    viewBox="0 0 {size} {size}"
+    viewBox="{-size / 2} {-size / 2} {size} {size}"
     width={size}
     height={size}
     class="wheel"

@@ -33,6 +33,13 @@ export const notesFretboard: Lesson = {
         '{{C}}  {{C#}}/{{Db}}  {{D}}  {{D#}}/{{Eb}}  {{E}}  {{F}}  {{F#}}/{{Gb}}  {{G}}  {{G#}}/{{Ab}}  {{A}}  {{A#}}/{{Bb}}  {{B}} → (back to {{C}})',
     },
     {
+      kind: 'piano',
+      octaves: 1,
+      notes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+      caption:
+        'The same 12 pitch classes on a keyboard. The 7 white keys are the natural notes ({{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}}); the 5 black keys are the accidentals. After {{B}} the cycle repeats from {{C}} again, one octave higher. Click any key to hear it.',
+    },
+    {
       kind: 'list',
       items: [
         '**Natural notes** — {{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}} (the 7 "white-key" notes).',

@@ -11,6 +11,7 @@
  *   - callout      (highlighted tip / note / warning box)
  *   - table        (rows of strings — used for interval/chord/scale tables)
  *   - widget       (embeds interactive widgets bound to the shared store)
+ *   - piano        (interactive piano keyboard — standalone or store-driven)
  *
  * The widget block specifies an *initial* store selection (root, chord/scale
  * type, key…) and which widgets to show. The reader applies the selection to
@@ -96,6 +97,19 @@ export type Block =
       /** Which widgets to render, left-to-right / stacked on mobile. */
       widgets: WidgetKind[]
       /** Optional caption beneath the widget cluster. */
+      caption?: string
+    }
+  | {
+      kind: 'piano'
+      /**
+       * Notes to highlight. Given → standalone reference (shows exactly
+       * these notes, e.g. all 12 pitch classes). Omitted → store-driven
+       * (mirrors the current chord/scale selection).
+       */
+      notes?: NoteName[]
+      /** Number of octaves to render (default 2). */
+      octaves?: number
+      /** Optional caption beneath the keyboard. */
       caption?: string
     }
 

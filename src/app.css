@@ -23,6 +23,11 @@
   --color-warning-soft: #fff3eb;
   --color-focus: #2563eb;
 
+  /* Piano keyboard surfaces (Piano.svelte). */
+  --piano-white: #fafbfc;
+  --piano-black: #20262f;
+  --piano-white-edge: #c4c9d0;
+
   --font-sans:
     system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
@@ -42,6 +47,10 @@
     --color-warning: #f97316;
     --color-warning-soft: #2a1810;
     --color-focus: #58a6ff;
+    /* Piano keyboard surfaces — white keys stay light, black keys very dark. */
+    --piano-white: #d9dfe8;
+    --piano-black: #06090d;
+    --piano-white-edge: #3a434e;
   }
 }
 

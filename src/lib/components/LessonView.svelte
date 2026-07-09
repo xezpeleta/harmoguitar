@@ -27,6 +27,7 @@
   import Staff from '$lib/components/Staff.svelte'
   import IntervalWheel from '$lib/components/IntervalWheel.svelte'
   import CircleOfFifths from '$lib/components/CircleOfFifths.svelte'
+  import Piano from '$lib/components/Piano.svelte'
 
   interface Props {
     lesson: Lesson
@@ -154,6 +155,16 @@
             </tbody>
           </table>
         </div>
+      {:else if block.kind === 'piano'}
+        <figure class="widget-block piano-block">
+          <Piano
+            octaves={block.octaves ?? 2}
+            highlightNotes={block.notes}
+          />
+          {#if block.caption}
+            <figcaption><InlineText source={block.caption} /></figcaption>
+          {/if}
+        </figure>
       {:else if block.kind === 'widget'}
         <figure class="widget-block" use:applyWidget={block}>
           <div class="widget-grid {block.widgets.length === 1 ? 'single' : 'multi'}">

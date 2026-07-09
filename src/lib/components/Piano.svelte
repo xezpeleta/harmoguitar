@@ -201,14 +201,16 @@
           class="key white"
           class:highlighted={hi}
           class:root={isRoot(wk.pc)}
-          style:--key-bg={hi ? col.bg : 'var(--piano-white)'}
-          style:--key-fg={hi ? col.fg : 'var(--color-muted)'}
           aria-label="{keyLabel(wk.pc)} (pitch class {wk.pc})"
           aria-pressed={hi}
           onclick={() => handleClick(wk.pc, wk.midi)}
         >
           {#if hi}
-            <span class="label">{keyLabel(wk.pc)}</span>
+            <span
+              class="dot"
+              style:--dot-color={col.bg}
+              style:--dot-fg={col.fg}>{keyLabel(wk.pc)}</span
+            >
           {/if}
         </button>
       {/each}
@@ -222,14 +224,16 @@
           class:highlighted={hi}
           class:root={isRoot(bk.pc)}
           style:left={blackLeft(bk.after)}
-          style:--key-bg={hi ? col.bg : 'var(--piano-black)'}
-          style:--key-fg={hi ? col.fg : '#fff'}
           aria-label="{keyLabel(bk.pc)} (pitch class {bk.pc})"
           aria-pressed={hi}
           onclick={() => handleClick(bk.pc, bk.midi)}
         >
           {#if hi}
-            <span class="label">{keyLabel(bk.pc)}</span>
+            <span
+              class="dot"
+              style:--dot-color={col.bg}
+              style:--dot-fg={col.fg}>{keyLabel(bk.pc)}</span
+            >
           {/if}
         </button>
       {/each}
@@ -275,7 +279,7 @@
   .key.white {
     flex: 1 1 0;
     height: var(--piano-h, 6.5rem);
-    background: var(--key-bg);
+    background: var(--piano-white);
     border: 1px solid var(--piano-white-edge, #c4c9d0);
     border-radius: 0 0 0.35rem 0.35rem;
     box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.06);
@@ -287,7 +291,7 @@
     top: 0;
     width: var(--bw);
     height: calc(var(--piano-h, 6.5rem) * 0.62);
-    background: var(--key-bg);
+    background: var(--piano-black);
     border-radius: 0 0 0.28rem 0.28rem;
     box-shadow:
       inset 0 -3px 4px rgba(255, 255, 255, 0.08),
@@ -308,35 +312,43 @@
     z-index: 2;
   }
 
-  /* Highlighted keys get their note colour + a label. */
-  .key.highlighted {
-    color: var(--key-fg);
-  }
-
-  /* Root ring: inset accent border, visible on any fill. */
-  .key.root {
-    box-shadow:
-      inset 0 0 0 3px var(--color-accent),
-      inset 0 -3px 6px rgba(0, 0, 0, 0.06);
-  }
-  .key.black.root {
-    box-shadow:
-      inset 0 0 0 3px var(--color-accent),
-      0 2px 3px rgba(0, 0, 0, 0.35);
-  }
-
-  .label {
+  /* Note marker: a coloured circle tag sitting on the key surface. The key
+   * itself stays piano-white / piano-black; the colour lives in the tag, so
+   * the keyboard reads as a real piano with note badges on it. Single-char
+   * labels render as a circle; two-char (C#, Do) as a pill. */
+  .dot {
     position: relative;
-    bottom: 0.28rem;
+    bottom: 0.34rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 0.32rem;
+    border-radius: 9999px;
+    background: var(--dot-color);
+    color: var(--dot-fg);
     font-size: 0.68rem;
     font-weight: 700;
     font-family: var(--font-mono);
     line-height: 1;
     pointer-events: none;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   }
-  .key.black .label {
-    bottom: 0.22rem;
-    font-size: 0.6rem;
+  .key.black .dot {
+    bottom: 0.24rem;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.2rem;
+    font-size: 0.58rem;
+  }
+
+  /* Root note: accent ring around the tag, with a surface-coloured gap so it
+   * reads on both white and black keys. */
+  .key.root .dot {
+    box-shadow:
+      0 0 0 2px var(--color-surface),
+      0 0 0 4px var(--color-accent),
+      0 1px 2px rgba(0, 0, 0, 0.25);
   }
 </style>

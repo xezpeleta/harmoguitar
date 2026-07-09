@@ -45,7 +45,7 @@ export const modes: Lesson = {
       kind: 'list',
       ordered: true,
       items: [
-        '**Parent-scale view:** D Dorian = the notes of C major, starting on D. Easiest to *construct* — you already know the major scale.',
+        '**Parent-scale view:** D Dorian = the notes of C major, starting on {{D}}. Easiest to *construct* — you already know the major scale.',
         '**Parallel / formula view:** D Dorian = D major with ♭3 and ♭7. Easiest to *play over a single chord* — you compare to the major scale of the same root.',
       ],
     },
@@ -53,7 +53,7 @@ export const modes: Lesson = {
       kind: 'callout',
       variant: 'warning',
       markdown:
-        'The parent-scale view is why beginners get confused: "D Dorian has the same notes as C major, so what makes it Dorian?" The answer is the **tonal centre** — which note feels like "home." Play a D in the bass and Dorian emerges; play a C and Ionian returns. Context is everything.',
+        'The parent-scale view is why beginners get confused: "D Dorian has the same notes as C major, so what makes it Dorian?" The answer is the **tonal centre** — which note feels like "home." Play a {{D}} in the bass and Dorian emerges; play a {{C}} and Ionian returns. Context is everything.',
     },
 
     {
@@ -70,7 +70,7 @@ export const modes: Lesson = {
       kind: 'widget',
       selection: { scaleType: 'dorian', root: 'D' },
       widgets: ['fretboard', 'staff', 'interval-wheel'],
-      caption: 'D Dorian. Compare the natural 6th (B) to the ♭6 you would expect in D natural minor.',
+      caption: 'D Dorian. Compare the natural 6th ({{B}}) to the ♭6 you would expect in D natural minor.',
     },
 
     {
@@ -87,7 +87,7 @@ export const modes: Lesson = {
       kind: 'widget',
       selection: { scaleType: 'mixolydian', root: 'G' },
       widgets: ['fretboard', 'staff'],
-      caption: 'G Mixolydian — a major scale with a ♭7 (F natural). The sound of a G7 vamp.',
+      caption: 'G Mixolydian — a major scale with a ♭7 ({{F}} natural). The sound of a G7 vamp.',
     },
 
     {

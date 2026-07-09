@@ -46,7 +46,7 @@ export const intervals: Lesson = {
       selection: { scaleType: 'major', root: 'C' },
       widgets: ['interval-wheel'],
       caption:
-        'The interval wheel rooted at C. The 7 major-scale tones are coloured. Hover or tap a segment to hear that interval played against the root.',
+        'The interval wheel rooted at {{C}}. The 7 major-scale tones are coloured. Hover or tap a segment to hear that interval played against the root.',
     },
 
     {
@@ -96,7 +96,7 @@ export const intervals: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        '**Try it:** in the wheel above, change the root with the home-page selector and watch the intervals re-label. Every interval is measured *from the root* — so the same 7 semitones is a "perfect 5th" no matter where you start.',
+        '**Try it:** in the wheel above, change the root with the home-page selector and watch the intervals re-label. Every interval is measured *from the root* — so the same 7 semitones is a "perfect 5th" no matter where you start. From {{C}} that lands on {{G}}; from {{F}} it lands on {{C}}.',
     },
   ],
 }

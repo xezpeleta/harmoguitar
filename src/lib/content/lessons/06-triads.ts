@@ -26,10 +26,10 @@ export const triads: Lesson = {
       kind: 'table',
       headers: ['Triad', 'Formula', 'Stack of 3rds', 'Example (C)', 'Sound'],
       rows: [
-        ['Major', '1 3 5', 'M3 + m3', 'C E G', 'happy, stable'],
-        ['Minor', '1 ♭3 5', 'm3 + M3', 'C E♭ G', 'sad, stable'],
-        ['Diminished', '1 ♭3 ♭5', 'm3 + m3', 'C E♭ G♭', 'tense, unstable'],
-        ['Augmented', '1 3 ♯5', 'M3 + M3', 'C E G♯', 'suspenseful'],
+        ['Major', '1 3 5', 'M3 + m3', '{{C}} {{E}} {{G}}', 'happy, stable'],
+        ['Minor', '1 ♭3 5', 'm3 + M3', '{{C}} {{Eb}} {{G}}', 'sad, stable'],
+        ['Diminished', '1 ♭3 ♭5', 'm3 + m3', '{{C}} {{Eb}} {{Gb}}', 'tense, unstable'],
+        ['Augmented', '1 3 ♯5', 'M3 + M3', '{{C}} {{E}} {{G#}}', 'suspenseful'],
       ],
     },
     {
@@ -56,13 +56,13 @@ export const triads: Lesson = {
       kind: 'widget',
       selection: { chordType: 'major', root: 'C' },
       widgets: ['fretboard', 'staff'],
-      caption: 'C major triad (C E G). Switch the chord type on the explorer to hear minor, diminished, and augmented.',
+      caption: 'C major triad ({{C}} {{E}} {{G}}). Switch the chord type on the explorer to hear minor, diminished, and augmented.',
     },
     {
       kind: 'widget',
       selection: { chordType: 'minor', root: 'C' },
       widgets: ['fretboard', 'staff'],
-      caption: 'C minor triad (C E♭ G) — one note different from major, a completely different emotion.',
+      caption: 'C minor triad ({{C}} {{Eb}} {{G}}) — one note different from major, a completely different emotion.',
     },
 
     {

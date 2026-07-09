@@ -34,7 +34,7 @@ export const notesFretboard: Lesson = {
     {
       kind: 'list',
       items: [
-        '**Natural notes** — C D E F G A B (the 7 "white-key" notes).',
+        '**Natural notes** — {{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}} (the 7 "white-key" notes).',
         '**Accidentals** — the 5 notes between them, each with two names (C♯ = D♭). These double names are called *enharmonic equivalents*.',
         '**The octave** — after 12 semitones you return to the same letter name, one octave higher. The octave doubles the frequency (a 2:1 ratio).',
       ],
@@ -87,12 +87,12 @@ export const notesFretboard: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'The notes at **fret 12** are exactly the open-string names (E A D G B E), one octave up. The fret markers (dots at 3, 5, 7, 9, 12) are your landmarks — use them to jump by 3rds, 4ths, and 5ths without counting.',
+        'The notes at **fret 12** are exactly the open-string names ({{E}} {{A}} {{D}} {{G}} {{B}} {{E}}), one octave up. The fret markers (dots at 3, 5, 7, 9, 12) are your landmarks — use them to jump by 3rds, 4ths, and 5ths without counting.',
     },
     {
       kind: 'text',
       markdown:
-        '**Try it:** click any fret below to hear the note and see every other occurrence of that pitch class light up. Find a C, then find the next C using an octave shape.',
+        '**Try it:** click any fret below to hear the note and see every other occurrence of that pitch class light up. Find a {{C}}, then find the next {{C}} using an octave shape.',
     },
     {
       kind: 'widget',

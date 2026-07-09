@@ -1,14 +1,23 @@
 /**
- * markdown.ts — Tiny inline-markdown renderer.
+ * markdown.ts — Tiny inline-markdown renderer + node parser.
  *
  * Lessons use a deliberately small markdown subset inside `text`, `callout`,
- * and `list` blocks: **bold**, *italic*, `code`, and [links](url). There are
- * no headings (those are `HeadingBlock`s), no images, no nested lists. This
- * keeps the renderer dependency-free, auditable, and XSS-safe (all user
- * content is escaped before formatting).
+ * and `list` blocks: **bold**, *italic*, `code`, [links](url), and note-chip
+ * tokens `{{C}}`. There are no headings (those are `HeadingBlock`s), no
+ * images, no nested lists. This keeps the renderer dependency-free, auditable,
+ * and XSS-safe (all content is escaped before formatting).
  *
- * Returns an HTML string; the component renders it with {@html}.
+ * Two layers:
+ *   - `parseInline` / `parseBlocks` return a node tree used by the Svelte
+ *     components (`InlineText.svelte`, `Markdown.svelte`) so that note tokens
+ *     render as real, reactive `NoteBadge` chips (adapting to the solfège
+ *     toggle) instead of static HTML.
+ *   - `renderInline` / `renderMarkdown` serialize the same tree to an HTML
+ *     string (notes become plain `<span>` chips) — kept for tests and as a
+ *     non-reactive fallback. No production path uses `{@html}` anymore.
  */
+import type { NoteName } from '$lib/theory/notes'
+
 const ESC: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -21,6 +30,25 @@ const ESC: Record<string, string> = {
 function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ESC[c] ?? c)
 }
+
+/**
+ * A note-chip token: `{{C}}`, `{{F#}}`, `{{Bb}}`, `{{Bbb}}`. Authors opt in to
+ * a coloured, toggle-aware chip by wrapping a note name in double braces.
+ * The letter class [A-G] avoids matching the internal `{{CODE{n}}}` stash and
+ * arbitrary braced prose.
+ */
+const NOTE_TOKEN = /\{\{([A-G][#b]*)\}\}/g
+
+/** An inline node: either formatted HTML text or a note reference. */
+export type InlineNode =
+  | { kind: 'text'; html: string }
+  | { kind: 'note'; note: NoteName }
+
+/** A block-level node produced from multi-line markdown. */
+export type BlockNode =
+  | { kind: 'p'; text: string }
+  | { kind: 'ul'; items: string[] }
+  | { kind: 'ol'; items: string[] }
 
 /**
  * Apply inline markdown to an *already-escaped* string. We run formatters
@@ -62,21 +90,54 @@ function formatInline(escaped: string): string {
 }
 
 /**
- * Render an inline-markdown string to safe HTML.
+ * Parse inline markdown into an ordered list of text segments (formatted,
+ * escaped HTML) and note references. Note tokens are extracted from the raw
+ * string *before* escaping so their names are preserved verbatim.
  */
+export function parseInline(markdown: string): InlineNode[] {
+  const nodes: InlineNode[] = []
+  let last = 0
+  NOTE_TOKEN.lastIndex = 0
+  let m: RegExpExecArray | null
+  while ((m = NOTE_TOKEN.exec(markdown)) !== null) {
+    if (m.index > last) {
+      nodes.push({
+        kind: 'text',
+        html: formatInline(escapeHtml(markdown.slice(last, m.index))),
+      })
+    }
+    nodes.push({ kind: 'note', note: m[1] as NoteName })
+    last = m.index + m[0].length
+  }
+  if (last < markdown.length) {
+    nodes.push({ kind: 'text', html: formatInline(escapeHtml(markdown.slice(last))) })
+  }
+  return nodes
+}
+
+/** Serialize a single note node to a plain (non-reactive) HTML chip. */
+function noteChipHtml(note: NoteName): string {
+  const n = escapeHtml(note)
+  return `<span class="note-chip" data-note="${n}">${n}</span>`
+}
+
+/** Render an inline-markdown string to safe HTML (notes become plain chips). */
 export function renderInline(markdown: string): string {
-  return formatInline(escapeHtml(markdown))
+  return parseInline(markdown)
+    .map((n) => (n.kind === 'text' ? n.html : noteChipHtml(n.note)))
+    .join('')
 }
 
 /**
- * Render a multi-line markdown string (paragraphs + simple lists) to HTML.
+ * Parse multi-line markdown into block nodes (paragraphs + simple lists).
  * Blank lines separate paragraphs. Lines starting with `- ` or `* ` become
  * bullet items; `1. ` / `2. ` become ordered items. Consecutive list lines
- * merge into a single <ul>/<ol>.
+ * merge into a single list. Inline content is kept raw for the component to
+ * parse via `parseInline`.
  */
-export function renderMarkdown(markdown: string): string {
+export function parseBlocks(markdown: string): BlockNode[] {
   const lines = markdown.replace(/\r\n/g, '\n').split('\n')
-  const parts: string[] = []
+  const blocks: BlockNode[] = []
   let i = 0
 
   while (i < lines.length) {
@@ -94,7 +155,7 @@ export function renderMarkdown(markdown: string): string {
         items.push(lines[i]!.replace(/^\s*[-*]\s+/, ''))
         i++
       }
-      parts.push(`<ul>${items.map((it) => `<li>${renderInline(it)}</li>`).join('')}</ul>`)
+      blocks.push({ kind: 'ul', items })
       continue
     }
 
@@ -105,7 +166,7 @@ export function renderMarkdown(markdown: string): string {
         items.push(lines[i]!.replace(/^\s*\d+\.\s+/, ''))
         i++
       }
-      parts.push(`<ol>${items.map((it) => `<li>${renderInline(it)}</li>`).join('')}</ol>`)
+      blocks.push({ kind: 'ol', items })
       continue
     }
 
@@ -120,8 +181,26 @@ export function renderMarkdown(markdown: string): string {
       para.push(lines[i]!)
       i++
     }
-    parts.push(`<p>${renderInline(para.join(' '))}</p>`)
+    blocks.push({ kind: 'p', text: para.join(' ') })
   }
 
-  return parts.join('\n')
+  return blocks
+}
+
+/**
+ * Render a multi-line markdown string to HTML (paragraphs + lists). Notes
+ * become plain chips. Kept for tests / non-reactive fallback.
+ */
+export function renderMarkdown(markdown: string): string {
+  return parseBlocks(markdown)
+    .map((b) => {
+      if (b.kind === 'ul') {
+        return `<ul>${b.items.map((it) => `<li>${renderInline(it)}</li>`).join('')}</ul>`
+      }
+      if (b.kind === 'ol') {
+        return `<ol>${b.items.map((it) => `<li>${renderInline(it)}</li>`).join('')}</ol>`
+      }
+      return `<p>${renderInline(b.text)}</p>`
+    })
+    .join('\n')
 }

@@ -26,10 +26,10 @@ export const cadences: Lesson = {
       kind: 'table',
       headers: ['Cadence', 'Progression', 'Effect'],
       rows: [
-        ['Authentic', 'V–I (G7–C)', '"period" — full resolution, strongest'],
-        ['Plagal', 'IV–I (F–C)', '"amen" — softer, gospel'],
-        ['Half', 'any–V (C–G)', 'comma — leaves you hanging'],
-        ['Deceptive', 'V–vi (G7–Am)', 'plot twist — resolves to a substitute'],
+        ['Authentic', 'V–I ({{G}}7–{{C}})', '"period" — full resolution, strongest'],
+        ['Plagal', 'IV–I ({{F}}–{{C}})', '"amen" — softer, gospel'],
+        ['Half', 'any–V ({{C}}–{{G}})', 'comma — leaves you hanging'],
+        ['Deceptive', 'V–vi ({{G}}7–{{A}}m)', 'plot twist — resolves to a substitute'],
       ],
     },
 
@@ -64,9 +64,9 @@ export const cadences: Lesson = {
     {
       kind: 'list',
       items: [
-        '**I–vi–ii–V** (C–Am–Dm–G) — the classic',
-        '**iii–vi–ii–V** (Em–A7–Dm–G) — often with secondary dominants',
-        '**I–VI7–ii–V** (C–A7–Dm–G)',
+        '**I–vi–ii–V** ({{C}}–{{A}}m–{{D}}m–{{G}}) — the classic',
+        '**iii–vi–ii–V** ({{E}}m–{{A}}7–{{D}}m–{{G}}) — often with secondary dominants',
+        '**I–VI7–ii–V** ({{C}}–{{A}}7–{{D}}m–{{G}})',
       ],
     },
     {
@@ -90,7 +90,7 @@ export const cadences: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'Play G7 → C (authentic), then G7 → Am (deceptive). The notes are nearly identical, but the *feeling* is completely different. That is the power of cadence — it is about expectation and resolution, not just the chords themselves.',
+        'Play {{G}}7 → {{C}} (authentic), then {{G}}7 → {{A}}m (deceptive). The notes are nearly identical, but the *feeling* is completely different. That is the power of cadence — it is about expectation and resolution, not just the chords themselves.',
     },
   ],
 }

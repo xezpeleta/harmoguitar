@@ -15,7 +15,8 @@
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
   import { notesToAscendingMidis } from '$lib/theory/midi'
-  import { renderMarkdown, renderInline } from '$lib/utils/markdown'
+  import Markdown from '$lib/components/Markdown.svelte'
+  import InlineText from '$lib/components/InlineText.svelte'
   import {
     markComplete,
     markIncomplete,
@@ -118,25 +119,25 @@
           <h3>{block.text}</h3>
         {/if}
       {:else if block.kind === 'text'}
-        <div class="prose">{@html renderMarkdown(block.markdown)}</div>
+        <div class="prose"><Markdown source={block.markdown} /></div>
       {:else if block.kind === 'callout'}
         <aside class="callout {block.variant}">
           <span class="callout-icon" aria-hidden="true">
             {block.variant === 'tip' ? '💡' : block.variant === 'warning' ? '⚠️' : '📝'}
           </span>
-          <div class="prose">{@html renderInline(block.markdown)}</div>
+          <div class="prose"><InlineText source={block.markdown} /></div>
         </aside>
       {:else if block.kind === 'list'}
         {#if block.ordered}
           <ol class="prose-list">
             {#each block.items as item, i (item + i)}
-              <li>{@html renderInline(item)}</li>
+              <li><InlineText source={item} /></li>
             {/each}
           </ol>
         {:else}
           <ul class="prose-list">
             {#each block.items as item, i (item + i)}
-              <li>{@html renderInline(item)}</li>
+              <li><InlineText source={item} /></li>
             {/each}
           </ul>
         {/if}
@@ -148,7 +149,7 @@
             </thead>
             <tbody>
               {#each block.rows as row, ri (ri)}
-                <tr>{#each row as cell, ci (ri + ci)}<td>{@html renderInline(cell)}</td>{/each}</tr>
+                <tr>{#each row as cell, ci (ri + ci)}<td><InlineText source={cell} /></td>{/each}</tr>
               {/each}
             </tbody>
           </table>

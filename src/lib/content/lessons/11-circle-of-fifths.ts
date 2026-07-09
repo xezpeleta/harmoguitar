@@ -14,7 +14,7 @@ export const circleOfFifths: Lesson = {
     {
       kind: 'text',
       markdown:
-        'The **circle of fifths** arranges the 12 pitch classes in a cycle of **perfect fifths** (clockwise) / perfect fourths (counterclockwise). Starting at C (top): **C → G → D → A → E → B → F♯ → D♭ → A♭ → E♭ → B♭ → F → C**. It is the single most useful diagram in music theory.',
+        'The **circle of fifths** arranges the 12 pitch classes in a cycle of **perfect fifths** (clockwise) / perfect fourths (counterclockwise). Starting at {{C}} (top): **{{C}} → {{G}} → {{D}} → {{A}} → {{E}} → {{B}} → {{F#}} → {{Db}} → {{Ab}} → {{Eb}} → {{Bb}} → {{F}} → {{C}}**. It is the single most useful diagram in music theory.',
     },
 
     {
@@ -49,13 +49,13 @@ export const circleOfFifths: Lesson = {
     {
       kind: 'text',
       markdown:
-        'The three most important chords in any key — the I, IV, and V — sit together on the circle. To find them instantly: your key is I, one step **left** is IV, one step **right** is V. This is the **1-4-5** of blues, rock, and folk. In C: C–F–G. In A: A–D–E. In G: G–C–D.',
+        'The three most important chords in any key — the I, IV, and V — sit together on the circle. To find them instantly: your key is I, one step **left** is IV, one step **right** is V. This is the **1-4-5** of blues, rock, and folk. In C: {{C}}–{{F}}–{{G}}. In A: {{A}}–{{D}}–{{E}}. In G: {{G}}–{{C}}–{{D}}.',
     },
     {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'Click **G** on the circle above. G is your I, C (left) is your IV, D (right) is your V. The 1-4-5 of a blues in G is G–C–D — read straight off the circle.',
+        'Click **G** on the circle above. {{G}} is your I, {{C}} (left) is your IV, {{D}} (right) is your V. The 1-4-5 of a blues in G is {{G}}–{{C}}–{{D}} — read straight off the circle.',
     },
 
     {

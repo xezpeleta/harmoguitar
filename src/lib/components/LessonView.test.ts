@@ -21,6 +21,7 @@ const fixture: Lesson = {
   blocks: [
     { kind: 'heading', level: 2, text: 'Section One' },
     { kind: 'text', markdown: 'A paragraph with **bold** and `code`.' },
+    { kind: 'text', markdown: 'Play {{C}} then {{E}} then {{G}}.' },
     {
       kind: 'callout',
       variant: 'tip',
@@ -63,6 +64,21 @@ describe('LessonView', () => {
     const { container } = render(LessonView, { lesson: fixture })
     expect(container.querySelector('strong')?.textContent).toBe('bold')
     expect(container.querySelector('code')?.textContent).toBe('code')
+  })
+
+  it('renders note tokens as clickable chips', () => {
+    const { container } = render(LessonView, { lesson: fixture })
+    const chips = container.querySelectorAll('.note-chip-btn')
+    expect(chips.length).toBe(3)
+    // Each chip is a real button with an accessible label
+    const first = chips[0] as HTMLButtonElement
+    expect(first.tagName).toBe('BUTTON')
+    expect(first.getAttribute('aria-label')).toContain('Play')
+    // Labels show note names in CDE mode by default
+    const labels = [...chips].map((c) => c.textContent?.replace(/\s+/g, '').trim())
+    expect(labels[0]).toContain('C')
+    expect(labels[1]).toContain('E')
+    expect(labels[2]).toContain('G')
   })
 
   it('renders callouts with the variant class', () => {

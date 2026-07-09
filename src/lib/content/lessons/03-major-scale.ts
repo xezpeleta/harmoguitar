@@ -45,8 +45,8 @@ export const majorScale: Lesson = {
     {
       kind: 'list',
       items: [
-        '**C major** (no sharps/flats): C D E F G A B C',
-        '**G major** (1 sharp, F♯): G A B C D E F♯ G',
+        '**C major** (no sharps/flats): {{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}} {{C}}',
+        '**G major** (1 sharp, F♯): {{G}} {{A}} {{B}} {{C}} {{D}} {{E}} {{F#}} {{G}}',
       ],
     },
     {
@@ -59,7 +59,7 @@ export const majorScale: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'Change the root on the home explorer to **G** and watch F♯ appear on the fretboard and staff. The pattern never changes — only the starting note does.',
+        'Change the root on the home explorer to **G** and watch {{F#}} appear on the fretboard and staff. The pattern never changes — only the starting note does.',
     },
 
     {

@@ -60,7 +60,7 @@ export const functionalHarmony: Lesson = {
       kind: 'widget',
       selection: { chordType: 'dom7', root: 'G' },
       widgets: ['fretboard', 'staff', 'interval-wheel'],
-      caption: 'G7 — the V7 of C. The tritone B–F (3rd & ♭7) wants to resolve: B→C, F→E.',
+      caption: 'G7 — the V7 of C. The tritone {{B}}–{{F}} (3rd & ♭7) wants to resolve: {{B}}→{{C}}, {{F}}→{{E}}.',
     },
     {
       kind: 'widget',
@@ -91,7 +91,7 @@ export const functionalHarmony: Lesson = {
     {
       kind: 'text',
       markdown:
-        'In natural minor, the v chord is minor (Em in Am) and lacks pull. Composers **borrow from harmonic minor** to get a major V (E7 in Am). The raised 7th (G♯) creates a leading tone that resolves up to the tonic A.',
+        'In natural minor, the v chord is minor ({{E}}m in {{A}}m) and lacks pull. Composers **borrow from harmonic minor** to get a major V (E7 in Am). The raised 7th ({{G#}}) creates a leading tone that resolves up to the tonic {{A}}.',
     },
     {
       kind: 'callout',

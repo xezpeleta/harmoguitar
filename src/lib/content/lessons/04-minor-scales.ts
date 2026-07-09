@@ -25,13 +25,13 @@ export const minorScales: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Pattern: **W - H - W - W - H - W - W**. Relative to the major scale, the formula is **1 2 ♭3 4 5 ♭6 ♭7** — it lowers the 3rd, 6th, and 7th. A natural minor shares the **same notes** as its relative major: A natural minor (A B C D E F G) uses exactly the notes of C major, just starting on A.',
+        'Pattern: **W - H - W - W - H - W - W**. Relative to the major scale, the formula is **1 2 ♭3 4 5 ♭6 ♭7** — it lowers the 3rd, 6th, and 7th. A natural minor shares the **same notes** as its relative major: A natural minor ({{A}} {{B}} {{C}} {{D}} {{E}} {{F}} {{G}}) uses exactly the notes of C major, just starting on A.',
     },
     {
       kind: 'widget',
       selection: { scaleType: 'natural-minor', root: 'A' },
       widgets: ['fretboard', 'staff'],
-      caption: 'A natural minor — same notes as C major, but A is "home."',
+      caption: 'A natural minor — same notes as C major, but {{A}} is "home."',
     },
 
     {
@@ -42,19 +42,19 @@ export const minorScales: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Natural minor with a **raised 7th**. Formula: **1 2 ♭3 4 5 ♭6 7** (A B C D E F G♯). Why? In natural minor the V chord is minor (Em in A minor), which lacks the strong pull back to the tonic. Raising the 7th creates a **leading tone** (G♯ → A) and turns the V into a major or dominant chord (E7 → Am) that resolves forcefully.',
+        'Natural minor with a **raised 7th**. Formula: **1 2 ♭3 4 5 ♭6 7** ({{A}} {{B}} {{C}} {{D}} {{E}} {{F}} {{G#}}). Why? In natural minor the V chord is minor (Em in A minor), which lacks the strong pull back to the tonic. Raising the 7th creates a **leading tone** ({{G#}} → {{A}}) and turns the V into a major or dominant chord (E7 → Am) that resolves forcefully.',
     },
     {
       kind: 'widget',
       selection: { scaleType: 'harmonic-minor', root: 'A' },
       widgets: ['fretboard', 'staff'],
-      caption: 'A harmonic minor — notice the G♯ and the exotic augmented-2nd gap between F and G♯.',
+      caption: 'A harmonic minor — notice the {{G#}} and the exotic augmented-2nd gap between {{F}} and {{G#}}.',
     },
     {
       kind: 'callout',
       variant: 'note',
       markdown:
-        'That gap between ♭6 and 7 (F to G♯, three semitones) is an **augmented 2nd**. It gives harmonic minor its exotic, Middle-Eastern flavour — and why it is the source of the Phrygian dominant scale used in flamenco.',
+        'That gap between ♭6 and 7 ({{F}} to {{G#}}, three semitones) is an **augmented 2nd**. It gives harmonic minor its exotic, Middle-Eastern flavour — and why it is the source of the Phrygian dominant scale used in flamenco.',
     },
 
     {
@@ -65,7 +65,7 @@ export const minorScales: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Natural minor with **both the 6th and 7th raised**: **1 2 ♭3 4 5 6 7** (A B C D E F♯ G♯). In classical music this form is used ascending and reverted to natural minor descending. **In jazz, the raised form is used both ways** — and it is the parent of several crucial jazz modes (Lydian dominant, altered, etc.).',
+        'Natural minor with **both the 6th and 7th raised**: **1 2 ♭3 4 5 6 7** ({{A}} {{B}} {{C}} {{D}} {{E}} {{F#}} {{G#}}). In classical music this form is used ascending and reverted to natural minor descending. **In jazz, the raised form is used both ways** — and it is the parent of several crucial jazz modes (Lydian dominant, altered, etc.).',
     },
     {
       kind: 'widget',
@@ -91,7 +91,7 @@ export const minorScales: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'Switch the home explorer between the three minor scales with root A. Listen to how the raised 7th (G♯) in harmonic minor suddenly *wants* to resolve up to A.',
+        'Switch the home explorer between the three minor scales with root {{A}}. Listen to how the raised 7th ({{G#}}) in harmonic minor suddenly *wants* to resolve up to {{A}}.',
     },
   ],
 }

@@ -25,19 +25,19 @@ export const diatonicHarmony: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Take each scale degree as a root and **stack thirds** (skip every other note). In **C major** (C D E F G A B), the seven diatonic 7th chords are:',
+        'Take each scale degree as a root and **stack thirds** (skip every other note). In **C major** ({{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}}), the seven diatonic 7th chords are:',
     },
     {
       kind: 'table',
       headers: ['Degree', 'Chord', 'Notes', 'Quality', 'Roman numeral'],
       rows: [
-        ['I', 'Cmaj7', 'C E G B', 'Major 7', '**I**'],
-        ['II', 'Dm7', 'D F A C', 'Minor 7', '**ii**'],
-        ['III', 'Em7', 'E G B D', 'Minor 7', '**iii**'],
-        ['IV', 'Fmaj7', 'F A C E', 'Major 7', '**IV**'],
-        ['V', 'G7', 'G B D F', 'Dominant 7', '**V**'],
-        ['VI', 'Am7', 'A C E G', 'Minor 7', '**vi**'],
-        ['VII', 'Bm7♭5', 'B D F A', 'Half-diminished', '**vii°**'],
+        ['I', 'Cmaj7', '{{C}} {{E}} {{G}} {{B}}', 'Major 7', '**I**'],
+        ['II', 'Dm7', '{{D}} {{F}} {{A}} {{C}}', 'Minor 7', '**ii**'],
+        ['III', 'Em7', '{{E}} {{G}} {{B}} {{D}}', 'Minor 7', '**iii**'],
+        ['IV', 'Fmaj7', '{{F}} {{A}} {{C}} {{E}}', 'Major 7', '**IV**'],
+        ['V', 'G7', '{{G}} {{B}} {{D}} {{F}}', 'Dominant 7', '**V**'],
+        ['VI', 'Am7', '{{A}} {{C}} {{E}} {{G}}', 'Minor 7', '**vi**'],
+        ['VII', 'Bm7♭5', '{{B}} {{D}} {{F}} {{A}}', 'Half-diminished', '**vii°**'],
       ],
     },
     {
@@ -91,7 +91,7 @@ export const diatonicHarmony: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Roman numerals let you describe a progression **in any key**: "I–IV–V–I" means the same relationship whether you are in C (C-F-G-C) or A (A-D-E-A). This is the key to transposing.',
+        'Roman numerals let you describe a progression **in any key**: "I–IV–V–I" means the same relationship whether you are in C ({{C}}-{{F}}-{{G}}-{{C}}) or A ({{A}}-{{D}}-{{E}}-{{A}}). This is the key to transposing.',
     },
 
     {
@@ -102,7 +102,7 @@ export const diatonicHarmony: Lesson = {
     {
       kind: 'text',
       markdown:
-        'From the natural minor scale (e.g., A minor: A B C D E F G), the diatonic 7th chords are:',
+        'From the natural minor scale (e.g., A minor: {{A}} {{B}} {{C}} {{D}} {{E}} {{F}} {{G}}), the diatonic 7th chords are:',
     },
     {
       kind: 'text',
@@ -111,7 +111,7 @@ export const diatonicHarmony: Lesson = {
     {
       kind: 'text',
       markdown:
-        '(Am7 – Bm7♭5 – Cmaj7 – Dm7 – Em7 – Fmaj7 – G7). Note: the v chord is **minor** in natural minor, which lacks the strong dominant pull. That is why harmonic minor raises the 7th to give a **major V** (E7 → Am).',
+        '({{A}}m7 – {{B}}m7♭5 – {{C}}maj7 – {{D}}m7 – {{E}}m7 – {{F}}maj7 – {{G}}7). Note: the v chord is **minor** in natural minor, which lacks the strong dominant pull. That is why harmonic minor raises the 7th to give a **major V** (E7 → Am).',
     },
     {
       kind: 'callout',

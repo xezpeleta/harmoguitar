@@ -26,12 +26,12 @@ export const progressions: Lesson = {
       kind: 'table',
       headers: ['Progression', 'In C major', 'Character', 'Genre'],
       rows: [
-        ['I–IV–V–I', 'C–F–G–C', 'classic, strong', 'rock, country, folk'],
-        ['I–V–vi–IV', 'C–G–Am–F', 'emotional arc', 'pop ("4-chord song")'],
-        ['I–vi–IV–V', 'C–Am–F–G', '50s doo-wop', 'pop, ballad'],
-        ['ii–V–I', 'Dm–G–C', 'jazz cadence', 'jazz, soul'],
-        ['I–vi–ii–V', 'C–Am–Dm–G', 'circle / turnaround', 'jazz, pop'],
-        ['vi–IV–I–V', 'Am–F–C–G', 'minor-starting pop', 'modern pop'],
+        ['I–IV–V–I', '{{C}}–{{F}}–{{G}}–{{C}}', 'classic, strong', 'rock, country, folk'],
+        ['I–V–vi–IV', '{{C}}–{{G}}–{{A}}m–{{F}}', 'emotional arc', 'pop ("4-chord song")'],
+        ['I–vi–IV–V', '{{C}}–{{A}}m–{{F}}–{{G}}', '50s doo-wop', 'pop, ballad'],
+        ['ii–V–I', '{{D}}m–{{G}}–{{C}}', 'jazz cadence', 'jazz, soul'],
+        ['I–vi–ii–V', '{{C}}–{{A}}m–{{D}}m–{{G}}', 'circle / turnaround', 'jazz, pop'],
+        ['vi–IV–I–V', '{{A}}m–{{F}}–{{C}}–{{G}}', 'minor-starting pop', 'modern pop'],
       ],
     },
 
@@ -59,9 +59,9 @@ export const progressions: Lesson = {
     {
       kind: 'list',
       items: [
-        '"I–IV–V in G" = G–C–D',
-        '"ii–V–I in F" = Gm–C–F',
-        '"I–vi–IV–V in D" = D–Bm–G–A',
+        '"I–IV–V in G" = {{G}}–{{C}}–{{D}}',
+        '"ii–V–I in F" = {{G}}m–{{C}}–{{F}}',
+        '"I–vi–IV–V in D" = {{D}}–{{B}}m–{{G}}–{{A}}',
       ],
     },
     {
@@ -76,13 +76,13 @@ export const progressions: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
-        'The **I–V–vi–IV** progression (C–G–Am–F in C) is the famous "four-chord song" pattern — it has powered hundreds of pop hits because it has a built-in emotional arc: home → tension → minor colour → lift → (loop). Try it on the circle: click I, V, vi, IV in order.',
+        'The **I–V–vi–IV** progression ({{C}}–{{G}}–{{A}}m–{{F}} in C) is the famous "four-chord song" pattern — it has powered hundreds of pop hits because it has a built-in emotional arc: home → tension → minor colour → lift → (loop). Try it on the circle: click I, V, vi, IV in order.',
     },
     {
       kind: 'callout',
       variant: 'note',
       markdown:
-        'The **ii–V–I** (Dm–G–C) is the most important progression in jazz — it gets its own lesson next. For now, notice it is just three diatonic chords whose roots move in 4ths (D→G→C): the circle-of-fifths motion that makes everything sound smooth.',
+        'The **ii–V–I** ({{D}}m–{{G}}–{{C}}) is the most important progression in jazz — it gets its own lesson next. For now, notice it is just three diatonic chords whose roots move in 4ths ({{D}}→{{G}}→{{C}}): the circle-of-fifths motion that makes everything sound smooth.',
     },
   ],
 }

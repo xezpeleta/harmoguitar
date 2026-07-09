@@ -332,8 +332,8 @@
     background: var(--color-raised);
   }
   .callout.warning {
-    border-left-color: #c2410c;
-    background: #fff3eb;
+    border-left-color: var(--color-warning);
+    background: var(--color-warning-soft);
   }
   .callout :global(p) {
     margin: 0;

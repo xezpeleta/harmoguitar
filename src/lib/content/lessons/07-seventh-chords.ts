@@ -82,7 +82,7 @@ export const seventhChords: Lesson = {
       kind: 'callout',
       variant: 'warning',
       markdown:
-        'In G7 (G B D F), the tritone is **B–F**. B wants to rise to C (the 3rd of the I chord); F wants to fall to E (the 3rd of C major, or rather the 5th... actually E is the 3rd of C). Watch those two notes resolve into Cmaj7 and you have understood the core of tonal music.',
+        'In G7 (G B D F), the tritone is **B–F**. B wants to rise to C (the root of the I chord); F wants to fall to E (the 3rd of the I chord). Watch those two notes resolve into Cmaj7 and you have understood the core of tonal music.',
     },
     {
       kind: 'callout',

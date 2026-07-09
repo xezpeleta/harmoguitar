@@ -18,6 +18,9 @@
    * page background and the accent-soft tint. Reference: PLAN.md Task 5.2. */
   --color-accent: #0a6b64;
   --color-accent-soft: #cdeae6;
+  /* Warning callout tint (used by LessonView callouts). */
+  --color-warning: #c2410c;
+  --color-warning-soft: #fff3eb;
   --color-focus: #2563eb;
 
   --font-sans:
@@ -36,6 +39,8 @@
     --color-border: #2b333d;
     --color-accent: #2dd4bf;
     --color-accent-soft: #134e4a;
+    --color-warning: #f97316;
+    --color-warning-soft: #2a1810;
     --color-focus: #58a6ff;
   }
 }

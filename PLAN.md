@@ -1,7 +1,7 @@
 # PLAN.md — HarmoGuitar Implementation Plan
 
-> **Status:** Execution-ready · **Source docs:** `PROMPT.md`, `PROJECT.md`, `RESEARCH.md` · **Target:** v1 static site on GitHub Pages
-> **Repo:** `xezpeleta/harmoguitar` (not yet a git repo — initialization is Task 1.1)
+> **Status:** ✅ v1.0.0 shipped — all 5 epics complete · **Live:** <https://xezpeleta.github.io/harmoguitar/> · **Source docs:** `PROMPT.md`, `PROJECT.md`, `RESEARCH.md`
+> **Repo:** `xezpeleta/harmoguitar` · **Tag:** `v1.0.0`
 
 ---
 

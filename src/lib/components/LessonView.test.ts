@@ -252,3 +252,72 @@ describe('LessonView — widget Play override', () => {
     ])
   })
 })
+
+describe('LessonView — playable comparison list', () => {
+  const listLesson: Lesson = {
+    id: 'list-test',
+    slug: 'list-test',
+    title: 'List Test',
+    summary: 'Comparisons.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'list',
+        items: ['Major 3rd then minor 3rd.', 'Perfect 5th then tritone.'],
+        playable: { root: 'C', offsets: [[4, 3], [7, 6]] },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playIntervalsMock.mockClear()
+  })
+
+  it('renders a play button per list item', () => {
+    const { container } = render(LessonView, { lesson: listLesson })
+    const buttons = container.querySelectorAll('.prose-list .row-play')
+    expect(buttons.length).toBe(2)
+  })
+
+  it('lays out each item as text + button (flex)', () => {
+    const { container } = render(LessonView, { lesson: listLesson })
+    const items = container.querySelectorAll('.prose-list li.has-play')
+    expect(items.length).toBe(2)
+    // Each item has a .li-text span and a .row-play button.
+    expect(items[0]!.querySelector('.li-text')).toBeTruthy()
+    expect(items[0]!.querySelector('.row-play')).toBeTruthy()
+  })
+
+  it('clicking a list play button plays the comparison intervals', async () => {
+    const { container } = render(LessonView, { lesson: listLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>(
+      '.prose-list .row-play',
+    )
+    await fireEvent.click(buttons[0]!) // major 3rd then minor 3rd
+    expect(playIntervalsMock).toHaveBeenCalledTimes(1)
+    // C4 = midi 60.
+    expect(playIntervalsMock.mock.calls[0]![0]).toBe(60)
+    expect(playIntervalsMock.mock.calls[0]![1]).toEqual([4, 3])
+  })
+
+  it('the second item plays its own offsets', async () => {
+    const { container } = render(LessonView, { lesson: listLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>(
+      '.prose-list .row-play',
+    )
+    await fireEvent.click(buttons[1]!)
+    expect(playIntervalsMock.mock.calls[0]![1]).toEqual([7, 6])
+  })
+
+  it('comparison play buttons have descriptive accessible labels', () => {
+    const { container } = render(LessonView, { lesson: listLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>(
+      '.prose-list .row-play',
+    )
+    const label0 = buttons[0]!.getAttribute('aria-label') ?? ''
+    expect(label0).toContain('Play')
+    expect(label0).toContain('C')
+    expect(label0).toContain('Major 3rd')
+    expect(label0).toContain('Minor 3rd')
+  })
+})

@@ -16,6 +16,7 @@
   import { audio } from '$lib/services/audio'
   import { notesToAscendingMidis, noteToMidi } from '$lib/theory/midi'
   import type { NoteName } from '$lib/theory/notes'
+  import { simpleInterval } from '$lib/theory/intervals'
   import Markdown from '$lib/components/Markdown.svelte'
   import InlineText from '$lib/components/InlineText.svelte'
   import {
@@ -101,6 +102,22 @@
     audio.playInterval(noteToMidi(root, 4), semitones)
   }
 
+  /** Common name for a semitone offset (handles 0–12; 12 = octave). */
+  function intervalName(semitones: number): string {
+    if (semitones === 12) return 'Octave'
+    return simpleInterval(semitones).name
+  }
+
+  /** Play a comparison of intervals from a root (a list item's example). */
+  function playComparison(root: NoteName, offsets: number[]): void {
+    audio.playIntervals(noteToMidi(root, 4), offsets)
+  }
+
+  /** Accessible label for a comparison button (e.g. "Play C Major 3rd, then C Minor 3rd"). */
+  function comparisonLabel(root: NoteName, offsets: number[]): string {
+    return `Play ${offsets.map((o) => `${root} ${intervalName(o)}`).join(', then ')}`
+  }
+
   /** Play a widget block's Play button, honouring an optional override. */
   function playWidget(play?: WidgetPlay): void {
     if (play?.kind === 'intervals-from-root') {
@@ -149,13 +166,55 @@
         {#if block.ordered}
           <ol class="prose-list">
             {#each block.items as item, i (item + i)}
-              <li><InlineText source={item} /></li>
+              <li class:has-play={block.playable}>
+                {#if block.playable}
+                  <div class="li-row">
+                    <span class="li-text"><InlineText source={item} /></span>
+                    <button
+                      type="button"
+                      class="row-play"
+                      aria-label={comparisonLabel(
+                        block.playable.root,
+                        block.playable.offsets[i] ?? [],
+                      )}
+                      onclick={() =>
+                        playComparison(
+                          block.playable!.root,
+                          block.playable!.offsets[i] ?? [],
+                        )}
+                    >▶</button>
+                  </div>
+                {:else}
+                  <InlineText source={item} />
+                {/if}
+              </li>
             {/each}
           </ol>
         {:else}
           <ul class="prose-list">
             {#each block.items as item, i (item + i)}
-              <li><InlineText source={item} /></li>
+              <li class:has-play={block.playable}>
+                {#if block.playable}
+                  <div class="li-row">
+                    <span class="li-text"><InlineText source={item} /></span>
+                    <button
+                      type="button"
+                      class="row-play"
+                      aria-label={comparisonLabel(
+                        block.playable.root,
+                        block.playable.offsets[i] ?? [],
+                      )}
+                      onclick={() =>
+                        playComparison(
+                          block.playable!.root,
+                          block.playable!.offsets[i] ?? [],
+                        )}
+                    >▶</button>
+                  </div>
+                {:else}
+                  <InlineText source={item} />
+                {/if}
+              </li>
             {/each}
           </ul>
         {/if}
@@ -362,6 +421,21 @@
   }
   .prose-list li {
     margin: 0.3rem 0;
+  }
+  /* List items with a comparison Play button: text on the left, button on
+   * the right (never wraps mid-text). The flex lives on an inner wrapper so
+   * the <li> keeps its default list-marker (bullet / number). */
+  .prose-list li.has-play .li-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .prose-list li.has-play .li-text {
+    flex: 1 1 auto;
+  }
+  .prose-list li.has-play .row-play {
+    flex: 0 0 auto;
+    margin-top: 0.1rem;
   }
 
   /* Callout */

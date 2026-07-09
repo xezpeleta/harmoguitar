@@ -65,12 +65,25 @@ export const intervals: Lesson = {
       text: 'Major, minor, perfect',
     },
     {
+      kind: 'text',
+      markdown:
+        'Intervals come in families. Tap **▶** next to each example to hear the comparison against a root of {{C}} — first the starting interval, then the altered one.',
+    },
+    {
       kind: 'list',
       items: [
         'A **major** interval made one semitone smaller becomes **minor** (major 3rd → minor 3rd).',
         'A **perfect** interval (4th, 5th, octave) made one semitone smaller becomes **diminished**; one semitone larger becomes **augmented**.',
         'The **3rd** is the most important interval in harmony — it alone defines whether a chord is major or minor.',
       ],
+      playable: {
+        root: 'C',
+        offsets: [
+          [4, 3], // major 3rd, then minor 3rd
+          [7, 6, 8], // perfect 5th, diminished 5th (tritone), augmented 5th
+          [4, 3], // the 3rd: major then minor
+        ],
+      },
     },
     {
       kind: 'callout',

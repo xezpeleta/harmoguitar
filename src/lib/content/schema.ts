@@ -99,6 +99,13 @@ export type Block =
       ordered?: boolean
       /** Each item is inline markdown. */
       items: string[]
+      /**
+       * If given, renders a Play button after each item. Each entry plays the
+       * listed intervals (semitone offsets from root) in sequence, so the
+       * listener can A/B-compare them (e.g. major 3rd then minor 3rd).
+       * Aligned with `items` by index.
+       */
+      playable?: { root: NoteName; offsets: number[][] }
     }
   | {
       kind: 'table'

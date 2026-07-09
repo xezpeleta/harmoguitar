@@ -23,6 +23,11 @@ export const intervals: Lesson = {
       text: 'The 12 intervals',
     },
     {
+      kind: 'text',
+      markdown:
+        'Here are all 12 intervals within an octave, measured from a root of {{C}}. Tap the **▶** button on any row to hear that interval played against the root — first the low note, then the high note, so the *distance* is what you hear.',
+    },
+    {
       kind: 'table',
       headers: ['Semitones', 'Name', 'Symbol', 'Character'],
       rows: [
@@ -40,13 +45,18 @@ export const intervals: Lesson = {
         ['11', 'Major 7th', '7', 'jazzy'],
         ['12', 'Octave', '8 / 1', 'same note, higher'],
       ],
+      playable: {
+        root: 'C',
+        semitones: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      },
     },
     {
       kind: 'widget',
       selection: { scaleType: 'major', root: 'C' },
       widgets: ['interval-wheel'],
+      play: { kind: 'intervals-from-root', root: 'C' },
       caption:
-        'The interval wheel rooted at {{C}}. The 7 major-scale tones are coloured. Hover or tap a segment to hear that interval played against the root.',
+        'The interval wheel rooted at {{C}}. The 7 major-scale tones are coloured. Hover or tap a segment to hear that interval played against the root — or press Play to hear every interval in turn: {{C}}–{{C}}, {{C}}–{{C#}}, {{C}}–{{D}}, … up to the octave.',
     },
 
     {

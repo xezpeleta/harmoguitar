@@ -5,12 +5,31 @@
  * rendered output. Widget blocks are verified to apply their selection to the
  * shared store.
  */
-import { describe, it, expect, beforeEach } from 'vitest'
-import { render } from '@testing-library/svelte'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { render, fireEvent } from '@testing-library/svelte'
 import LessonView from '$lib/components/LessonView.svelte'
 import type { Lesson } from '$lib/content/schema'
 import { app } from '$lib/stores/app.svelte'
 import { resetProgress, isComplete } from '$lib/services/progress.svelte'
+
+// Mock the audio engine so playback calls can be asserted.
+const playIntervalMock = vi.fn()
+const playIntervalsMock = vi.fn()
+vi.mock('$lib/services/audio', () => ({
+  audio: {
+    playInterval: (...a: unknown[]) => playIntervalMock(...a),
+    playIntervals: (...a: unknown[]) => playIntervalsMock(...a),
+    playNote: vi.fn(),
+    playChord: vi.fn(),
+    playSequence: vi.fn(),
+    playChordByName: vi.fn(),
+    playNoteName: vi.fn(),
+    stopAll: vi.fn(),
+    setVolume: vi.fn(),
+    dispose: vi.fn(),
+    available: false,
+  },
+}))
 
 const fixture: Lesson = {
   id: 'test-lesson',
@@ -46,6 +65,8 @@ describe('LessonView', () => {
   beforeEach(() => {
     resetProgress()
     app.reset()
+    playIntervalMock.mockClear()
+    playIntervalsMock.mockClear()
   })
 
   it('renders the title, summary, and minutes', () => {
@@ -131,5 +152,103 @@ describe('LessonView', () => {
     // → no nav buttons. Assert none are present.
     const navBtns = getByRole('button', { name: /mark as complete/i })
     expect(navBtns).toBeTruthy()
+  })
+})
+
+describe('LessonView — playable intervals table', () => {
+  const intervalsLesson: Lesson = {
+    id: 'intervals-test',
+    slug: 'intervals-test',
+    title: 'Intervals Test',
+    summary: 'Play intervals.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'table',
+        headers: ['Semitones', 'Name'],
+        rows: [
+          ['0', 'Unison'],
+          ['7', 'Perfect 5th'],
+          ['12', 'Octave'],
+        ],
+        playable: { root: 'C', semitones: [0, 7, 12] },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playIntervalMock.mockClear()
+  })
+
+  it('renders a play button per row', () => {
+    const { container } = render(LessonView, { lesson: intervalsLesson })
+    const buttons = container.querySelectorAll('.row-play')
+    expect(buttons.length).toBe(3)
+  })
+
+  it('adds an empty header for the play column', () => {
+    const { container } = render(LessonView, { lesson: intervalsLesson })
+    const ths = container.querySelectorAll('th')
+    expect(ths.length).toBe(3) // 2 data cols + 1 play col
+  })
+
+  it('clicking a row button plays root + that interval', async () => {
+    const { container } = render(LessonView, { lesson: intervalsLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>('.row-play')
+    // Row 1 = Perfect 5th (7 semitones from C).
+    await fireEvent.click(buttons[1]!)
+    expect(playIntervalMock).toHaveBeenCalledTimes(1)
+    // C4 = midi 60; 7 semitones up.
+    expect(playIntervalMock.mock.calls[0]![0]).toBe(60)
+    expect(playIntervalMock.mock.calls[0]![1]).toBe(7)
+  })
+
+  it('the unison row plays interval 0', async () => {
+    const { container } = render(LessonView, { lesson: intervalsLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>('.row-play')
+    await fireEvent.click(buttons[0]!)
+    expect(playIntervalMock.mock.calls[0]![1]).toBe(0)
+  })
+
+  it('row play buttons have accessible labels', () => {
+    const { container } = render(LessonView, { lesson: intervalsLesson })
+    const buttons = container.querySelectorAll<HTMLButtonElement>('.row-play')
+    expect(buttons[0]!.getAttribute('aria-label')).toContain('Play')
+    expect(buttons[0]!.getAttribute('aria-label')).toContain('C')
+  })
+})
+
+describe('LessonView — widget Play override', () => {
+  const wheelLesson: Lesson = {
+    id: 'wheel-test',
+    slug: 'wheel-test',
+    title: 'Wheel Test',
+    summary: 'All intervals.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { scaleType: 'major', root: 'C' },
+        widgets: ['interval-wheel'],
+        play: { kind: 'intervals-from-root', root: 'C' },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playIntervalsMock.mockClear()
+  })
+
+  it('the Play button plays every interval from the root (0..12)', async () => {
+    const { getByRole } = render(LessonView, { lesson: wheelLesson })
+    const play = getByRole('button', { name: /play/i })
+    await fireEvent.click(play)
+    expect(playIntervalsMock).toHaveBeenCalledTimes(1)
+    // C4 = midi 60.
+    expect(playIntervalsMock.mock.calls[0]![0]).toBe(60)
+    // offsets 0..12
+    expect(playIntervalsMock.mock.calls[0]![1]).toEqual([
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+    ])
   })
 })

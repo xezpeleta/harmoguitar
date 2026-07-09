@@ -37,6 +37,17 @@ export interface PlayChordOptions {
   velocity?: number
 }
 
+/** Options for interval playback (a root + a second note above it). */
+export interface PlayIntervalOptions {
+  /** Delay between the root and the interval note, in seconds (default 0.32). */
+  melodicGap?: number
+  /** Delay between the start of consecutive intervals, in seconds (default 0.62). */
+  intervalGap?: number
+  /** How long each note rings, in seconds (default 0.9). */
+  duration?: number
+  velocity?: number
+}
+
 /** Convert a MIDI note number to its frequency in Hz (A4 = 440). */
 export function midiToFreq(midi: number): number {
   return 440 * Math.pow(2, (midi - 69) / 12)
@@ -197,6 +208,47 @@ class AudioEngine {
       })
     } catch (err) {
       console.error('AudioEngine.playSequence failed:', err)
+    }
+  }
+
+  /**
+   * Play a single interval: the root, then the note `semitones` above it,
+   * overlapping so the listener hears the distance melodically and then
+   * harmonically. `semitones` may be 0 (unison) or 12 (octave).
+   */
+  playInterval(
+    rootMidi: number,
+    semitones: number,
+    opts: PlayIntervalOptions = {},
+  ): void {
+    this.playIntervals(rootMidi, [semitones], opts)
+  }
+
+  /**
+   * Play a series of intervals from a root. Each offset is played as a
+   * (root, root + offset) pair; pairs are spaced `intervalGap` apart so the
+   * listener can tell where one interval ends and the next begins. Used to
+   * demo every interval in turn (do–do, do–do♯, do–re, …).
+   */
+  playIntervals(
+    rootMidi: number,
+    offsets: number[],
+    opts: PlayIntervalOptions = {},
+  ): void {
+    try {
+      const ctx = this.ensureContext()
+      if (!ctx || offsets.length === 0) return
+      const melodicGap = opts.melodicGap ?? 0.32
+      const intervalGap = opts.intervalGap ?? 0.62
+      const duration = opts.duration ?? 0.9
+      const velocity = (opts.velocity ?? 0.55) * 0.5
+      offsets.forEach((offset, i) => {
+        const t0 = ctx.currentTime + i * intervalGap
+        this.voice(rootMidi, t0, duration, velocity)
+        this.voice(rootMidi + offset, t0 + melodicGap, duration, velocity)
+      })
+    } catch (err) {
+      console.error('AudioEngine.playIntervals failed:', err)
     }
   }
 

@@ -10,11 +10,12 @@
    * Reference: PLAN.md Task 4.2, PROJECT.md ("structured data files rendered
    * by generic component").
    */
-  import type { Lesson, Block } from '$lib/content/schema'
+  import type { Lesson, Block, WidgetPlay } from '$lib/content/schema'
   import { prevLesson, nextLesson } from '$lib/content/lessons'
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
-  import { notesToAscendingMidis } from '$lib/theory/midi'
+  import { notesToAscendingMidis, noteToMidi } from '$lib/theory/midi'
+  import type { NoteName } from '$lib/theory/notes'
   import Markdown from '$lib/components/Markdown.svelte'
   import InlineText from '$lib/components/InlineText.svelte'
   import {
@@ -94,6 +95,22 @@
       audio.playSequence(notesToAscendingMidis(notes), { mode: 'block' })
     }
   }
+
+  /** Play a single interval row: root then root+semitones, both ringing. */
+  function playIntervalRow(root: NoteName, semitones: number): void {
+    audio.playInterval(noteToMidi(root, 4), semitones)
+  }
+
+  /** Play a widget block's Play button, honouring an optional override. */
+  function playWidget(play?: WidgetPlay): void {
+    if (play?.kind === 'intervals-from-root') {
+      const max = play.maxSemitones ?? 12
+      const offsets = Array.from({ length: max + 1 }, (_, i) => i)
+      audio.playIntervals(noteToMidi(play.root, 4), offsets)
+      return
+    }
+    playSelection()
+  }
 </script>
 
 <svelte:head>
@@ -146,11 +163,30 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr>{#each block.headers as h (h)}<th>{h}</th>{/each}</tr>
+              <tr>
+                {#each block.headers as h (h)}<th>{h}</th>{/each}
+                {#if block.playable}<th class="play-col"><span class="sr-only">Play</span></th>{/if}
+              </tr>
             </thead>
             <tbody>
               {#each block.rows as row, ri (ri)}
-                <tr>{#each row as cell, ci (ri + ci)}<td><InlineText source={cell} /></td>{/each}</tr>
+                <tr>
+                  {#each row as cell, ci (ri + ci)}<td><InlineText source={cell} /></td>{/each}
+                  {#if block.playable}
+                    <td class="play-col">
+                      <button
+                        type="button"
+                        class="row-play"
+                        aria-label="Play {block.playable.root} to {row[1] ?? 'interval'}"
+                        onclick={() =>
+                          playIntervalRow(
+                            block.playable!.root,
+                            block.playable!.semitones[ri] ?? 0,
+                          )}
+                      >▶</button>
+                    </td>
+                  {/if}
+                </tr>
               {/each}
             </tbody>
           </table>
@@ -192,7 +228,7 @@
             <figcaption><InlineText source={block.caption} /></figcaption>
           {/if}
           <div class="widget-actions">
-            <button type="button" class="play-btn" onclick={playSelection}>
+            <button type="button" class="play-btn" onclick={() => playWidget(block.play)}>
               ▶ Play
             </button>
           </div>
@@ -382,9 +418,54 @@
   tbody tr:last-child td {
     border-bottom: 0;
   }
+  /* Per-row Play button column (playable tables, e.g. intervals). */
+  .play-col {
+    width: 2.6rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .row-play {
+    background: var(--color-accent);
+    color: var(--color-surface);
+    border: 0;
+    border-radius: 0.4rem;
+    width: 2rem;
+    height: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.8rem;
+    padding: 0;
+  }
+  .row-play:hover {
+    filter: brightness(1.1);
+  }
+  .row-play:active {
+    transform: translateY(1px);
+  }
   td :global(code) {
     font-family: var(--font-mono);
     font-size: 0.85em;
+  }
+
+  /* Compact the intervals table on small screens so the per-row Play
+   * buttons stay visible without horizontal scrolling. */
+  @media (max-width: 480px) {
+    table {
+      font-size: 0.8rem;
+    }
+    th,
+    td {
+      padding: 0.35rem 0.4rem;
+    }
+    .play-col {
+      width: 2.2rem;
+    }
+    .row-play {
+      width: 1.7rem;
+      height: 1.7rem;
+      font-size: 0.72rem;
+    }
   }
 
   /* Widget block */

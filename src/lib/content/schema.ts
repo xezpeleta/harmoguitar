@@ -57,6 +57,21 @@ export interface WidgetSelection {
   clear?: boolean
 }
 
+/**
+ * Optional override for a widget block's Play button. By default the button
+ * plays the current store selection (chord/scale). When `play` is set, it
+ * plays this instead — e.g. demo every interval from a root rather than the
+ * scale itself.
+ */
+export type WidgetPlay =
+  | {
+      /** Play every interval from the root, 0..maxSemitones semitones. */
+      kind: 'intervals-from-root'
+      root: NoteName
+      /** Highest semitone offset to play (default 12 = up to the octave). */
+      maxSemitones?: number
+    }
+
 /** A callout variant, controlling its colour/affordance. */
 export type CalloutVariant = 'tip' | 'note' | 'warning'
 
@@ -89,6 +104,16 @@ export type Block =
       kind: 'table'
       headers: string[]
       rows: string[][]
+      /**
+       * If given, renders a Play button at the end of every row. Each row
+       * plays `root` followed by the note `semitones[i]` above it, so the
+       * listener hears that interval against the root. Aligned with `rows`
+       * by index.
+       */
+      playable?: {
+        root: NoteName
+        semitones: number[]
+      }
     }
   | {
       kind: 'widget'
@@ -98,6 +123,11 @@ export type Block =
       widgets: WidgetKind[]
       /** Optional caption beneath the widget cluster. */
       caption?: string
+      /**
+       * Overrides the Play button's default behaviour (which plays the
+       * current store selection). When set, the button plays this instead.
+       */
+      play?: WidgetPlay
     }
   | {
       kind: 'piano'

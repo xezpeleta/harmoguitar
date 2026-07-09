@@ -104,6 +104,12 @@ describe('AudioEngine — graceful degradation (no AudioContext)', () => {
   it('playSequence does not throw without AudioContext', () => {
     expect(() => audio.playSequence([60, 62, 64, 65])).not.toThrow()
   })
+  it('playInterval does not throw without AudioContext', () => {
+    expect(() => audio.playInterval(60, 7)).not.toThrow()
+  })
+  it('playIntervals does not throw without AudioContext', () => {
+    expect(() => audio.playIntervals(60, [0, 7, 12])).not.toThrow()
+  })
   it('playChordByName does not throw without AudioContext', () => {
     expect(() => audio.playChordByName(['C', 'E', 'G'])).not.toThrow()
   })
@@ -159,6 +165,31 @@ describe('AudioEngine — with mocked AudioContext', () => {
     audio.playChord([60, 64, 67], { mode: 'block' })
     const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
     expect(oscs.length).toBe(6) // 3 notes × 2 oscillators
+  })
+
+  it('playInterval builds a voice for root and interval note (4 osc)', () => {
+    mock._nodes.length = 0
+    audio.playInterval(60, 7) // C → G (perfect 5th)
+    const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
+    expect(oscs.length).toBe(4) // 2 notes × 2 oscillators
+    // Frequencies: 60 (C4) and 67 (G4).
+    const freqs = oscs.map((o) => o.frequency.value).sort((a, b) => a - b)
+    expect(freqs[0]).toBeCloseTo(midiToFreq(60), 1)
+    expect(freqs[2]).toBeCloseTo(midiToFreq(67), 1)
+  })
+
+  it('playIntervals builds 2 voices per interval (root + offset)', () => {
+    mock._nodes.length = 0
+    audio.playIntervals(60, [0, 7, 12]) // unison, 5th, octave
+    const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
+    expect(oscs.length).toBe(12) // 3 intervals × 2 notes × 2 osc
+  })
+
+  it('playIntervals handles empty offsets', () => {
+    mock._nodes.length = 0
+    audio.playIntervals(60, [])
+    const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
+    expect(oscs.length).toBe(0)
   })
 
   it('resume is called when context is suspended', () => {

@@ -10,23 +10,34 @@
 import { toPitchClass, type NoteName } from '$lib/theory/notes'
 
 /**
- * 12 colors indexed by pitch class (C=0 … B=11). Chosen for hue spread and
- * reasonable contrast on both light and dark surfaces.
+ * 12 colors indexed by pitch class (C=0 … B=11).
+ *
+ * Design: the 7 NATURAL notes (C D E F G A B) get 7 vivid, maximally distinct
+ * hues (min CIE76 ΔE = 30 between any two). The 5 accidentals (C# D# F# G# A#)
+ * share a single neutral gray, grouping them visually as the "chromatic" notes.
+ *
+ * This makes the diatonic foundation pop: on a C-major fretboard the 7 scale
+ * tones are instantly distinguishable, while accidentals read as a unified
+ * secondary tier. (Color is always supplementary to the text label — see the
+ * a11y note at the top of this file.)
  */
 export const NOTE_COLORS: readonly string[] = [
-  '#c1121f', // C  – red (darkened so white label text passes WCAG AA)
-  '#f4a261', // C# – orange
-  '#e9c46a', // D  – amber
-  '#90a955', // D# – olive
+  '#d62828', // C  – red
+  '#6c757d', // C# – gray (accidental)
+  '#f77f00', // D  – orange
+  '#6c757d', // D# – gray (accidental)
   '#2a9d8f', // E  – teal
-  '#43aa8b', // F  – green-teal
-  '#577590', // F# – slate-blue
-  '#5e60ce', // G  – indigo
-  '#7b2cbf', // G# – purple
-  '#b5179e', // A  – magenta
-  '#d62828', // A# – crimson
-  '#06a77d', // B  – green
+  '#1d72b8', // F  – blue
+  '#6c757d', // F# – gray (accidental)
+  '#7209b7', // G  – purple
+  '#6c757d', // G# – gray (accidental)
+  '#d6336c', // A  – pink
+  '#6c757d', // A# – gray (accidental)
+  '#386641', // B  – forest green
 ]
+
+/** Neutral gray used for all accidental (sharp/flat) pitch classes. */
+export const ACCIDENTAL_COLOR = '#6c757d'
 
 /** The color for a given note (by pitch class). */
 export function noteColor(note: NoteName): string {

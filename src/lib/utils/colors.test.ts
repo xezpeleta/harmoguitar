@@ -1,9 +1,23 @@
 import { describe, it, expect } from 'vitest'
-import { NOTE_COLORS, noteColor, luminance, readableForeground } from './colors'
+import { NOTE_COLORS, noteColor, luminance, readableForeground, ACCIDENTAL_COLOR } from './colors'
 
 describe('NOTE_COLORS', () => {
   it('has exactly 12 colors', () => {
     expect(NOTE_COLORS).toHaveLength(12)
+  })
+
+  it('gives the 7 natural notes 7 distinct, vivid colors', () => {
+    const naturals = [0, 2, 4, 5, 7, 9, 11] // C D E F G A B
+    const colors = naturals.map((pc) => NOTE_COLORS[pc])
+    // all 7 are different
+    expect(new Set(colors).size).toBe(7)
+    // none of the naturals is the accidental gray
+    for (const c of colors) expect(c).not.toBe(ACCIDENTAL_COLOR)
+  })
+
+  it('gives all 5 accidentals the same neutral gray', () => {
+    const accidentals = [1, 3, 6, 8, 10] // C# D# F# G# A#
+    for (const pc of accidentals) expect(NOTE_COLORS[pc]).toBe(ACCIDENTAL_COLOR)
   })
 })
 

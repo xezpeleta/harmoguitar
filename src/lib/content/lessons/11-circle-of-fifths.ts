@@ -34,7 +34,7 @@ export const circleOfFifths: Lesson = {
       kind: 'list',
       ordered: true,
       items: [
-        '**Key signatures:** each step clockwise adds a sharp; each step counterclockwise adds a flat. C = 0, G = 1♯, D = 2♯, … F = 1♭, B♭ = 2♭.',
+        '**Key signatures:** each step clockwise adds a sharp; each step counterclockwise adds a flat. {{C}} = 0, {{G}} = 1♯, {{D}} = 2♯, … {{F}} = 1♭, {{Bb}} = 2♭.',
         '**Closely related keys:** neighbours share the most notes (differ by only one sharp/flat). This is where modulations naturally go.',
         '**The I–IV–V of any key:** find your key; the note to the **left is the IV**, the note to the **right is the V**.',
         '**Relative minor:** the inner ring. C major ↔ A minor — they share a key signature.',

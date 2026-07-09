@@ -29,13 +29,14 @@ export const notesFretboard: Lesson = {
     },
     {
       kind: 'text',
-      markdown: '`C  C♯/D♭  D  D♯/E♭  E  F  F♯/G♭  G  G♯/A♭  A  A♯/B♭  B` → (back to C)',
+      markdown:
+        '{{C}}  {{C#}}/{{Db}}  {{D}}  {{D#}}/{{Eb}}  {{E}}  {{F}}  {{F#}}/{{Gb}}  {{G}}  {{G#}}/{{Ab}}  {{A}}  {{A#}}/{{Bb}}  {{B}} → (back to {{C}})',
     },
     {
       kind: 'list',
       items: [
         '**Natural notes** — {{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}} (the 7 "white-key" notes).',
-        '**Accidentals** — the 5 notes between them, each with two names (C♯ = D♭). These double names are called *enharmonic equivalents*.',
+        '**Accidentals** — the 5 notes between them, each with two names ({{C#}} = {{Db}}). These double names are called *enharmonic equivalents*.',
         '**The octave** — after 12 semitones you return to the same letter name, one octave higher. The octave doubles the frequency (a 2:1 ratio).',
       ],
     },
@@ -54,7 +55,7 @@ export const notesFretboard: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Your guitar is tuned **E–A–D–G–B–E** (low to high). The interval between adjacent strings is a **perfect 4th** — *except* between the G and B strings, which is a **major 3rd**. This "kink" is the single most important fact shaping every chord shape you know. It is why a G-barre chord shape slides unchanged but the high strings need a one-fret shift.',
+        'Your guitar is tuned **{{E}}–{{A}}–{{D}}–{{G}}–{{B}}–{{E}}** (low to high). The interval between adjacent strings is a **perfect 4th** — *except* between the {{G}} and {{B}} strings, which is a **major 3rd**. This "kink" is the single most important fact shaping every chord shape you know. It is why a {{G}}-barre chord shape slides unchanged but the high strings need a one-fret shift.',
     },
     {
       kind: 'widget',
@@ -78,7 +79,7 @@ export const notesFretboard: Lesson = {
       kind: 'list',
       ordered: true,
       items: [
-        'Learn the notes on **strings 6 and 5** first (low E and A) — they are the roots of most chord shapes.',
+        'Learn the notes on **strings 6 and 5** first (low {{E}} and {{A}}) — they are the roots of most chord shapes.',
         'Learn the **octave shapes**: a note on string 6 appears **2 frets higher** on string 4, and a note on string 5 appears **2 frets higher** on string 3.',
         'Use those shapes to reach any note on strings 4, 3, and 2 from what you already know on 6 and 5.',
       ],

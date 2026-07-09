@@ -178,7 +178,7 @@
             {/each}
           </div>
           {#if block.caption}
-            <figcaption>{block.caption}</figcaption>
+            <figcaption><InlineText source={block.caption} /></figcaption>
           {/if}
           <div class="widget-actions">
             <button type="button" class="play-btn" onclick={playSelection}>

@@ -414,3 +414,86 @@ describe('LessonView — playable comparison list', () => {
     expect(label0).toContain('Minor 3rd')
   })
 })
+
+describe('LessonView — each widget displays its own selection', () => {
+  // Regression: previously only the first widget block applied its selection
+  // to the shared store, so every subsequent fretboard showed the FIRST
+  // chord's tones (e.g. a Cmaj7 caption over an F7 diagram). Each widget must
+  // now render its own chord/scale.
+  const multiChordLesson: Lesson = {
+    id: 'multi-chord',
+    slug: 'multi-chord',
+    title: 'Multi Chord',
+    summary: 'Three chords.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { chordType: 'm7', root: 'D' },
+        widgets: ['fretboard'],
+        caption: 'Dm7',
+      },
+      {
+        kind: 'widget',
+        selection: { chordType: 'dom7', root: 'G' },
+        widgets: ['fretboard'],
+        caption: 'G7',
+      },
+      {
+        kind: 'widget',
+        selection: { chordType: 'maj7', root: 'C' },
+        widgets: ['fretboard'],
+        caption: 'Cmaj7',
+      },
+    ],
+  }
+
+  /** Collect the highlighted note names from a single widget-block figure. */
+  function highlightedNotes(figure: Element): Set<string> {
+    const pressed = figure.querySelectorAll<HTMLButtonElement>(
+      '.fret-cell[aria-pressed="true"]',
+    )
+    const notes = new Set<string>()
+    pressed.forEach((b) => {
+      const label = b.getAttribute('aria-label') ?? ''
+      // aria-label = "String N fret M: NOTE"
+      const note = label.split(':').pop()?.trim()
+      if (note) notes.add(note)
+    })
+    return notes
+  }
+
+  it('the first widget shows Dm7 tones (D, F, A, C)', () => {
+    const { container } = render(LessonView, { lesson: multiChordLesson })
+    const figures = container.querySelectorAll('.widget-block')
+    const notes = highlightedNotes(figures[0]!)
+    expect(notes.has('D')).toBe(true)
+    expect(notes.has('F')).toBe(true)
+    expect(notes.has('A')).toBe(true)
+    expect(notes.has('C')).toBe(true)
+  })
+
+  it('the second widget shows G7 tones (G, B, D, F), NOT Dm7', () => {
+    const { container } = render(LessonView, { lesson: multiChordLesson })
+    const figures = container.querySelectorAll('.widget-block')
+    const notes = highlightedNotes(figures[1]!)
+    expect(notes.has('G')).toBe(true)
+    expect(notes.has('B')).toBe(true)
+    // Dm7 has Eb? no — Dm7 is D F A C. G7 is G B D F. Both share D and F,
+    // but G7 has B (not in Dm7) and Dm7 has A (not in G7).
+    expect(notes.has('A')).toBe(false)
+  })
+
+  it('the third widget shows Cmaj7 tones (C, E, G, B), NOT Dm7 or G7', () => {
+    const { container } = render(LessonView, { lesson: multiChordLesson })
+    const figures = container.querySelectorAll('.widget-block')
+    const notes = highlightedNotes(figures[2]!)
+    expect(notes.has('C')).toBe(true)
+    expect(notes.has('E')).toBe(true)
+    expect(notes.has('G')).toBe(true)
+    expect(notes.has('B')).toBe(true)
+    // Cmaj7 has E natural; F7 (the old bug) would show Eb instead.
+    expect(notes.has('Eb')).toBe(false)
+    expect(notes.has('A')).toBe(false)
+  })
+})

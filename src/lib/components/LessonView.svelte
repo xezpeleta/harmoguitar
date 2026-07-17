@@ -16,10 +16,11 @@
   import { audio } from '$lib/services/audio'
   import { notesToAscendingMidis, noteToMidi } from '$lib/theory/midi'
   import { parseChordSymbol, chordNotes, type ChordType } from '$lib/theory/chords'
-  import type { ScaleType } from '$lib/theory/scales'
+  import { scaleNotes, type ScaleType } from '$lib/theory/scales'
   import type { NoteName } from '$lib/theory/notes'
   import { simpleInterval } from '$lib/theory/intervals'
   import { onDestroy } from 'svelte'
+  import type { WidgetSelection } from '$lib/content/schema'
   import Markdown from '$lib/components/Markdown.svelte'
   import InlineText from '$lib/components/InlineText.svelte'
   import {
@@ -90,15 +91,6 @@
   const prev = $derived(prevLesson(lesson))
   const next = $derived(nextLesson(lesson))
 
-  function playSelection(): void {
-    const notes = app.highlightNotes
-    if (notes.length === 0) return
-    if (app.mode === 'chord') {
-      audio.playChordByName(notes, { mode: 'strum' })
-    } else {
-      audio.playSequence(notesToAscendingMidis(notes), { mode: 'block' })
-    }
-  }
 
   /** Play a single interval row: root then root+semitones, both ringing. */
   function playIntervalRow(root: NoteName, semitones: number): void {
@@ -121,8 +113,48 @@
     return `Play ${offsets.map((o) => `${root} ${intervalName(o)}`).join(', then ')}`
   }
 
+  /**
+   * Compute the highlight notes for a widget block's own selection, so each
+   * widget displays the chord/scale its caption describes — instead of all
+   * widgets sharing the store's single selection (which left every diagram
+   * showing the first block's chord). Returns [] when the selection clears.
+   */
+  function selectionNotes(s: WidgetSelection): NoteName[] {
+    if (s.clear) return []
+    const root = s.root ?? app.rootNote
+    if (s.chordType) return chordNotes(root, s.chordType)
+    if (s.scaleType) return scaleNotes(root, s.scaleType)
+    return []
+  }
+
+  /** Root note for a widget block's own selection (falls back to the store). */
+  function selectionRoot(s: WidgetSelection): NoteName {
+    return s.root ?? app.rootNote
+  }
+
+  /** True while a progression is actively playing on this specific block. */
+  function isProgressingHere(block: Block): boolean {
+    return (
+      block.kind === 'widget' &&
+      block.play?.kind === 'progression' &&
+      activeProgression === block.play
+    )
+  }
+
+  /** Play a widget block's own selection (chord or scale), not the store. */
+  function playBlockSelection(block: Block): void {
+    if (block.kind !== 'widget') return
+    const notes = selectionNotes(block.selection)
+    if (notes.length === 0) return
+    if (block.selection.chordType) {
+      audio.playChordByName(notes, { mode: 'strum' })
+    } else {
+      audio.playSequence(notesToAscendingMidis(notes), { mode: 'block' })
+    }
+  }
+
   /** Play a widget block's Play button, honouring an optional override. */
-  function playWidget(play?: WidgetPlay): void {
+  function playWidget(block: Block, play?: WidgetPlay): void {
     if (play?.kind === 'progression') {
       // Toggle: if this progression is already playing, stop it.
       if (activeProgression === play) {
@@ -138,7 +170,8 @@
       audio.playIntervals(noteToMidi(play.root, 4), offsets)
       return
     }
-    playSelection()
+    // No override: play this block's own selection (not the shared store).
+    playBlockSelection(block)
   }
 
   // --- Progression playback -------------------------------------------------
@@ -359,11 +392,19 @@
             {#each block.widgets as w (w)}
               {#if w === 'fretboard'}
                 <div class="widget-cell">
-                  <Fretboard fretCount={app.fretCount} markPositions={block.voicing} />
+                  <Fretboard
+                    fretCount={app.fretCount}
+                    markPositions={block.voicing}
+                    highlightNotes={isProgressingHere(block) ? undefined : selectionNotes(block.selection)}
+                    rootNote={isProgressingHere(block) ? undefined : selectionRoot(block.selection)}
+                  />
                 </div>
               {:else if w === 'staff'}
                 <div class="widget-cell">
-                  <Staff />
+                  <Staff
+                    notes={isProgressingHere(block) ? undefined : selectionNotes(block.selection)}
+                    asScale={isProgressingHere(block) ? undefined : !!block.selection.scaleType}
+                  />
                 </div>
               {:else if w === 'interval-wheel'}
                 <div class="widget-cell wheel-cell">
@@ -380,7 +421,7 @@
             <figcaption><InlineText source={block.caption} /></figcaption>
           {/if}
           <div class="widget-actions">
-            <button type="button" class="play-btn" onclick={() => playWidget(block.play)}>
+            <button type="button" class="play-btn" onclick={() => playWidget(block, block.play)}>
               {#if block.play?.kind === 'progression' && activeProgression === block.play}
                 ■ Stop
               {:else if block.play?.kind === 'progression'}

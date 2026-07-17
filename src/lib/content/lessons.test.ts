@@ -17,8 +17,8 @@ const VALID_WIDGETS: WidgetKind[] = [
 ]
 
 describe('lesson curriculum', () => {
-  it('has 14 lessons (v1 scope)', () => {
-    expect(LESSONS.length).toBe(14)
+  it('has 20 lessons', () => {
+    expect(LESSONS.length).toBe(20)
   })
 
   it('every lesson has a non-empty id, slug, title, summary', () => {
@@ -94,9 +94,9 @@ describe('lesson curriculum', () => {
     }
   })
 
-  it('total estimated minutes is reasonable (90–200)', () => {
+  it('total estimated minutes is reasonable (90–260)', () => {
     const total = LESSONS.reduce((s, l) => s + l.minutes, 0)
     expect(total).toBeGreaterThanOrEqual(90)
-    expect(total).toBeLessThanOrEqual(200)
+    expect(total).toBeLessThanOrEqual(260)
   })
 })

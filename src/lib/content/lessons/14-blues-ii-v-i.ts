@@ -64,7 +64,7 @@ export const bluesAndIIVI: Lesson = {
       kind: 'callout',
       variant: 'note',
       markdown:
-        'Jazz blues adds **secondary dominants** and **ii–V** movement to the basic form (e.g., a iim7–V7 leading to the IV in bar 4). These are v1.1 topics — for now, nail the basic 12-bar form in a few keys.',
+        'Jazz blues adds **secondary dominants** and **ii–V** movement to the basic form (e.g., a iim7–V7 leading to the IV in bar 4). These are covered in the **Secondary Dominants** lesson — for now, nail the basic 12-bar form in a few keys.',
     },
 
     {
@@ -151,13 +151,13 @@ export const bluesAndIIVI: Lesson = {
     {
       kind: 'text',
       markdown:
-        'You have completed the v1 curriculum: notes → intervals → scales → modes → chords → diatonic harmony → functional harmony → the circle → progressions → cadences → the blues & ii–V–I. You now have the theory grounding behind everything you play.',
+        'You have completed the foundations: notes → intervals → scales → modes → chords → diatonic harmony → functional harmony → the circle → progressions → cadences → the blues & ii–V–I. You now have the theory grounding behind everything you play.',
     },
     {
       kind: 'callout',
       variant: 'note',
       markdown:
-        '**v1.1+** dives into deep jazz harmony: secondary dominants, tritone substitution, borrowed chords, the minor ii–V–i, chord-scale theory, the altered scale, symmetrical scales, and Drop 2 / Drop 3 / quartal voicings. The full knowledge base lives in `RESEARCH.md` §15–§28 — ready to be turned into lessons when v1 ships.',
+        'The next lessons take you into **deep jazz harmony**: secondary dominants, tritone substitution, voice leading & guide tones, passing chords & inversions, jazz comping voicings, and pentatonics & blue notes. The full knowledge base lives in `RESEARCH.md` §15–§23 and §28 — and these lessons turn it into playable widgets.',
     },
     {
       kind: 'callout',

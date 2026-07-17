@@ -14,7 +14,7 @@ export const extendedChords: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Once you have a 7th chord, you can keep stacking thirds to get **extensions**: the 9th, 11th, and 13th. These add colour and richness, especially in jazz. This lesson is a *light* introduction — the deep jazz voicings are v1.1+.',
+        'Once you have a 7th chord, you can keep stacking thirds to get **extensions**: the 9th, 11th, and 13th. These add colour and richness, especially in jazz. This lesson is a *light* introduction — the deep jazz voicings (shell + extension, Drop 2 / Drop 3) are covered in the **Jazz Comping Voicings** lesson.',
     },
 
     {

@@ -2,7 +2,7 @@
   /**
    * Lessons.svelte — The lesson list / table of contents.
    *
-   * Shows the ordered v1 learning path with completion status, total minutes,
+   * Shows the ordered learning path with completion status, total minutes,
    * and a progress bar. Clicking a lesson navigates to its reader page.
    */
   import { LESSONS } from '$lib/content/lessons'
@@ -34,9 +34,9 @@
   <header>
     <h1>Lessons</h1>
     <p class="lede">
-      A guided path from the notes on the fretboard to functional harmony and
-      the ii–V–I. Each lesson pairs concise theory with live, interactive
-      fretboards, staves, and wheels.
+      A guided path from the notes on the fretboard to functional harmony, the
+      ii–V–I, and deep jazz harmony. Each lesson pairs concise theory with live,
+      interactive fretboards, staves, and wheels.
     </p>
   </header>
 
@@ -83,7 +83,7 @@
   <footer class="total">
     <span>≈ {totalMinutes} minutes total</span>
     <span class="dot">·</span>
-    <span>14 lessons · v1 curriculum</span>
+    <span>{LESSONS.length} lessons · foundations → jazz harmony</span>
   </footer>
 </section>
 

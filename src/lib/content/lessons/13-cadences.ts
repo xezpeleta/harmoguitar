@@ -73,7 +73,7 @@ export const cadences: Lesson = {
       kind: 'callout',
       variant: 'note',
       markdown:
-        'Tritone-sub versions of turnarounds (I–♭III7–♭VI7–♭II7, a chromatic descending bass) are a v1.1 jazz topic. For v1, the I–vi–ii–V is the turnaround to master.',
+        'Tritone-sub versions of turnarounds (I–♭III7–♭VI7–♭II7, a chromatic descending bass) are covered in the **Tritone Substitution** lesson. For now, the I–vi–ii–V is the turnaround to master.',
     },
 
     {

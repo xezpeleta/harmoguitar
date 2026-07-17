@@ -37,9 +37,9 @@ Pick a root note and a chord or scale type; everything updates in sync:
 - **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
   synthesized pluck — no audio files)
 
-### Structured lessons (14 lessons)
+### Structured lessons (20 lessons)
 
-A guided path from first principles to functional harmony, each lesson
+A guided path from first principles through deep jazz harmony, each lesson
 embedding live interactive widgets:
 
 1. Notes & the fretboard
@@ -56,6 +56,12 @@ embedding live interactive widgets:
 12. Progressions & Roman numerals
 13. Cadences & turnarounds
 14. The blues & ii–V–I
+15. Secondary dominants
+16. Tritone substitution
+17. Voice leading & guide tones
+18. Passing chords, inversions & walking bass
+19. Jazz comping voicings
+20. Pentatonics & blue notes
 
 Progress is saved to `localStorage` (optional; degrades gracefully).
 
@@ -85,7 +91,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (336 tests, 91.6% statement coverage) |
+| Testing | Vitest (383 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 
@@ -154,8 +160,15 @@ workflow on every push to `main`. The pipeline runs the full quality gate
 
 **v1 (current)** — Foundations through functional harmony and the ii–V–I.
 
-**v1.1+ (planned):**
-- Deep jazz harmony (altered scales, tritone substitutions, drop-2/drop-3 voicings)
+**v1.1 (current)** — Deep jazz harmony: secondary dominants, tritone
+substitution, voice leading & guide tones, passing chords & inversions (with
+walking bass), jazz comping voicings (shell + extension, Drop 2 / Drop 3),
+and pentatonics & blue notes. 20 lessons total.
+
+**Planned:**
+- The altered scale & altered dominants in depth (chord-scale theory)
+- The minor ii–V–i
+- Borrowed chords & modal mixture
 - Movable-Do solfège alongside fixed-Do
 - Left-handed fretboard view
 - Save custom chord/scale presets

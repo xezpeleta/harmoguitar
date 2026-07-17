@@ -30,9 +30,10 @@
         and circle-of-fifths all stay synchronized to one shared selection.
       </p>
       <p class="muted">
-        v1 covers foundations through functional harmony and the ii–V–I. Deep
-        jazz harmony (altered scales, tritone substitutions, drop voicings) is
-        planned for v1.1+.
+        v1 covers foundations through functional harmony and the ii–V–I; v1.1
+        extends into deep jazz harmony — secondary dominants, tritone
+        substitution, voice leading, passing chords, comping voicings, and blue
+        notes.
       </p>
     </section>
   {:else}

@@ -35,7 +35,8 @@
 25. [Harmonic & Melodic Minor: The Jazz Toolkits](#25-harmonic--melodic-minor-the-jazz-toolkits)
 26. [Reharmonization & Substitutions Overview](#26-reharmonization--substitutions-overview)
 27. [Recommended Learning Path](#27-recommended-learning-path)
-28. [Sources](#sources)
+28. [Pentatonics & Blue Notes in Practice](#28-pentatonics--blue-notes-in-practice)
+29. [Sources](#sources)
 
 ---
 
@@ -846,6 +847,30 @@ A pedagogically sound sequence for an experienced guitarist with no harmony grou
 26. Learn the modes of melodic and harmonic minor (Lydian dominant, altered, Phrygian dominant, Locrian ♮2).
 27. Analyze and reharmonize jazz standards; apply substitutions in context.
 28. Transcribe solos by jazz guitarists (Wes Montgomery, Joe Pass, Pat Martino, Jim Hall) to absorb vocabulary.
+
+---
+
+## 28. Pentatonics & Blue Notes in Practice
+
+The pentatonic and blues scale *formulas* live in §3. This section covers their **musical usage** — the difference between running a scale and making music, and what a blue note actually *is*.
+
+### The pentatonic is material, not a ladder
+The pentatonic scale (major: 1 2 3 5 6; minor: 1 ♭3 4 5 ♭7) is the safest scale there is — five notes, no half steps, almost no "wrong" choices. That safety is also its trap: playing it up and down is not music. The sound of blues, jazz, and all Black American music comes from **embellishment** (turns, slides, grace notes, bends, hammer-ons/pull-offs) and from **blue notes** slipped between the scale tones.
+
+### What a blue note is
+A **blue note** is a *chromatic passing note* — a note outside the chord/diatonic scale, wedged between two notes that belong. The most famous is the **♭5** (a.k.a. ♯4) in a minor-pentatonic context, which turns the minor pentatonic into the **blues scale** (1 ♭3 4 ♭5 5 ♭7). But there are many others: the ♭3 leaned against a major chord, the ♭7, the ♯9, or a quarter-tone bend between the major and minor 3rd.
+
+### The golden rule: a blue note is a passing note
+What makes a note "blue" is not *which* note it is but **how it behaves**: a blue note is a **passing note you never rest on.** You touch it for an instant on the way to a chord tone a semitone above or below, and the *resolution* is what makes it sound blue. Land on a blue note and stop, and it stops sounding blue and starts sounding wrong — the tension only means something because it resolves.
+
+### The harmony under a blue note
+Melody and harmony mirror each other. When the melody leans on a blue note, the chord underneath is very often a **diminished 7** — one of the symmetric passing chords from §21. The blue note (melodic chromatic tension) and the dim7 (harmonic chromatic tension) are two sides of the same coin: both slide by half-step into a chord tone. This is why a blues solo over a passing dim7 sounds so cohesive.
+
+### Practical approach
+- **Don't run the scale.** Use two or three notes, then slide off one through a blue note into the next.
+- **Approach chord tones from a semitone below** (e.g., approach C via B/C♭).
+- **Bend into the note.** A quarter-tone bend up to the ♭3 or ♭5 is the most vocal, human sound the guitar makes; the major/minor ambiguity *is* the blues.
+- **Resolve, always.** Every blue note resolves by half-step into a chord tone. The resolution is the blues; the blue note is the set-up.
 
 ---
 

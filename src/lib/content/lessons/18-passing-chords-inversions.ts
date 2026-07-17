@@ -1,0 +1,151 @@
+/**
+ * Lesson 18 — Passing Chords, Inversions & Walking Bass
+ * Source: RESEARCH.md §21 (diminished), §23 (inversions/voice leading)
+ *
+ * The "develop the chord" idea from the Félix Santos class: instead of sitting
+ * static on one voicing, move a dominant through its inversions up the neck,
+ * connecting them with diminished-7 passing chords. The result is a walking
+ * bass line and a self-accompanying, orchestral texture.
+ */
+import type { Lesson } from '$lib/content/schema'
+
+export const passingChordsInversions: Lesson = {
+  id: 'passing-chords-inversions',
+  slug: 'passing-chords-inversions-walking-bass',
+  title: 'Passing Chords, Inversions & Walking Bass',
+  summary: 'Stop sitting still: move a chord through its inversions and connect them with diminished passing chords.',
+  minutes: 11,
+  blocks: [
+    {
+      kind: 'text',
+      markdown:
+        'Here is a common habit Félix Santos calls out: when guitarists play a blues, they find **one** voicing (say {{A}}7) and strum it statically for four bars. It works — but it is boring, and it wastes the neck. The cure is to **develop the chord**: move it through its **inversions** up the fretboard, and glue those inversions together with **diminished-7 passing chords**. The bass starts to *walk*, and one guitar starts to sound like a bass, a piano, and a guitar all at once.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'Recap: inversions',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'You met triad inversions in the Triads lesson. The same idea applies to 7th chords: any of the four chord tones can sit in the bass. **Same notes, different bass note, different sound.**',
+    },
+    {
+      kind: 'table',
+      headers: ['Inversion', 'Bass note', 'A7 example'],
+      rows: [
+        ['Root position', 'Root (1)', '{{A}}7 — {{A}} in the bass'],
+        ['1st inversion', '3rd', '{{A}}7/{{C#}} — {{C#}} in the bass'],
+        ['2nd inversion', '5th', '{{A}}7/{{E}} — {{E}} in the bass'],
+        ['3rd inversion', '7th', '{{A}}7/{{G}} — {{G}} in the bass'],
+      ],
+    },
+    {
+      kind: 'widget',
+      selection: { chordType: 'dom7', root: 'A' },
+      widgets: ['fretboard', 'staff'],
+      caption: 'A7 ({{A}} {{C#}} {{E}} {{G}}). The fretboard shows every A7 tone across the neck — each cluster at a different position is a different inversion waiting to be played.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'Diminished-7 passing chords',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'To move smoothly between inversions, insert a **diminished 7 chord a semitone away** from your target. Because the dim7 sits just one fret above or below, your hand *slides* into the inversion — chromatic motion, no jumps. The dim7 is a **passing chord**: it is not a destination, just a slippery texture that connects two real chords.',
+    },
+    {
+      kind: 'widget',
+      selection: { chordType: 'dim7', root: 'Bb' },
+      widgets: ['fretboard', 'staff'],
+      caption: 'Bb dim7 ({{Bb}} {{Db}} {{E}} {{G}}) — a half-step above A7. Slide it down one fret and you land back on A7 material. Pure passing tension.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Diminished symmetry:** a dim7 is built entirely of minor 3rds, so it **repeats every 3 frets** — the same four notes, transposed. There are really only **3 distinct dim7 chords** in total ({{C}}dim7 = {{Eb}}dim7 = {{F#}}dim7 = {{A}}dim7 — same notes). So any dim7 grip you learn is reusable up and down the neck in minor-3rd hops. This is why they are so handy as passing chords: you always have one within reach.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'The exercise: developing A7 up the neck',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'Here is the sequence from the class. Hold the flavour of **{{A}}7** the whole time, but walk up the neck through its inversions, approaching each one with a dim7 a semitone above. Play it slowly, letting each chord ring:',
+    },
+    {
+      kind: 'table',
+      headers: ['Step', 'Chord', 'Bass', 'Role'],
+      rows: [
+        ['1', '{{A}}7', '{{A}}', 'Root position — home base'],
+        ['2', '{{Bb}}dim7', '{{Bb}}', 'Passing — a fret above'],
+        ['3', '{{A}}7/{{C#}}', '{{C#}}', '1st inversion (3rd in bass)'],
+        ['4', '{{C}}dim7', '{{C}}', 'Passing'],
+        ['5', '{{A}}7/{{E}}', '{{E}}', '2nd inversion (5th in bass)'],
+        ['6', '{{Eb}}dim7', '{{Eb}}', 'Passing'],
+        ['7', '{{A}}7/{{G}}', '{{G}}', '3rd inversion (7th in bass)'],
+      ],
+    },
+    {
+      kind: 'widget',
+      selection: { chordType: 'dim7', root: 'C' },
+      widgets: ['fretboard', 'staff'],
+      caption: 'C dim7 — another passing chord in the sequence. Same symmetric shape as Bb dim7, just shifted.',
+    },
+    {
+      kind: 'widget',
+      selection: { chordType: 'dim7', root: 'Eb' },
+      widgets: ['fretboard', 'staff'],
+      caption: 'Eb dim7 — the third passing chord. Notice these are all the same grip moved around the neck (diminished symmetry).',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        'Instead of strumming one {{A}}7 for a whole bar, play **step 1 → 2 → 3** across the bar. The bass walks ({{A}} → {{Bb}} → {{C#}}), the harmony stays "A7-ish," and suddenly you are accompanying *yourself*. Add steps 4–7 over the next bars and you have climbed the whole neck. This is the essence of chord-melody and walking-bass comping.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'Passing diminished between diatonic chords',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'The same trick works between two diatonic chords a whole step apart. To get from {{C}} to {{D}}m, slide a **{{C#}}dim7** between them: `{{C}} → {{C#}}dim7 → {{D}}m`. The bass walks up ({{C}} → {{C#}} → {{D}}), and the dim7 supplies a moment of slippery tension that resolves neatly into the Dm. You will hear this in countless jazz and pop arrangements.',
+    },
+    {
+      kind: 'callout',
+      variant: 'warning',
+      markdown:
+        'A passing chord is a **means, not an end.** Do not camp on the dim7 — it is there to grease the motion between two chords that matter. The moment you linger on it, it stops walking and starts sounding like a horror-movie sting.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'Walking bass = inversions + passing chords',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'A **walking bass line** is built from exactly these ingredients: choose chord-tone inversions so the bass lands on roots, 3rds, 5ths, and 7ths on the strong beats, and fill the gaps with **chromatic passing notes** (often supplied by dim7 shapes). When you play the exercise above, you are *playing a walking bass line with chords on top* — the same job a bassist and a pianist would do together.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        'This is also the harmonic side of the **blue note** idea you will meet in the Pentatonics & Blue Notes lesson: when a melody hits a slippery chromatic "blue" note, the chord underneath is very often one of these **diminished passing chords**. The melody and the harmony walk together.',
+    },
+  ],
+}

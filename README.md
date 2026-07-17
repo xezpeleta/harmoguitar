@@ -37,7 +37,7 @@ Pick a root note and a chord or scale type; everything updates in sync:
 - **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
   synthesized pluck — no audio files)
 
-### Structured lessons (20 lessons)
+### Structured lessons (27 lessons)
 
 A guided path from first principles through deep jazz harmony, each lesson
 embedding live interactive widgets:
@@ -62,6 +62,13 @@ embedding live interactive widgets:
 18. Passing chords, inversions & walking bass
 19. Jazz comping voicings
 20. Pentatonics & blue notes
+21. The minor ii–V–i
+22. The altered scale
+23. Borrowed chords & modal mixture
+24. Chord-scale theory
+25. Modal jazz & quartal harmony
+26. Harmonic & melodic minor modes
+27. Reharmonization & substitutions
 
 Progress is saved to `localStorage` (optional; degrades gracefully).
 
@@ -91,7 +98,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (383 tests, ~91% statement coverage) |
+| Testing | Vitest (392 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 
@@ -163,12 +170,13 @@ workflow on every push to `main`. The pipeline runs the full quality gate
 **v1.1 (current)** — Deep jazz harmony: secondary dominants, tritone
 substitution, voice leading & guide tones, passing chords & inversions (with
 walking bass), jazz comping voicings (shell + extension, Drop 2 / Drop 3),
-and pentatonics & blue notes. 20 lessons total.
+pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
+chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
+harmonic & melodic minor modes, and reharmonization. 27 lessons
+total. Includes **progression playback** (hear any chord sequence in time)
+and **fretboard voicing markers** (diagram exact grips).
 
 **Planned:**
-- The altered scale & altered dominants in depth (chord-scale theory)
-- The minor ii–V–i
-- Borrowed chords & modal mixture
 - Movable-Do solfège alongside fixed-Do
 - Left-handed fretboard view
 - Save custom chord/scale presets

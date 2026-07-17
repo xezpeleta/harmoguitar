@@ -109,7 +109,13 @@ export const voiceLeadingGuideTones: Lesson = {
       kind: 'widget',
       selection: { chordType: 'm7', root: 'D' },
       widgets: ['fretboard', 'staff'],
-      caption: 'Dm7 — target its 3rd ({{F}}) and 7th ({{C}}) in a melody. These are the notes a horn player would lean on.',
+      caption: 'Dm7 — target its 3rd ({{F}}) and 7th ({{C}}) in a melody. Hit “Play progression” to hear the ii–V–I and listen for how the 3rds and 7ths connect.',
+      play: {
+        kind: 'progression',
+        chords: ['Dm7', 'G7', 'Cmaj7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {

@@ -46,6 +46,12 @@ export const bluesAndIIVI: Lesson = {
       selection: { chordType: 'dom7', root: 'F' },
       widgets: ['fretboard', 'staff'],
       caption: '{{F}}7 — the I of a blues in F. In jazz, the tonic of a blues is a dominant 7, not a major triad.',
+      play: {
+        kind: 'progression',
+        chords: ['F7', 'F7', 'F7', 'F7', 'Bb7', 'Bb7', 'F7', 'F7', 'C7', 'Bb7', 'F7', 'C7'],
+        tempo: 140,
+        beatsPerChord: 1,
+      },
     },
 
     {
@@ -109,7 +115,13 @@ export const bluesAndIIVI: Lesson = {
       kind: 'widget',
       selection: { chordType: 'maj7', root: 'C' },
       widgets: ['fretboard', 'staff'],
-      caption: '{{C}}maj7 — the I. Resolution. Play all three in order: {{D}}m7 → {{G}}7 → {{C}}maj7.',
+      caption: '{{C}}maj7 — the I. Hit “Play progression” to hear the full ii–V–I: {{D}}m7 → {{G}}7 → {{C}}maj7.',
+      play: {
+        kind: 'progression',
+        chords: ['Dm7', 'G7', 'Cmaj7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {

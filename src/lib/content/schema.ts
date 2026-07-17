@@ -32,6 +32,21 @@ export type WidgetKind =
   | 'circle-of-fifths'
 
 /**
+ * A specific fret position to mark on the fretboard — used to diagram an exact
+ * voicing/grip (e.g. the four notes of an A13 shape) rather than lighting up
+ * every chord tone across the neck. String numbers follow guitar convention:
+ * 6 = low E … 1 = high E; fret 0 = open.
+ */
+export interface VoicingPosition {
+  /** String number 6 (low E) … 1 (high E). */
+  string: number
+  /** Fret number (0 = open). */
+  fret: number
+  /** Optional label override (e.g. a finger number or interval). */
+  label?: string
+}
+
+/**
  * Initial store state to apply when a widget block renders. Only the fields
  * you specify are changed; others keep their current value. This lets a lesson
  * say "show C major on the fretboard" without re-specifying tuning, solfège,
@@ -70,6 +85,20 @@ export type WidgetPlay =
       root: NoteName
       /** Highest semitone offset to play (default 12 = up to the octave). */
       maxSemitones?: number
+    }
+  | {
+      /** Play a sequence of chords (a progression) in time. */
+      kind: 'progression'
+      /**
+       * Chord symbols to play in order, e.g. ['Dm7','G7','Cmaj7']. Each is
+       * parsed with the theory engine's `parseChordSymbol`, so any symbol the
+       * Builder accepts works (Cmaj7, G7, Am7b5, Bb13, F#7b9, …).
+       */
+      chords: string[]
+      /** Tempo in BPM (default 100). */
+      tempo?: number
+      /** Beats per chord (default 2). */
+      beatsPerChord?: number
     }
 
 /** A callout variant, controlling its colour/affordance. */
@@ -130,6 +159,12 @@ export type Block =
       widgets: WidgetKind[]
       /** Optional caption beneath the widget cluster. */
       caption?: string
+      /**
+       * Specific fret positions to mark as an exact voicing/grip on the
+       * fretboard. When set, the fretboard diagrams just these positions
+       * (instead of lighting every chord tone across the neck).
+       */
+      voicing?: VoicingPosition[]
       /**
        * Overrides the Play button's default behaviour (which plays the
        * current store selection). When set, the button plays this instead.

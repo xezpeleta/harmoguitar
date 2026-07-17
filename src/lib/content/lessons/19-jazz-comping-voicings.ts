@@ -62,7 +62,12 @@ export const jazzCompingVoicings: Lesson = {
       kind: 'widget',
       selection: { chordType: 'maj7', root: 'C' },
       widgets: ['fretboard', 'staff'],
-      caption: 'Cmaj7 ({{C}} {{E}} {{G}} {{B}}). The shell is {{C}}–{{E}}–{{B}} (root, 3rd, 7th) — the 5th ({{G}}) is optional.',
+      caption: 'Cmaj7 shell — root ({{C}}), 3rd ({{E}}), 7th ({{B}}). The 5th ({{G}}) is omitted. Three notes, instantly jazzy.',
+      voicing: [
+        { string: 5, fret: 3, label: 'R' },
+        { string: 4, fret: 2, label: '3' },
+        { string: 3, fret: 4, label: '7' },
+      ],
     },
 
     {
@@ -89,7 +94,13 @@ export const jazzCompingVoicings: Lesson = {
       kind: 'widget',
       selection: { chordType: 'dom13', root: 'A' },
       widgets: ['fretboard', 'staff'],
-      caption: 'A13 — root, 3rd, ♭7, and 13th. Four notes, one tension (the 13th, {{F#}}). The 5th ({{E}}) and 9th ({{B}}) are omitted to keep it lean. This is the shell+extension method in a single grip.',
+      caption: 'A13 grip — four notes: root, ♭7, 3rd, 13th. The 5th ({{E}}) and 9th ({{B}}) are omitted to keep it lean. The 13th ({{F#}}) is the “money note.”',
+      voicing: [
+        { string: 6, fret: 5, label: 'R' },
+        { string: 4, fret: 5, label: '♭7' },
+        { string: 3, fret: 6, label: '3' },
+        { string: 2, fret: 7, label: '13' },
+      ],
     },
     {
       kind: 'callout',
@@ -120,7 +131,19 @@ export const jazzCompingVoicings: Lesson = {
       kind: 'widget',
       selection: { chordType: 'dom7', root: 'G' },
       widgets: ['fretboard', 'staff'],
-      caption: 'G7 — find a 4-note cluster on the middle strings (5-4-3-2). That cluster, with the 2nd-from-top note dropped, is a Drop 2. Invert it up the neck for the other three.',
+      caption: 'G7 Drop 2 (root position, strings 5-4-3-2): 5th–root–3rd–♭7. Hit “Play progression” to hear a ii–V–I comped with shell/Drop-2 voicings.',
+      voicing: [
+        { string: 5, fret: 5, label: '5' },
+        { string: 4, fret: 5, label: 'R' },
+        { string: 3, fret: 4, label: '3' },
+        { string: 2, fret: 6, label: '♭7' },
+      ],
+      play: {
+        kind: 'progression',
+        chords: ['Dm7', 'G7', 'Cmaj7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {

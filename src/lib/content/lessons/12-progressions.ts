@@ -69,7 +69,13 @@ export const progressions: Lesson = {
       selection: { key: 'C', keyScaleType: 'major', chordType: 'major', root: 'C' },
       widgets: ['circle-of-fifths'],
       caption:
-        'Use the circle to find the I–IV–V of any key. Click the diatonic chords below to explore each one — the sequence I–vi–IV–V is right there in the roman-numeral row.',
+        'Use the circle to find the I–IV–V of any key. Hit “Play progression” to hear the famous I–V–vi–IV ({{C}}–{{G}}–{{A}}m–{{F}}) and watch the root travel around the circle.',
+      play: {
+        kind: 'progression',
+        chords: ['C', 'G', 'Am', 'F'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {

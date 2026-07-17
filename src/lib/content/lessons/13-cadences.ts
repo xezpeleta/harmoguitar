@@ -48,7 +48,13 @@ export const cadences: Lesson = {
       kind: 'widget',
       selection: { chordType: 'maj7', root: 'C' },
       widgets: ['fretboard', 'staff'],
-      caption: 'Cmaj7 — the I. G7 → Cmaj7 is the strongest resolution in tonal music.',
+      caption: 'Cmaj7 — the I. Hit “Play progression” to hear the authentic cadence: {{G}}7 → {{C}}maj7 — the strongest resolution in tonal music.',
+      play: {
+        kind: 'progression',
+        chords: ['G7', 'Cmaj7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {

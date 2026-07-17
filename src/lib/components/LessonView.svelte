@@ -15,8 +15,11 @@
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
   import { notesToAscendingMidis, noteToMidi } from '$lib/theory/midi'
+  import { parseChordSymbol, chordNotes, type ChordType } from '$lib/theory/chords'
+  import type { ScaleType } from '$lib/theory/scales'
   import type { NoteName } from '$lib/theory/notes'
   import { simpleInterval } from '$lib/theory/intervals'
+  import { onDestroy } from 'svelte'
   import Markdown from '$lib/components/Markdown.svelte'
   import InlineText from '$lib/components/InlineText.svelte'
   import {
@@ -120,6 +123,15 @@
 
   /** Play a widget block's Play button, honouring an optional override. */
   function playWidget(play?: WidgetPlay): void {
+    if (play?.kind === 'progression') {
+      // Toggle: if this progression is already playing, stop it.
+      if (activeProgression === play) {
+        stopProgression()
+      } else {
+        playProgression(play)
+      }
+      return
+    }
     if (play?.kind === 'intervals-from-root') {
       const max = play.maxSemitones ?? 12
       const offsets = Array.from({ length: max + 1 }, (_, i) => i)
@@ -128,6 +140,87 @@
     }
     playSelection()
   }
+
+  // --- Progression playback -------------------------------------------------
+  // A progression plays a sequence of chords in time, animating the shared
+  // store through each chord so the fretboard/staff move in sync with the
+  // audio. The original selection is restored when the progression ends.
+
+  /**
+   * The progression WidgetPlay currently playing, or null. Uses `$state.raw`
+   * so the value is not proxied — identity comparison (`=== block.play`) works
+   * for the toggle check and the button label.
+   */
+  let activeProgression = $state.raw<WidgetPlay | null>(null)
+  /** Pending setTimeout handles for the store-animation + final restore. */
+  let progressionTimers: ReturnType<typeof setTimeout>[] = []
+  /** Snapshot of the store selection to restore after a progression. */
+  let savedSelection:
+    | { root: NoteName; chordType: ChordType | null; scaleType: ScaleType | null }
+    | null = null
+
+  /** Stop any playing progression: clear timers, silence audio, restore store. */
+  function stopProgression(): void {
+    for (const t of progressionTimers) clearTimeout(t)
+    progressionTimers = []
+    audio.stopAll()
+    if (savedSelection) {
+      if (savedSelection.scaleType !== null) {
+        app.selectScale(savedSelection.root, savedSelection.scaleType)
+      } else if (savedSelection.chordType !== null) {
+        app.selectChord(savedSelection.root, savedSelection.chordType)
+      } else {
+        app.clearSelection()
+        app.setRoot(savedSelection.root)
+      }
+      savedSelection = null
+    }
+    activeProgression = null
+  }
+
+  /** Play a progression: schedule audio + animate the store through each chord. */
+  function playProgression(play: Extract<WidgetPlay, { kind: 'progression' }>): void {
+    stopProgression()
+    let chords: { root: NoteName; type: ChordType; notes: NoteName[] }[]
+    try {
+      chords = play.chords.map((sym) => {
+        const { root, type } = parseChordSymbol(sym)
+        return { root, type, notes: chordNotes(root, type) }
+      })
+    } catch {
+      return
+    }
+    if (chords.length === 0) return
+
+    const tempo = play.tempo ?? 100
+    const beatsPerChord = play.beatsPerChord ?? 2
+    const chordDurMs = ((60 / tempo) * beatsPerChord) * 1000
+
+    savedSelection = {
+      root: app.rootNote,
+      chordType: app.chordType,
+      scaleType: app.scaleType,
+    }
+    activeProgression = play
+
+    // Animate the store through each chord in sync with the audio.
+    chords.forEach((c, i) => {
+      progressionTimers.push(
+        setTimeout(() => app.selectChord(c.root, c.type), i * chordDurMs),
+      )
+    })
+    // Restore the original selection after the last chord rings.
+    progressionTimers.push(
+      setTimeout(() => stopProgression(), chords.length * chordDurMs + 250),
+    )
+
+    audio.playProgression(
+      chords.map((c) => c.notes),
+      { tempo, beatsPerChord },
+    )
+  }
+
+  onDestroy(() => stopProgression())
 </script>
 
 <svelte:head>
@@ -266,7 +359,7 @@
             {#each block.widgets as w (w)}
               {#if w === 'fretboard'}
                 <div class="widget-cell">
-                  <Fretboard fretCount={app.fretCount} />
+                  <Fretboard fretCount={app.fretCount} markPositions={block.voicing} />
                 </div>
               {:else if w === 'staff'}
                 <div class="widget-cell">
@@ -288,7 +381,13 @@
           {/if}
           <div class="widget-actions">
             <button type="button" class="play-btn" onclick={() => playWidget(block.play)}>
-              ▶ Play
+              {#if block.play?.kind === 'progression' && activeProgression === block.play}
+                ■ Stop
+              {:else if block.play?.kind === 'progression'}
+                ▶ Play progression
+              {:else}
+                ▶ Play
+              {/if}
             </button>
           </div>
         </figure>

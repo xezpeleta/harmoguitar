@@ -192,6 +192,27 @@ describe('AudioEngine — with mocked AudioContext', () => {
     expect(oscs.length).toBe(0)
   })
 
+  it('playProgression builds voices for every chord tone', () => {
+    mock._nodes.length = 0
+    audio.playProgression(
+      [
+        ['D', 'F', 'A', 'C'],
+        ['G', 'B', 'D', 'F'],
+        ['C', 'E', 'G', 'B'],
+      ],
+      { tempo: 100, beatsPerChord: 2 },
+    )
+    const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
+    // 4 tones × 3 chords × 2 oscillators = 24.
+    expect(oscs.length).toBe(24)
+  })
+
+  it('playProgression handles empty input', () => {
+    mock._nodes.length = 0
+    audio.playProgression([], { tempo: 100 })
+    expect(mock._nodes.filter((n) => n.kind === 'oscillator').length).toBe(0)
+  })
+
   it('resume is called when context is suspended', () => {
     mock.state = 'suspended'
     audio.playNote(60)
@@ -231,5 +252,47 @@ describe('AudioEngine — playChordByName', () => {
 
   it('handles empty input without error', () => {
     expect(() => audio.playChordByName([])).not.toThrow()
+  })
+})
+
+describe('AudioEngine — playProgression', () => {
+  let mock: ReturnType<typeof makeMockContext>
+
+  beforeEach(() => {
+    mock = makeMockContext()
+    audio.dispose()
+    g.AudioContext = function () {
+      return mock
+    }
+  })
+  afterEach(() => {
+    audio.dispose()
+    delete g.AudioContext
+  })
+
+  it('builds a voice per chord tone across all chords', () => {
+    // Dm7 (4 tones), G7 (4 tones), Cmaj7 (4 tones) = 12 tones × 2 osc.
+    audio.playProgression(
+      [
+        ['D', 'F', 'A', 'C'],
+        ['G', 'B', 'D', 'F'],
+        ['C', 'E', 'G', 'B'],
+      ],
+      { tempo: 120, beatsPerChord: 2 },
+    )
+    const oscs = mock._nodes.filter((n) => n.kind === 'oscillator')
+    expect(oscs.length).toBe(24) // 12 tones × 2 osc
+  })
+
+  it('handles empty input without error', () => {
+    expect(() => audio.playProgression([], { tempo: 100 })).not.toThrow()
+  })
+
+  it('does not throw without AudioContext', () => {
+    delete g.AudioContext
+    delete g.webkitAudioContext
+    expect(() =>
+      audio.playProgression([['C', 'E', 'G'], ['F', 'A', 'C']], { tempo: 100 }),
+    ).not.toThrow()
   })
 })

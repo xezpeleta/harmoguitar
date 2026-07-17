@@ -11,6 +11,7 @@
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
   import { noteColor, readableForeground } from '$lib/utils/colors'
+  import type { VoicingPosition } from '$lib/content/schema'
 
   interface Props {
     /** Number of frets (excludes the open string). Falls back to the store. */
@@ -27,6 +28,12 @@
     preferFlats?: boolean
     /** Fired on click with the note + midi. Defaults to toggling the store. */
     onselectnote?: (note: NoteName, midi: number) => void
+    /**
+     * Exact fret positions to mark as a specific voicing/grip. When provided,
+     * the fretboard diagrams just these positions (with note labels) instead
+     * of lighting every chord tone across the neck.
+     */
+    markPositions?: VoicingPosition[]
   }
 
   let {
@@ -37,6 +44,7 @@
     showSolfege,
     preferFlats,
     onselectnote,
+    markPositions,
   }: Props = $props()
 
   // Reactive props with store fallbacks (override when provided).
@@ -93,6 +101,31 @@
   }
   function isRoot(pos: FretPosition): boolean {
     return pos.pitchClass === rootPc
+  }
+
+  /**
+   * When `markPositions` is set, the fretboard becomes a grip diagram: only
+   * the marked positions render a dot. A position is shown if it matches a
+   * mark (by string + fret). When no marks are given, fall back to the usual
+   * chord/scale pitch-class highlighting.
+   */
+  function isMarked(pos: FretPosition): boolean {
+    if (!markPositions || markPositions.length === 0) return false
+    return markPositions.some(
+      (m) => m.string === pos.stringNumber && m.fret === pos.fret,
+    )
+  }
+  /** True when this position should render a dot (marked grip OR highlighted). */
+  function shouldShow(pos: FretPosition): boolean {
+    if (markPositions && markPositions.length > 0) return isMarked(pos)
+    return isHighlighted(pos)
+  }
+  /** Optional per-position label override from the voicing (e.g. a finger no.). */
+  function markLabel(pos: FretPosition): string | undefined {
+    if (!markPositions) return undefined
+    return markPositions.find(
+      (m) => m.string === pos.stringNumber && m.fret === pos.fret,
+    )?.label
   }
   function hasInlay(fret: number): boolean {
     return INLAY_FRETS.includes(fret)
@@ -155,16 +188,18 @@
         <span class="str-note">{openStringLabel(openPos)}</span>
       </div>
       {#each stringPositions as pos (pos.midi)}
-        {@const highlighted = isHighlighted(pos)}
+        {@const highlighted = shouldShow(pos)}
         {@const root = isRoot(pos)}
         {@const open = pos.fret === 0}
         {@const colors = highlighted ? dotColors(pos) : null}
+        {@const gripMode = !!(markPositions && markPositions.length > 0)}
         <button
           type="button"
           class="fret-cell"
           class:open-cell={open}
           class:highlighted
           class:root
+          class:grip={gripMode}
           aria-label="String {pos.stringNumber} fret {pos.fret}: {displayNote(pos)}"
           aria-pressed={highlighted}
           style:--dot-bg={colors?.bg}
@@ -173,7 +208,7 @@
         >
           {#if highlighted}
             <span class="dot" class:solfege={effSolfege} class:root>
-              {positionLabel(pos)}
+              {markLabel(pos) ?? positionLabel(pos)}
             </span>
           {/if}
         </button>
@@ -315,6 +350,18 @@
     box-shadow:
       0 0 0 2px var(--fretboard-bg),
       0 0 0 4px var(--dot-bg);
+  }
+  /* Grip mode: a marked voicing position gets a bold outline so the exact
+   * frets to press stand out against the wood, even on dim cells. */
+  .fret-cell.grip .dot {
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 1.5px var(--fretboard-bg), 0 0 0 3px var(--color-ink);
+  }
+  .fret-cell.grip .dot.root {
+    box-shadow:
+      0 0 0 1.5px var(--fretboard-bg),
+      0 0 0 3px var(--color-ink),
+      0 0 0 5px var(--dot-bg);
   }
 
   .fret-cell:focus-visible {

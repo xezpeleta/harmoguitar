@@ -15,7 +15,9 @@
 </script>
 
 {#if lesson}
-  <LessonView {lesson} />
+  {#key lesson.id}
+    <LessonView {lesson} />
+  {/key}
 {:else}
   <section class="not-found">
     <h1>Lesson not found</h1>

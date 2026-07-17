@@ -7,6 +7,7 @@
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, fireEvent } from '@testing-library/svelte'
+import { tick } from 'svelte'
 import LessonView from '$lib/components/LessonView.svelte'
 import type { Lesson } from '$lib/content/schema'
 import { app } from '$lib/stores/app.svelte'
@@ -15,10 +16,12 @@ import { resetProgress, isComplete } from '$lib/services/progress.svelte'
 // Mock the audio engine so playback calls can be asserted.
 const playIntervalMock = vi.fn()
 const playIntervalsMock = vi.fn()
+const playProgressionMock = vi.fn()
 vi.mock('$lib/services/audio', () => ({
   audio: {
     playInterval: (...a: unknown[]) => playIntervalMock(...a),
     playIntervals: (...a: unknown[]) => playIntervalsMock(...a),
+    playProgression: (...a: unknown[]) => playProgressionMock(...a),
     playNote: vi.fn(),
     playChord: vi.fn(),
     playSequence: vi.fn(),
@@ -250,6 +253,96 @@ describe('LessonView — widget Play override', () => {
     expect(playIntervalsMock.mock.calls[0]![1]).toEqual([
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
     ])
+  })
+})
+
+describe('LessonView — progression Play', () => {
+  const progressionLesson: Lesson = {
+    id: 'progression-test',
+    slug: 'progression-test',
+    title: 'Progression Test',
+    summary: 'Hear a ii–V–I.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { chordType: 'm7', root: 'D' },
+        widgets: ['fretboard', 'staff'],
+        play: {
+          kind: 'progression',
+          chords: ['Dm7', 'G7', 'Cmaj7'],
+          tempo: 200,
+          beatsPerChord: 1,
+        },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playProgressionMock.mockClear()
+  })
+
+  it('renders a "Play progression" button', () => {
+    const { getByRole } = render(LessonView, { lesson: progressionLesson })
+    expect(getByRole('button', { name: /play progression/i })).toBeTruthy()
+  })
+
+  it('clicking plays the chord sequence via the audio engine', async () => {
+    const { getByRole } = render(LessonView, { lesson: progressionLesson })
+    await fireEvent.click(getByRole('button', { name: /play progression/i }))
+    expect(playProgressionMock).toHaveBeenCalledTimes(1)
+    // Three chords, each a NoteName[] (4 notes for 7th chords).
+    const sets = playProgressionMock.mock.calls[0]![0] as unknown[][]
+    expect(sets.length).toBe(3)
+    expect(sets[0]).toEqual(['D', 'F', 'A', 'C'])
+    expect(sets[1]).toEqual(['G', 'B', 'D', 'F'])
+    expect(sets[2]).toEqual(['C', 'E', 'G', 'B'])
+    // Tempo + beatsPerChord forwarded.
+    const opts = playProgressionMock.mock.calls[0]![1] as { tempo: number; beatsPerChord: number }
+    expect(opts.tempo).toBe(200)
+    expect(opts.beatsPerChord).toBe(1)
+  })
+
+  it('clicking again stops the progression (toggles to Stop, then back)', async () => {
+    const { getByRole } = render(LessonView, { lesson: progressionLesson })
+    const btn = getByRole('button', { name: /play progression/i })
+    await fireEvent.click(btn) // start
+    await tick()
+    // Now the button reads "Stop".
+    const stopBtn = getByRole('button', { name: /stop/i })
+    await fireEvent.click(stopBtn) // stop
+    // playProgression called once (on start); stop calls audio.stopAll, not play.
+    expect(playProgressionMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('LessonView — fretboard voicing markers', () => {
+  const voicingLesson: Lesson = {
+    id: 'voicing-test',
+    slug: 'voicing-test',
+    title: 'Voicing Test',
+    summary: 'A specific grip.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { chordType: 'dom13', root: 'A' },
+        widgets: ['fretboard'],
+        voicing: [
+          { string: 6, fret: 5 },
+          { string: 4, fret: 5 },
+          { string: 3, fret: 6 },
+          { string: 2, fret: 7 },
+        ],
+        caption: 'A13 grip',
+      },
+    ],
+  }
+
+  it('renders exactly the marked voicing positions (no whole-neck highlights)', () => {
+    const { container } = render(LessonView, { lesson: voicingLesson })
+    const dots = container.querySelectorAll('.fret-cell.grip .dot')
+    expect(dots.length).toBe(4)
   })
 })
 

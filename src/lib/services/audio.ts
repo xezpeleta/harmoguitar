@@ -37,6 +37,18 @@ export interface PlayChordOptions {
   velocity?: number
 }
 
+/** Options for progression playback (a sequence of chords). */
+export interface PlayProgressionOptions {
+  /** Tempo in BPM (default 100). */
+  tempo?: number
+  /** How many beats each chord lasts (default 2). */
+  beatsPerChord?: number
+  /** How each chord's notes are spread in time (default 'strum'). */
+  mode?: ChordMode
+  /** Gain 0–1 (default 0.55). */
+  velocity?: number
+}
+
 /** Options for interval playback (a root + a second note above it). */
 export interface PlayIntervalOptions {
   /** Delay between the root and the interval note, in seconds (default 0.32). */
@@ -253,6 +265,35 @@ class AudioEngine {
   }
 
   /**
+   * Voice a chord by name across the fretboard: the lowest playable position
+   * of each chord tone, on distinct strings where possible. Returns ascending
+   * MIDI numbers — a usable guitar voicing without a full voicing database.
+   * Shared by `playChordByName` and `playProgression`.
+   */
+  private chordToMidis(notes: NoteName[]): number[] {
+    const board = buildFretboard(STANDARD_TUNING, 12)
+    const usedStrings = new Set<number>()
+    const midis: number[] = []
+    for (const note of notes) {
+      const pc = toPitchClass(note)
+      let chosen: number | null = null
+      for (const string of board) {
+        if (usedStrings.has(string[0]!.stringNumber)) continue
+        const pos = string.find((p) => p.pitchClass === pc && p.fret <= 12)
+        if (pos) {
+          chosen = pos.midi
+          usedStrings.add(string[0]!.stringNumber)
+          break
+        }
+      }
+      midis.push(chosen ?? noteToMidi(note, 4))
+    }
+    // Ascending (low → high) for a natural strum order.
+    midis.sort((a, b) => a - b)
+    return midis
+  }
+
+  /**
    * Play a chord by name using a simple playable voicing across the fretboard:
    * the lowest position of each chord tone per string. This gives a usable
    * guitar voicing without a full voicing database.
@@ -264,30 +305,43 @@ class AudioEngine {
     try {
       const ctx = this.ensureContext()
       if (!ctx || notes.length === 0) return
-      // Find a fret position for each note, lowest playable, on distinct
-      // strings where possible. Fall back to a fixed octave if not found.
-      const board = buildFretboard(STANDARD_TUNING, 12)
-      const usedStrings = new Set<number>()
-      const midis: number[] = []
-      for (const note of notes) {
-        const pc = toPitchClass(note)
-        let chosen: number | null = null
-        for (const string of board) {
-          if (usedStrings.has(string[0]!.stringNumber)) continue
-          const pos = string.find((p) => p.pitchClass === pc && p.fret <= 12)
-          if (pos) {
-            chosen = pos.midi
-            usedStrings.add(string[0]!.stringNumber)
-            break
-          }
-        }
-        midis.push(chosen ?? noteToMidi(note, 4))
-      }
-      // Ensure ascending (low → high) for a natural strum order.
-      midis.sort((a, b) => a - b)
-      this.playChord(midis, opts)
+      this.playChord(this.chordToMidis(notes), opts)
     } catch (err) {
       console.error('AudioEngine.playChordByName failed:', err)
+    }
+  }
+
+  /**
+   * Play a sequence of chords (a progression) in time. Each chord is voiced
+   * with `chordToMidis` and scheduled at `currentTime + i * chordDuration`,
+   * so the whole progression plays as one continuous line. Call `stopAll`
+   * first so re-triggering cuts off any prior playback.
+   */
+  playProgression(
+    chordNoteSets: NoteName[][],
+    opts: PlayProgressionOptions = {},
+  ): void {
+    try {
+      const ctx = this.ensureContext()
+      if (!ctx || chordNoteSets.length === 0) return
+      this.stopAll()
+      const tempo = opts.tempo ?? 100
+      const beatsPerChord = opts.beatsPerChord ?? 2
+      const mode = opts.mode ?? 'strum'
+      const chordDur = (60 / tempo) * beatsPerChord
+      const noteDur = Math.max(0.4, chordDur * 0.92)
+      const velocity = (opts.velocity ?? 0.55) * 0.5
+      const stagger = mode === 'block' ? 0 : mode === 'strum' ? 0.05 : 0.09
+      const t0 = ctx.currentTime
+      chordNoteSets.forEach((notes, i) => {
+        const midis = this.chordToMidis(notes)
+        const base = t0 + i * chordDur
+        midis.forEach((midi, j) => {
+          this.voice(midi, base + j * stagger, noteDur, velocity)
+        })
+      })
+    } catch (err) {
+      console.error('AudioEngine.playProgression failed:', err)
     }
   }
 

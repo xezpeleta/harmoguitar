@@ -77,7 +77,13 @@ export const secondaryDominants: Lesson = {
       kind: 'widget',
       selection: { chordType: 'm7', root: 'A' },
       widgets: ['fretboard', 'staff'],
-      caption: 'Am — the vi, now "tonicized." E7 → Am feels like a mini V7→I inside the key of C.',
+      caption: 'Am — the vi, now “tonicized.” Hit “Play progression” to hear E7 → Am7 — a mini V7→I inside the key of C.',
+      play: {
+        kind: 'progression',
+        chords: ['E7', 'Am7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
 
     {
@@ -115,7 +121,13 @@ export const secondaryDominants: Lesson = {
       kind: 'widget',
       selection: { chordType: 'dom7', root: 'A' },
       widgets: ['fretboard', 'staff'],
-      caption: 'A7 — the V7/ii in C. Resolves to Dm. In the chain above, E7→A7→Dm→G7, each dominant falls a 5th into the next.',
+      caption: 'A7 — the V7/ii in C. Resolves to Dm. Hit “Play progression” for the full chain: {{C}}maj7 → {{E}}7 → {{A}}7 → {{D}}m7 → {{G}}7 — each dominant falls a 5th into the next.',
+      play: {
+        kind: 'progression',
+        chords: ['Cmaj7', 'E7', 'A7', 'Dm7', 'G7'],
+        tempo: 130,
+        beatsPerChord: 1,
+      },
     },
     {
       kind: 'callout',

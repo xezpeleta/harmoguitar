@@ -5,10 +5,12 @@
  * navigation is derived from this list, so reordering or inserting a lesson
  * is just moving an entry in the array — no manual link surgery.
  *
- * Foundations (lessons 1–14) map to RESEARCH.md §1–§14. Lessons 15–20 cover
- * the deep jazz harmony of §15–§23 and §28 — secondary dominants, tritone
+ * Foundations (lessons 1–14) map to RESEARCH.md §1–§14. Lessons 15–27 cover
+ * the full deep jazz harmony path of §15–§28 — secondary dominants, tritone
  * substitution, voice leading & guide tones, passing chords & inversions,
- * comping voicings, and pentatonics & blue notes.
+ * comping voicings, pentatonics & blue notes, the minor ii–V–i, the altered
+ * scale, borrowed chords & modal mixture, chord-scale theory, modal jazz &
+ * quartal harmony, harmonic & melodic minor modes, and reharmonization.
  */
 import type { Lesson } from '$lib/content/schema'
 import { notesFretboard } from './01-notes-fretboard'
@@ -31,10 +33,17 @@ import { voiceLeadingGuideTones } from './17-voice-leading-guide-tones'
 import { passingChordsInversions } from './18-passing-chords-inversions'
 import { jazzCompingVoicings } from './19-jazz-comping-voicings'
 import { pentatonicBlueNotes } from './20-pentatonic-blue-notes'
+import { minorIIVi } from './21-minor-ii-v-i'
+import { alteredScale } from './22-altered-scale'
+import { borrowedChords } from './23-borrowed-chords'
+import { chordScaleTheory } from './24-chord-scale-theory'
+import { modalJazz } from './25-modal-jazz-quartal'
+import { harmonicMelodicMinor } from './26-harmonic-melodic-minor'
+import { reharmonization } from './27-reharmonization'
 
 /**
  * The learning path, in order. Adding a lesson = adding an entry here.
- * Source: RESEARCH.md §1–§14 (foundations) + §15–§23, §28 (jazz).
+ * Source: RESEARCH.md §1–§14 (foundations) + §15–§28 (jazz).
  */
 export const LESSONS: readonly Lesson[] = [
   notesFretboard,
@@ -57,6 +66,13 @@ export const LESSONS: readonly Lesson[] = [
   passingChordsInversions,
   jazzCompingVoicings,
   pentatonicBlueNotes,
+  minorIIVi,
+  alteredScale,
+  borrowedChords,
+  chordScaleTheory,
+  modalJazz,
+  harmonicMelodicMinor,
+  reharmonization,
 ]
 
 /** Look up a lesson by its slug (for hash-route resolution). */

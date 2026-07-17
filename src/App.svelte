@@ -31,9 +31,10 @@
       </p>
       <p class="muted">
         v1 covers foundations through functional harmony and the ii–V–I; v1.1
-        extends into deep jazz harmony — secondary dominants, tritone
-        substitution, voice leading, passing chords, comping voicings, and blue
-        notes.
+        extends into deep jazz harmony — from secondary dominants and tritone
+        substitution through modal jazz, chord-scale theory, and reharmonization.
+        Every progression is playable in time, and key grips are diagrammed on
+        the fretboard.
       </p>
     </section>
   {:else}

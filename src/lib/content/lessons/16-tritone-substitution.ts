@@ -95,7 +95,13 @@ export const tritoneSubstitution: Lesson = {
       kind: 'widget',
       selection: { chordType: 'dom7', root: 'Eb' },
       widgets: ['fretboard', 'staff'],
-      caption: 'Eb7 — the tritone sub of A7. Both resolve to D. Play Eb7 → Dmaj7 and feel the half-step bass.',
+      caption: 'Eb7 — the tritone sub of A7. Both resolve to D. Hit “Play progression” to hear {{Eb}}7 → {{D}}maj7 — the half-step bass walk-down.',
+      play: {
+        kind: 'progression',
+        chords: ['Eb7', 'Dmaj7'],
+        tempo: 120,
+        beatsPerChord: 2,
+      },
     },
     {
       kind: 'widget',
@@ -126,7 +132,7 @@ export const tritoneSubstitution: Lesson = {
     {
       kind: 'text',
       markdown:
-        'Here is a beautiful shortcut. The **altered scale** over {{G}}7 (the scale with ♭9, ♯9, ♭5, ♯5, ♭13) is *enharmonically the same notes* as {{Db}} Mixolydian — the scale of the tritone sub. So jazz teachers say: **"playing altered over the V7 is the same as playing the tritone-sub dominant\'s scale."** The two ideas are two views of one sound.',
+        'Here is a beautiful shortcut. The **altered scale** over {{G}}7 (the scale with ♭9, ♯9, ♭5, ♯5, ♭13) is *enharmonically the same notes* as {{Db}} Mixolydian — the scale of the tritone sub. So jazz teachers say: **"playing altered over the V7 is the same as playing the tritone-sub dominant\'s scale."** The two ideas are two views of one sound. (The altered scale gets its own deep dive in the **Altered Scale** lesson.)',
     },
     {
       kind: 'callout',

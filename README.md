@@ -98,7 +98,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (395 tests, ~91% statement coverage) |
+| Testing | Vitest (405 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 
@@ -113,7 +113,7 @@ src/
 │   ├── services/        # Audio engine + progress tracking
 │   ├── components/      # Fretboard, Staff, IntervalWheel, CircleOfFifths,
 │   │                    #   NoteBadge, Nav, Layout, LessonView
-│   ├── content/         # Lesson schema + 14 authored lessons
+│   ├── content/         # Lesson schema + 27 authored lessons
 │   └── utils/           # Colors, markdown renderer, VexFlow bridge
 ├── routes/              # Home, Lessons, Lesson, Builder
 ├── App.svelte           # Hash-based router + route → component mapping
@@ -173,8 +173,11 @@ walking bass), jazz comping voicings (shell + extension, Drop 2 / Drop 3),
 pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
 chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
 harmonic & melodic minor modes, and reharmonization. 27 lessons
-total. Includes **progression playback** (hear any chord sequence in time)
-and **fretboard voicing markers** (diagram exact grips).
+total. Includes **progression playback** (hear any chord sequence in time),
+**fretboard voicing markers** (diagram exact grips), **open-string playback**
+(strum strings 6→1 with per-string highlighting), **+/− steppers** (cycle the
+root note or shift the fretboard window), and cross-instrument highlighting
+(click a piano key or fret and the note lights up everywhere).
 
 **Planned:**
 - Movable-Do solfège alongside fixed-Do

@@ -9,7 +9,7 @@ export const notesFretboard: Lesson = {
   slug: 'notes-and-the-fretboard',
   title: 'Notes & the Fretboard',
   summary: 'The 12 pitch classes, standard tuning, and how to find any note anywhere on the neck.',
-  minutes: 8,
+  minutes: 10,
   blocks: [
     {
       kind: 'text',
@@ -53,6 +53,13 @@ export const notesFretboard: Lesson = {
       markdown:
         'A **semitone** (half step) is the smallest unit here — the distance of **one fret**. Two frets = one **whole tone** (whole step). Everything in harmony is measured in semitones.',
     },
+    {
+      kind: 'widget',
+      selection: { clear: true, root: 'C', fretCount: 12 },
+      widgets: ['piano', 'fretboard'],
+      caption:
+        'Now explore: click a piano key **or** a fret — every occurrence of that note lights up on both instruments at once. The keyboard and the fretboard are two maps of the same 12 notes.',
+    },
 
     {
       kind: 'heading',
@@ -66,10 +73,19 @@ export const notesFretboard: Lesson = {
     },
     {
       kind: 'widget',
-      selection: { scaleType: 'major', root: 'C', fretCount: 12 },
+      selection: { clear: true, root: 'E', fretCount: 12 },
       widgets: ['fretboard'],
+      voicing: [
+        { string: 6, fret: 0 },
+        { string: 5, fret: 0 },
+        { string: 4, fret: 0 },
+        { string: 3, fret: 0 },
+        { string: 2, fret: 0 },
+        { string: 1, fret: 0 },
+      ],
+      play: { kind: 'open-strings', order: 'low-to-high', stagger: 0.55 },
       caption:
-        'The C major scale across all 12 frets. Notice how the same note repeats 12 frets up the same string.',
+        'The six open strings — {{E}} {{A}} {{D}} {{G}} {{B}} {{E}}, low → high. Press **Play strings** to hear them struck 6 → 1; each string lights up as it sounds. The big leap you hear between the {{G}} and {{B}} strings is the major-3rd "kink".',
     },
 
     {
@@ -92,20 +108,51 @@ export const notesFretboard: Lesson = {
       ],
     },
     {
+      kind: 'widget',
+      selection: { showAllNotes: true, fretCount: 12 },
+      strings: [6, 5],
+      widgets: ['fretboard'],
+      caption:
+        'Your roadmap: every note on strings 6 and 5, labelled. Learn these two rows first — every other string is reached from them via octave shapes.',
+    },
+    {
+      kind: 'widget',
+      selection: { clear: true, root: 'C', fretCount: 12 },
+      strings: [6, 5, 4, 3],
+      widgets: ['fretboard'],
+      voicing: [
+        { string: 6, fret: 8 },
+        { string: 4, fret: 10 },
+        { string: 5, fret: 3 },
+        { string: 3, fret: 5 },
+      ],
+      caption:
+        'Octave shapes in action: all four dots are {{C}}. A note on string 6 (fret 8) reappears **2 frets higher** on string 4 (fret 10); string 5 (fret 3) → string 3 (fret 5). Same shape, both pairs.',
+    },
+    {
       kind: 'callout',
       variant: 'tip',
       markdown:
         'The notes at **fret 12** are exactly the open-string names ({{E}} {{A}} {{D}} {{G}} {{B}} {{E}}), one octave up. The fret markers (dots at 3, 5, 7, 9, 12) are your landmarks — use them to jump by 3rds, 4ths, and 5ths without counting.',
     },
     {
+      kind: 'widget',
+      selection: { clear: true, followRoot: true, root: 'C', fretCount: 12 },
+      widgets: ['fretboard'],
+      steppers: { root: true },
+      caption:
+        'Note-finder: use **+/−** to cycle the note name ({{C}} → {{C#}} → {{D}} → …) and watch every occurrence of that pitch class light up across the whole neck. Find a note, then spot its octave 12 frets up.',
+    },
+    {
       kind: 'text',
       markdown:
-        '**Try it:** click any fret below to hear the note and see every other occurrence of that pitch class light up. Find a {{C}}, then find the next {{C}} using an octave shape.',
+        '**Try it free:** click any fret below to hear the note and see every other occurrence of that pitch class light up. Use **◀/▶** to slide the window up the neck and explore higher positions.',
     },
     {
       kind: 'widget',
       selection: { clear: true, root: 'C', fretCount: 12 },
       widgets: ['fretboard'],
+      steppers: { position: true },
       caption: 'Free-exploration mode: click frets to build your own set of highlighted notes.',
     },
   ],

@@ -30,6 +30,7 @@ export type WidgetKind =
   | 'staff'
   | 'interval-wheel'
   | 'circle-of-fifths'
+  | 'piano'
 
 /**
  * A specific fret position to mark on the fretboard — used to diagram an exact
@@ -44,6 +45,17 @@ export interface VoicingPosition {
   fret: number
   /** Optional label override (e.g. a finger number or interval). */
   label?: string
+}
+
+/**
+ * Optional +/− stepper controls for a widget block. Each enabled control
+ * renders a small button group beside the Play button.
+ */
+export interface WidgetSteppers {
+  /** Cycle the root note chromatically (A → A♯ → B → …), keeping any type. */
+  root?: boolean
+  /** Shift the fretboard's visible window one fret up (▶) or down (◀). */
+  position?: boolean
 }
 
 /**
@@ -67,9 +79,22 @@ export interface WidgetSelection {
   fretCount?: number
   /**
    * Clear any active chord/scale, entering free-exploration mode. Use when a
-   * widget should start with no preset (e.g. "click frets freely").
+   * widget should start with no preset (e.g. "click frets freely"). A cleared
+   * widget follows the shared store live, so clicks on the piano/fretboard
+   * highlight everywhere in real time.
    */
   clear?: boolean
+  /**
+   * Highlight all 12 pitch classes (a fully-labeled chromatic reference). Use
+   * for "every note on these strings" diagrams. Incompatible with chord/scale.
+   */
+  showAllNotes?: boolean
+  /**
+   * Highlight just the root note (every occurrence on the neck). Pair with a
+   * root stepper to cycle through note names and watch the highlight move —
+   * the "find any note" explorer.
+   */
+  followRoot?: boolean
 }
 
 /**
@@ -85,6 +110,14 @@ export type WidgetPlay =
       root: NoteName
       /** Highest semitone offset to play (default 12 = up to the octave). */
       maxSemitones?: number
+    }
+  | {
+      /** Play each open string in turn, highlighting one string at a time. */
+      kind: 'open-strings'
+      /** Playback order. Default 'low-to-high' (string 6 → 1). */
+      order?: 'low-to-high' | 'high-to-low'
+      /** Seconds between successive strings (default 0.55). */
+      stagger?: number
     }
   | {
       /** Play a sequence of chords (a progression) in time. */
@@ -165,6 +198,18 @@ export type Block =
        * (instead of lighting every chord tone across the neck).
        */
       voicing?: VoicingPosition[]
+      /**
+       * Render only these string numbers (6 = low E … 1 = high E). When
+       * omitted, all strings render. Use to focus a diagram on, say, the
+       * root strings (6 & 5) for a "finding any note" reference.
+       */
+      strings?: number[]
+      /**
+       * Optional +/− controls rendered beside the Play button. `root` cycles
+       * the root note chromatically (keeping any chord/scale type); `position`
+       * shifts the fretboard's visible window up/down the neck.
+       */
+      steppers?: WidgetSteppers
       /**
        * Overrides the Play button's default behaviour (which plays the
        * current store selection). When set, the button plays this instead.

@@ -10,17 +10,22 @@
    * Reference: PLAN.md Task 4.2, PROJECT.md ("structured data files rendered
    * by generic component").
    */
-  import type { Lesson, Block, WidgetPlay } from '$lib/content/schema'
+  import type {
+    Lesson,
+    Block,
+    WidgetPlay,
+    WidgetSelection,
+    VoicingPosition,
+  } from '$lib/content/schema'
   import { prevLesson, nextLesson } from '$lib/content/lessons'
   import { app } from '$lib/stores/app.svelte'
   import { audio } from '$lib/services/audio'
   import { notesToAscendingMidis, noteToMidi } from '$lib/theory/midi'
   import { parseChordSymbol, chordNotes, type ChordType } from '$lib/theory/chords'
   import { scaleNotes, type ScaleType } from '$lib/theory/scales'
-  import type { NoteName } from '$lib/theory/notes'
+  import { transposeNote, allNotes, type NoteName } from '$lib/theory/notes'
   import { simpleInterval } from '$lib/theory/intervals'
   import { onDestroy } from 'svelte'
-  import type { WidgetSelection } from '$lib/content/schema'
   import Markdown from '$lib/components/Markdown.svelte'
   import InlineText from '$lib/components/InlineText.svelte'
   import {
@@ -77,6 +82,14 @@
     if (!firstWidgetApplied) {
       applySelection(block)
       firstWidgetApplied = true
+      return
+    }
+    // A `clear` (free-exploration) widget resets the store to free mode on
+    // mount so its piano/fretboard clicks toggle notes live. Other widgets
+    // are display-only (each renders its own selection, decoupled from the
+    // store), so they don't touch the shared state.
+    if (block.kind === 'widget' && block.selection.clear) {
+      applySelection(block)
     }
   }
 
@@ -116,36 +129,56 @@
   /**
    * Compute the highlight notes for a widget block's own selection, so each
    * widget displays the chord/scale its caption describes — instead of all
-   * widgets sharing the store's single selection (which left every diagram
-   * showing the first block's chord). Returns [] when the selection clears.
+   * widgets sharing the store's single selection. Returns `undefined` for a
+   * `clear` (free-exploration) selection so the widget follows the shared
+   * store live: clicks on the piano/fretboard then highlight everywhere.
    */
-  function selectionNotes(s: WidgetSelection): NoteName[] {
-    if (s.clear) return []
+  function selectionNotes(s: WidgetSelection): NoteName[] | undefined {
+    if (s.showAllNotes) return [...allNotes(app.preferFlats)]
+    if (s.followRoot) return [app.rootNote]
+    if (s.clear) return undefined
     const root = s.root ?? app.rootNote
     if (s.chordType) return chordNotes(root, s.chordType)
     if (s.scaleType) return scaleNotes(root, s.scaleType)
     return []
   }
 
-  /** Root note for a widget block's own selection (falls back to the store). */
-  function selectionRoot(s: WidgetSelection): NoteName {
+  /** Root note for a widget block's own selection (`undefined` → store root). */
+  function selectionRoot(s: WidgetSelection): NoteName | undefined {
+    if (s.clear || s.showAllNotes) return undefined
     return s.root ?? app.rootNote
   }
 
-  /** True while a progression is actively playing on this specific block. */
-  function isProgressingHere(block: Block): boolean {
+  /** True while any Play override is actively running on this specific block. */
+  function isActiveHere(block: Block): boolean {
     return (
       block.kind === 'widget' &&
-      block.play?.kind === 'progression' &&
-      activeProgression === block.play
+      block.play !== undefined &&
+      activePlay === block.play
     )
+  }
+
+  /**
+   * Marked fret positions for a block's fretboard: the animated single-string
+   * mark while an open-strings play runs here, otherwise the block's static
+   * `voicing` grip. During a progression the store drives, so no marks.
+   */
+  function fretMarks(block: Block): VoicingPosition[] | undefined {
+    if (block.kind !== 'widget') return undefined
+    if (block.play?.kind === 'open-strings' && activePlay === block.play) {
+      return activeMarks
+    }
+    if (block.play?.kind === 'progression' && activePlay === block.play) {
+      return undefined
+    }
+    return block.voicing
   }
 
   /** Play a widget block's own selection (chord or scale), not the store. */
   function playBlockSelection(block: Block): void {
     if (block.kind !== 'widget') return
     const notes = selectionNotes(block.selection)
-    if (notes.length === 0) return
+    if (!notes || notes.length === 0) return
     if (block.selection.chordType) {
       audio.playChordByName(notes, { mode: 'strum' })
     } else {
@@ -156,11 +189,18 @@
   /** Play a widget block's Play button, honouring an optional override. */
   function playWidget(block: Block, play?: WidgetPlay): void {
     if (play?.kind === 'progression') {
-      // Toggle: if this progression is already playing, stop it.
-      if (activeProgression === play) {
-        stopProgression()
+      if (activePlay === play) {
+        stopPlayback()
       } else {
         playProgression(play)
+      }
+      return
+    }
+    if (play?.kind === 'open-strings') {
+      if (activePlay === play) {
+        stopPlayback()
+      } else {
+        playOpenStrings(play)
       }
       return
     }
@@ -184,18 +224,22 @@
    * so the value is not proxied — identity comparison (`=== block.play`) works
    * for the toggle check and the button label.
    */
-  let activeProgression = $state.raw<WidgetPlay | null>(null)
+  let activePlay = $state.raw<WidgetPlay | null>(null)
+  /** Animated single-string marks while an open-strings play runs. */
+  let activeMarks = $state<VoicingPosition[]>([])
+  /** Per-block fretboard window offsets (keyed by block index). */
+  let fretOffsets = $state<Record<number, number>>({})
   /** Pending setTimeout handles for the store-animation + final restore. */
-  let progressionTimers: ReturnType<typeof setTimeout>[] = []
+  let playbackTimers: ReturnType<typeof setTimeout>[] = []
   /** Snapshot of the store selection to restore after a progression. */
   let savedSelection:
     | { root: NoteName; chordType: ChordType | null; scaleType: ScaleType | null }
     | null = null
 
-  /** Stop any playing progression: clear timers, silence audio, restore store. */
-  function stopProgression(): void {
-    for (const t of progressionTimers) clearTimeout(t)
-    progressionTimers = []
+  /** Stop any running playback: clear timers, silence audio, restore store. */
+  function stopPlayback(): void {
+    for (const t of playbackTimers) clearTimeout(t)
+    playbackTimers = []
     audio.stopAll()
     if (savedSelection) {
       if (savedSelection.scaleType !== null) {
@@ -208,12 +252,13 @@
       }
       savedSelection = null
     }
-    activeProgression = null
+    activeMarks = []
+    activePlay = null
   }
 
   /** Play a progression: schedule audio + animate the store through each chord. */
   function playProgression(play: Extract<WidgetPlay, { kind: 'progression' }>): void {
-    stopProgression()
+    stopPlayback()
     let chords: { root: NoteName; type: ChordType; notes: NoteName[] }[]
     try {
       chords = play.chords.map((sym) => {
@@ -234,17 +279,17 @@
       chordType: app.chordType,
       scaleType: app.scaleType,
     }
-    activeProgression = play
+    activePlay = play
 
     // Animate the store through each chord in sync with the audio.
     chords.forEach((c, i) => {
-      progressionTimers.push(
+      playbackTimers.push(
         setTimeout(() => app.selectChord(c.root, c.type), i * chordDurMs),
       )
     })
     // Restore the original selection after the last chord rings.
-    progressionTimers.push(
-      setTimeout(() => stopProgression(), chords.length * chordDurMs + 250),
+    playbackTimers.push(
+      setTimeout(() => stopPlayback(), chords.length * chordDurMs + 250),
     )
 
     audio.playProgression(
@@ -253,7 +298,56 @@
     )
   }
 
-  onDestroy(() => stopProgression())
+  /** MIDI number of a string's open note (from the current tuning). */
+  function openStringMidi(stringNumber: number): number {
+    const tuning = app.tuning
+    const idx = tuning.strings.length - stringNumber
+    const open = tuning.strings[idx]
+    return open ? noteToMidi(open.note, open.octave) : noteToMidi('E', 4)
+  }
+
+  /** Play each open string in turn, animating a single-string mark each time. */
+  function playOpenStrings(
+    play: Extract<WidgetPlay, { kind: 'open-strings' }>,
+  ): void {
+    stopPlayback()
+    const order = play.order ?? 'low-to-high'
+    const stagger = play.stagger ?? 0.55
+    const strings =
+      order === 'low-to-high' ? [6, 5, 4, 3, 2, 1] : [1, 2, 3, 4, 5, 6]
+    activePlay = play
+    const noteDur = Math.max(0.4, stagger * 0.9)
+    strings.forEach((s, i) => {
+      playbackTimers.push(
+        setTimeout(() => {
+          activeMarks = [{ string: s, fret: 0 }]
+          audio.playNote(openStringMidi(s), {
+            duration: noteDur,
+            velocity: 0.5,
+          })
+        }, i * stagger * 1000),
+      )
+    })
+    playbackTimers.push(
+      setTimeout(
+        () => stopPlayback(),
+        strings.length * stagger * 1000 + 300,
+      ),
+    )
+  }
+
+  /** Cycle the root note chromatically (keeps any active chord/scale type). */
+  function stepRoot(dir: 1 | -1): void {
+    app.setRoot(transposeNote(app.rootNote, dir, app.preferFlats))
+  }
+
+  /** Shift a block's fretboard window by one fret (clamped to 0–12). */
+  function stepPosition(blockIndex: number, dir: 1 | -1): void {
+    const cur = fretOffsets[blockIndex] ?? 0
+    fretOffsets[blockIndex] = Math.max(0, Math.min(12, cur + dir))
+  }
+
+  onDestroy(() => stopPlayback())
 </script>
 
 <svelte:head>
@@ -272,7 +366,7 @@
   </header>
 
   <div class="blocks">
-    {#each lesson.blocks as block (block)}
+    {#each lesson.blocks as block, i (block)}
       {#if block.kind === 'heading'}
         {#if block.level === 2}
           <h2>{block.text}</h2>
@@ -394,17 +488,23 @@
                 <div class="widget-cell">
                   <Fretboard
                     fretCount={app.fretCount}
-                    markPositions={block.voicing}
-                    highlightNotes={isProgressingHere(block) ? undefined : selectionNotes(block.selection)}
-                    rootNote={isProgressingHere(block) ? undefined : selectionRoot(block.selection)}
+                    strings={block.strings}
+                    startFret={fretOffsets[i] ?? 0}
+                    markPositions={fretMarks(block)}
+                    highlightNotes={isActiveHere(block) ? undefined : selectionNotes(block.selection)}
+                    rootNote={isActiveHere(block) ? undefined : selectionRoot(block.selection)}
                   />
                 </div>
               {:else if w === 'staff'}
                 <div class="widget-cell">
                   <Staff
-                    notes={isProgressingHere(block) ? undefined : selectionNotes(block.selection)}
-                    asScale={isProgressingHere(block) ? undefined : !!block.selection.scaleType}
+                    notes={isActiveHere(block) ? undefined : selectionNotes(block.selection)}
+                    asScale={isActiveHere(block) ? undefined : !!block.selection.scaleType}
                   />
+                </div>
+              {:else if w === 'piano'}
+                <div class="widget-cell">
+                  <Piano />
                 </div>
               {:else if w === 'interval-wheel'}
                 <div class="widget-cell wheel-cell">
@@ -421,11 +521,27 @@
             <figcaption><InlineText source={block.caption} /></figcaption>
           {/if}
           <div class="widget-actions">
+            {#if block.steppers?.root}
+              <span class="stepper">
+                <span class="stepper-label">Root {app.rootNote}</span>
+                <button type="button" class="step-btn" aria-label="Lower root by one semitone" onclick={() => stepRoot(-1)}>−</button>
+                <button type="button" class="step-btn" aria-label="Raise root by one semitone" onclick={() => stepRoot(1)}>+</button>
+              </span>
+            {/if}
+            {#if block.steppers?.position}
+              <span class="stepper">
+                <button type="button" class="step-btn" aria-label="Shift fretboard window down one fret" onclick={() => stepPosition(i, -1)}>◀</button>
+                <span class="stepper-label">Fret {fretOffsets[i] ?? 0}+</span>
+                <button type="button" class="step-btn" aria-label="Shift fretboard window up one fret" onclick={() => stepPosition(i, 1)}>▶</button>
+              </span>
+            {/if}
             <button type="button" class="play-btn" onclick={() => playWidget(block, block.play)}>
-              {#if block.play?.kind === 'progression' && activeProgression === block.play}
+              {#if isActiveHere(block)}
                 ■ Stop
               {:else if block.play?.kind === 'progression'}
                 ▶ Play progression
+              {:else if block.play?.kind === 'open-strings'}
+                ▶ Play strings
               {:else}
                 ▶ Play
               {/if}
@@ -715,7 +831,42 @@
   .widget-actions {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
     margin-top: 0.6rem;
+  }
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .stepper-label {
+    font-family: var(--font-mono);
+    min-width: 3.2rem;
+    text-align: center;
+  }
+  .step-btn {
+    background: var(--color-raised);
+    color: var(--color-ink);
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    line-height: 1;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.8rem;
+    padding: 0;
+  }
+  .step-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .step-btn:active {
+    transform: translateY(1px);
   }
   .play-btn {
     background: var(--color-accent);

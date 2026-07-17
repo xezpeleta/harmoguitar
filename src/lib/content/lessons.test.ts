@@ -14,6 +14,7 @@ const VALID_WIDGETS: WidgetKind[] = [
   'staff',
   'interval-wheel',
   'circle-of-fifths',
+  'piano',
 ]
 
 describe('lesson curriculum', () => {

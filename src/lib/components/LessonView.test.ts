@@ -17,12 +17,13 @@ import { resetProgress, isComplete } from '$lib/services/progress.svelte'
 const playIntervalMock = vi.fn()
 const playIntervalsMock = vi.fn()
 const playProgressionMock = vi.fn()
+const playNoteMock = vi.fn()
 vi.mock('$lib/services/audio', () => ({
   audio: {
     playInterval: (...a: unknown[]) => playIntervalMock(...a),
     playIntervals: (...a: unknown[]) => playIntervalsMock(...a),
     playProgression: (...a: unknown[]) => playProgressionMock(...a),
-    playNote: vi.fn(),
+    playNote: (...a: unknown[]) => playNoteMock(...a),
     playChord: vi.fn(),
     playSequence: vi.fn(),
     playChordByName: vi.fn(),
@@ -70,6 +71,7 @@ describe('LessonView', () => {
     app.reset()
     playIntervalMock.mockClear()
     playIntervalsMock.mockClear()
+    playNoteMock.mockClear()
   })
 
   it('renders the title, summary, and minutes', () => {
@@ -495,5 +497,248 @@ describe('LessonView — each widget displays its own selection', () => {
     // Cmaj7 has E natural; F7 (the old bug) would show Eb instead.
     expect(notes.has('Eb')).toBe(false)
     expect(notes.has('A')).toBe(false)
+  })
+})
+
+describe('LessonView — open-strings playback', () => {
+  const openStringsLesson: Lesson = {
+    id: 'open-strings-test',
+    slug: 'open-strings-test',
+    title: 'Open Strings Test',
+    summary: 'Hear the open strings.',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { clear: true, root: 'E', fretCount: 12 },
+        widgets: ['fretboard'],
+        voicing: [
+          { string: 6, fret: 0 },
+          { string: 5, fret: 0 },
+          { string: 4, fret: 0 },
+          { string: 3, fret: 0 },
+          { string: 2, fret: 0 },
+          { string: 1, fret: 0 },
+        ],
+        play: { kind: 'open-strings', order: 'low-to-high', stagger: 0.55 },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playNoteMock.mockClear()
+  })
+
+  it('renders a "Play strings" button', () => {
+    const { getByRole } = render(LessonView, { lesson: openStringsLesson })
+    expect(getByRole('button', { name: /play strings/i })).toBeTruthy()
+  })
+
+  it('plays each open string 6 → 1 in ascending sequence', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: openStringsLesson })
+      await fireEvent.click(getByRole('button', { name: /play strings/i }))
+      await vi.advanceTimersByTimeAsync(4000)
+      // One note per string.
+      expect(playNoteMock).toHaveBeenCalledTimes(6)
+      // String 6 open = E2 (midi 40); string 1 open = E4 (midi 64).
+      expect(playNoteMock.mock.calls[0]![0]).toBe(40)
+      expect(playNoteMock.mock.calls[5]![0]).toBe(64)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('toggles to a Stop button while playing', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: openStringsLesson })
+      await fireEvent.click(getByRole('button', { name: /play strings/i }))
+      expect(getByRole('button', { name: /stop/i })).toBeTruthy()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})
+
+describe('LessonView — fretboard string filter & showAllNotes', () => {
+  it('renders only the requested strings', () => {
+    const lesson: Lesson = {
+      id: 'strings-test',
+      slug: 'strings-test',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { showAllNotes: true, fretCount: 12 },
+          strings: [6, 5],
+          widgets: ['fretboard'],
+        },
+      ],
+    }
+    const { container } = render(LessonView, { lesson })
+    // 2 strings × 13 cells (open + 12 frets) = 26 fret-cells.
+    expect(container.querySelectorAll('.fret-cell').length).toBe(26)
+    expect(container.querySelector('[aria-label^="String 6"]')).toBeTruthy()
+    expect(container.querySelector('[aria-label^="String 5"]')).toBeTruthy()
+    expect(container.querySelector('[aria-label^="String 4"]')).toBeNull()
+  })
+
+  it('showAllNotes highlights every pitch class', () => {
+    const lesson: Lesson = {
+      id: 'all-notes',
+      slug: 'all-notes',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { showAllNotes: true, fretCount: 0 },
+          widgets: ['fretboard'],
+        },
+      ],
+    }
+    const { container } = render(LessonView, { lesson })
+    // 6 open strings, all 12 pitch classes lit → all 6 pressed.
+    expect(container.querySelectorAll('.fret-cell[aria-pressed="true"]').length).toBe(6)
+  })
+})
+
+describe('LessonView — steppers', () => {
+  it('root stepper cycles the root note chromatically', async () => {
+    const lesson: Lesson = {
+      id: 'root-step',
+      slug: 'root-step',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { clear: true, followRoot: true, root: 'C', fretCount: 12 },
+          widgets: ['fretboard'],
+          steppers: { root: true },
+        },
+      ],
+    }
+    const { getByLabelText } = render(LessonView, { lesson })
+    const up = getByLabelText('Raise root by one semitone')
+    const down = getByLabelText('Lower root by one semitone')
+    await fireEvent.click(up)
+    expect(app.rootNote).toBe('C#')
+    await fireEvent.click(down)
+    expect(app.rootNote).toBe('C')
+    await fireEvent.click(down)
+    expect(app.rootNote).toBe('B')
+  })
+
+  it('followRoot highlights only the root note', () => {
+    const lesson: Lesson = {
+      id: 'follow-root',
+      slug: 'follow-root',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { clear: true, followRoot: true, root: 'C', fretCount: 12 },
+          widgets: ['fretboard'],
+          steppers: { root: true },
+        },
+      ],
+    }
+    const { container } = render(LessonView, { lesson })
+    const pressed = [
+      ...container.querySelectorAll('.fret-cell[aria-pressed="true"]'),
+    ]
+    expect(pressed.length).toBeGreaterThan(0)
+    pressed.forEach((c) => {
+      expect(c.getAttribute('aria-label')?.endsWith(': C')).toBe(true)
+    })
+  })
+
+  it('position stepper shifts the fretboard window and hides the open column', async () => {
+    const lesson: Lesson = {
+      id: 'pos-step',
+      slug: 'pos-step',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { clear: true, root: 'C', fretCount: 12 },
+          widgets: ['fretboard'],
+          steppers: { position: true },
+        },
+      ],
+    }
+    const { getByLabelText, container } = render(LessonView, { lesson })
+    // Initially the open-string (fret 0) column is shown.
+    expect(container.querySelector('.open-cell')).toBeTruthy()
+    await fireEvent.click(getByLabelText('Shift fretboard window up one fret'))
+    // After shifting to start fret 1, the open column is gone.
+    expect(container.querySelector('.open-cell')).toBeNull()
+  })
+})
+
+describe('LessonView — free-exploration highlight fix', () => {
+  // Regression: a `clear` (free) widget used to pass highlightNotes=[] so clicks
+  // never lit anything. It must now follow the store live.
+  it('clicking a fret in a clear widget highlights every occurrence of that note', async () => {
+    const lesson: Lesson = {
+      id: 'clear-click',
+      slug: 'clear-click',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { clear: true, root: 'C', fretCount: 12 },
+          widgets: ['fretboard'],
+        },
+      ],
+    }
+    const { container } = render(LessonView, { lesson })
+    expect(container.querySelectorAll('.fret-cell[aria-pressed="true"]').length).toBe(0)
+    const cell = container.querySelector<HTMLButtonElement>(
+      '[aria-label="String 1 fret 1: F"]',
+    )!
+    await fireEvent.click(cell)
+    const pressed = [
+      ...container.querySelectorAll<HTMLButtonElement>(
+        '.fret-cell[aria-pressed="true"]',
+      ),
+    ]
+    expect(pressed.length).toBeGreaterThan(1)
+    pressed.forEach((c) =>
+      expect(c.getAttribute('aria-label')?.endsWith(': F')).toBe(true),
+    )
+  })
+
+  it('renders a store-driven piano inside a widget block', () => {
+    const lesson: Lesson = {
+      id: 'piano-widget',
+      slug: 'piano-widget',
+      title: 'T',
+      summary: 's',
+      minutes: 5,
+      blocks: [
+        {
+          kind: 'widget',
+          selection: { clear: true, root: 'C', fretCount: 12 },
+          widgets: ['piano', 'fretboard'],
+        },
+      ],
+    }
+    const { container } = render(LessonView, { lesson })
+    expect(container.querySelector('.piano')).toBeTruthy()
+    expect(container.querySelector('.fretboard-grid')).toBeTruthy()
   })
 })

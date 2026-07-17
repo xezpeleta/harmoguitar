@@ -34,6 +34,10 @@
      * of lighting every chord tone across the neck.
      */
     markPositions?: VoicingPosition[]
+    /** Render only these string numbers (6 = low E … 1 = high E). Omit for all. */
+    strings?: number[]
+    /** First fret to show (0 = include open strings). Default 0. */
+    startFret?: number
   }
 
   let {
@@ -45,6 +49,8 @@
     preferFlats,
     onselectnote,
     markPositions,
+    strings,
+    startFret,
   }: Props = $props()
 
   // Reactive props with store fallbacks (override when provided).
@@ -54,9 +60,11 @@
   const effRoot = $derived(rootNote ?? app.rootNote)
   const effSolfege = $derived(showSolfege ?? app.showSolfege)
   const effFlats = $derived(preferFlats ?? app.preferFlats)
+  const effStartFret = $derived(startFret ?? 0)
+  const effStringFilter = $derived(strings ? new Set(strings) : null)
 
-  // The fretboard matrix, low string (6) → high string (1).
-  const board = $derived(buildFretboard(effTuning, effFretCount))
+  // Build enough frets to cover the visible window (0..startFret+fretCount).
+  const fullBoard = $derived(buildFretboard(effTuning, effStartFret + effFretCount))
 
   // Pitch-class sets for O(1) matching.
   const highlightPcs = $derived(new Set(effHighlight.map((n) => toPitchClass(n))))
@@ -75,7 +83,42 @@
   })
 
   // Render high string (1) at the top → low string (6) at the bottom.
-  const stringsTopToBottom = $derived([...board].reverse())
+  interface StringRow {
+    openPos: FretPosition
+    visible: FretPosition[]
+  }
+  /**
+   * Rows top (high E) → bottom (low E). Each row keeps its open-string
+   * position (for the gutter label) even when the open fret is outside the
+   * visible window, and exposes the visible frets. Filtered to `strings`.
+   */
+  const stringRows = $derived.by<StringRow[]>(() => {
+    const rows: StringRow[] = []
+    for (const positions of fullBoard) {
+      const openPos = positions[0]!
+      if (effStringFilter && !effStringFilter.has(openPos.stringNumber)) continue
+      const visible =
+        effStartFret === 0
+          ? positions.slice(0, effFretCount + 1)
+          : positions.slice(effStartFret, effStartFret + effFretCount)
+      rows.push({ openPos, visible })
+    }
+    return rows.reverse()
+  })
+
+  /** Fret numbers to label in the header (1..fretCount, or shifted). */
+  const fretNumbers = $derived(
+    effStartFret === 0
+      ? Array.from({ length: effFretCount }, (_, k) => k + 1)
+      : Array.from({ length: effFretCount }, (_, k) => effStartFret + k),
+  )
+
+  /** Grid template: label gutter + (open column only at fret 0) + fret cells. */
+  const gridTemplate = $derived(
+    effStartFret === 0
+      ? `var(--label-w) var(--open-w) repeat(${effFretCount}, var(--cell-w))`
+      : `var(--label-w) repeat(${effFretCount}, var(--cell-w))`,
+  )
 
   /** Spelling for a highlighted position: prefer the selection's spelling. */
   function displayNote(pos: FretPosition): NoteName {
@@ -159,12 +202,14 @@
 >
   <div
     class="fretboard-grid select-none"
-    style="grid-template-columns: var(--label-w) var(--open-w) repeat({effFretCount}, var(--cell-w));"
+    style="grid-template-columns: {gridTemplate};"
   >
     <!-- Fret numbers + inlay markers (header) -->
     <div class="fret-number label-cell" aria-hidden="true"></div>
-    <div class="fret-number open-cell" aria-hidden="true">0</div>
-    {#each Array.from({ length: effFretCount }, (_, i) => i + 1) as fret (fret)}
+    {#if effStartFret === 0}
+      <div class="fret-number open-cell" aria-hidden="true">0</div>
+    {/if}
+    {#each fretNumbers as fret (fret)}
       <div class="fret-number" aria-hidden="true">
         <span>{fret}</span>
         {#if hasInlay(fret)}
@@ -180,14 +225,13 @@
     {/each}
 
     <!-- Strings: high E (top) → low E (bottom) -->
-    {#each stringsTopToBottom as stringPositions, stringIdx (stringIdx)}
-      {@const openPos = stringPositions[0]!}
+    {#each stringRows as row, stringIdx (stringIdx)}
       <!-- String label gutter: number + open tuning note -->
       <div class="string-label" aria-hidden="true">
-        <span class="str-num">{openPos.stringNumber}</span>
-        <span class="str-note">{openStringLabel(openPos)}</span>
+        <span class="str-num">{row.openPos.stringNumber}</span>
+        <span class="str-note">{openStringLabel(row.openPos)}</span>
       </div>
-      {#each stringPositions as pos (pos.midi)}
+      {#each row.visible as pos (pos.midi)}
         {@const highlighted = shouldShow(pos)}
         {@const root = isRoot(pos)}
         {@const open = pos.fret === 0}

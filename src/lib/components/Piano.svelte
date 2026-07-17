@@ -106,6 +106,10 @@
   function isRoot(pc: number): boolean {
     return pc === rootPc
   }
+  /** True while this exact key's MIDI is currently sounding (playback). */
+  function isSounding(midi: number): boolean {
+    return app.soundingMidis.has(midi)
+  }
   function keyColors(pc: number): { bg: string; fg: string } {
     const bg = noteColor(displayNote(pc))
     return { bg, fg: readableForeground(bg) }
@@ -194,13 +198,14 @@
   {#each octavesData as oct, oi (oi)}
     <div class="octave">
       {#each oct.whites as wk (wk.midi)}
-        {@const hi = isHighlighted(wk.pc)}
+        {@const hi = isHighlighted(wk.pc) || isSounding(wk.midi)}
         {@const col = keyColors(wk.pc)}
         <button
           type="button"
           class="key white"
           class:highlighted={hi}
           class:root={isRoot(wk.pc)}
+          class:sounding={isSounding(wk.midi)}
           aria-label="{keyLabel(wk.pc)} (pitch class {wk.pc})"
           aria-pressed={hi}
           onclick={() => handleClick(wk.pc, wk.midi)}
@@ -208,6 +213,7 @@
           {#if hi}
             <span
               class="dot"
+              class:sounding={isSounding(wk.midi)}
               style:--dot-color={col.bg}
               style:--dot-fg={col.fg}>{keyLabel(wk.pc)}</span
             >
@@ -216,13 +222,14 @@
       {/each}
 
       {#each oct.blacks as bk (bk.midi)}
-        {@const hi = isHighlighted(bk.pc)}
+        {@const hi = isHighlighted(bk.pc) || isSounding(bk.midi)}
         {@const col = keyColors(bk.pc)}
         <button
           type="button"
           class="key black"
           class:highlighted={hi}
           class:root={isRoot(bk.pc)}
+          class:sounding={isSounding(bk.midi)}
           style:left={blackLeft(bk.after)}
           aria-label="{keyLabel(bk.pc)} (pitch class {bk.pc})"
           aria-pressed={hi}
@@ -231,6 +238,7 @@
           {#if hi}
             <span
               class="dot"
+              class:sounding={isSounding(bk.midi)}
               style:--dot-color={col.bg}
               style:--dot-fg={col.fg}>{keyLabel(bk.pc)}</span
             >
@@ -350,5 +358,23 @@
       0 0 0 2px var(--color-surface),
       0 0 0 4px var(--color-accent),
       0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  /* Sounding note: a pulsing accent ring while this exact key rings out. */
+  .key.sounding .dot {
+    animation: key-pulse 0.5s ease-in-out infinite alternate;
+    box-shadow:
+      0 0 0 2px var(--color-surface),
+      0 0 0 4.5px var(--color-accent),
+      0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  @keyframes key-pulse {
+    from { transform: scale(1); }
+    to   { transform: scale(1.18); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .key.sounding .dot {
+      animation: none;
+      transform: scale(1.14);
+    }
   }
 </style>

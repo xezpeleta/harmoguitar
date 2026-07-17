@@ -61,6 +61,25 @@ class AppStore {
   /** True while audio is actively sounding (for UI affordances). */
   isPlaying = $state<boolean>(false)
 
+  /**
+   * MIDI numbers currently sounding — a transient "ringing" set used to draw
+   * a pulsing highlight on the exact keys/frets being played during a
+   * sequence (e.g. a scale run or an open-string strum). Cleared when sound
+   * stops. Driven by LessonView's playback timers, not the audio engine, so
+   * the engine stays decoupled from the store.
+   */
+  soundingMidis = $state<Set<number>>(new Set())
+
+  /** Replace the set of sounding MIDIs (the notes ringing right now). */
+  setSounding(midis: number[]): void {
+    this.soundingMidis = new Set(midis)
+  }
+
+  /** Clear all sounding highlights. */
+  clearSounding(): void {
+    this.soundingMidis = new Set()
+  }
+
   // --- Derived --------------------------------------------------------------
 
   /** Which mode is driving the highlights. */

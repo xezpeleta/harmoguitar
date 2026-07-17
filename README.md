@@ -98,7 +98,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (405 tests, ~91% statement coverage) |
+| Testing | Vitest (413 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 

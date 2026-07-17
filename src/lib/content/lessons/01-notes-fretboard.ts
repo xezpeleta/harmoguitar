@@ -37,7 +37,7 @@ export const notesFretboard: Lesson = {
       octaves: 1,
       notes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
       caption:
-        'The same 12 pitch classes on a keyboard. The 7 white keys are the natural notes ({{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}}); the 5 black keys are the accidentals. After {{B}} the cycle repeats from {{C}} again, one octave higher. Click any key to hear it.',
+        'The same 12 pitch classes on a keyboard. The 7 white keys are the natural notes ({{C}} {{D}} {{E}} {{F}} {{G}} {{A}} {{B}}); the 5 black keys are the accidentals. After {{B}} the cycle repeats from {{C}} again, one octave higher. Click any key to hear it, or press **Play notes** to hear all 12 in order — each key rings as it sounds.',
     },
     {
       kind: 'list',
@@ -127,7 +127,7 @@ export const notesFretboard: Lesson = {
         { string: 3, fret: 5 },
       ],
       caption:
-        'Octave shapes in action: all four dots are {{C}}. A note on string 6 (fret 8) reappears **2 frets higher** on string 4 (fret 10); string 5 (fret 3) → string 3 (fret 5). Same shape, both pairs.',
+        'Octave shapes in action: all four dots are {{C}}. A note on string 6 (fret 8) reappears **2 frets higher** on string 4 (fret 10); string 5 (fret 3) → string 3 (fret 5). Same shape, both pairs. Press **Play** to hear them ring in turn — each dot lights up as it sounds.',
     },
     {
       kind: 'callout',

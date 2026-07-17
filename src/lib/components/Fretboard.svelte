@@ -146,6 +146,11 @@
     return pos.pitchClass === rootPc
   }
 
+  /** True while this exact position's MIDI is currently sounding (playback). */
+  function isSounding(pos: FretPosition): boolean {
+    return app.soundingMidis.has(pos.midi)
+  }
+
   /**
    * When `markPositions` is set, the fretboard becomes a grip diagram: only
    * the marked positions render a dot. A position is shown if it matches a
@@ -158,10 +163,10 @@
       (m) => m.string === pos.stringNumber && m.fret === pos.fret,
     )
   }
-  /** True when this position should render a dot (marked grip OR highlighted). */
+  /** True when this position should render a dot (marked grip, highlighted, or sounding). */
   function shouldShow(pos: FretPosition): boolean {
     if (markPositions && markPositions.length > 0) return isMarked(pos)
-    return isHighlighted(pos)
+    return isHighlighted(pos) || isSounding(pos)
   }
   /** Optional per-position label override from the voicing (e.g. a finger no.). */
   function markLabel(pos: FretPosition): string | undefined {
@@ -244,6 +249,7 @@
           class:highlighted
           class:root
           class:grip={gripMode}
+          class:sounding={isSounding(pos)}
           aria-label="String {pos.stringNumber} fret {pos.fret}: {displayNote(pos)}"
           aria-pressed={highlighted}
           style:--dot-bg={colors?.bg}
@@ -251,7 +257,7 @@
           onclick={() => handleSelect(pos)}
         >
           {#if highlighted}
-            <span class="dot" class:solfege={effSolfege} class:root>
+            <span class="dot" class:solfege={effSolfege} class:root class:sounding={isSounding(pos)}>
               {markLabel(pos) ?? positionLabel(pos)}
             </span>
           {/if}
@@ -395,6 +401,24 @@
       0 0 0 2px var(--fretboard-bg),
       0 0 0 4px var(--dot-bg);
   }
+  /* Sounding note: a pulsing accent ring while this exact fret rings out. */
+  .dot.sounding {
+    animation: dot-pulse 0.5s ease-in-out infinite alternate;
+    box-shadow:
+      0 0 0 2px var(--fretboard-bg),
+      0 0 0 4.5px var(--color-accent),
+      0 0 0 2px var(--fretboard-bg);
+  }
+  .dot.sounding.root {
+    box-shadow:
+      0 0 0 2px var(--fretboard-bg),
+      0 0 0 4.5px var(--color-accent),
+      0 0 0 7px var(--dot-bg);
+  }
+  @keyframes dot-pulse {
+    from { transform: scale(1); }
+    to   { transform: scale(1.16); }
+  }
   /* Grip mode: a marked voicing position gets a bold outline so the exact
    * frets to press stand out against the wood, even on dim cells. */
   .fret-cell.grip .dot {
@@ -406,6 +430,21 @@
       0 0 0 1.5px var(--fretboard-bg),
       0 0 0 3px var(--color-ink),
       0 0 0 5px var(--dot-bg);
+  }
+  /* Sounding note in grip mode: the accent ring must override the grip
+   * outline, so this selector is more specific than `.fret-cell.grip .dot`. */
+  .fret-cell.grip .dot.sounding {
+    animation: dot-pulse 0.5s ease-in-out infinite alternate;
+    box-shadow:
+      0 0 0 1.5px var(--fretboard-bg),
+      0 0 0 4.5px var(--color-accent),
+      0 0 0 2px var(--fretboard-bg);
+  }
+  .fret-cell.grip .dot.sounding.root {
+    box-shadow:
+      0 0 0 1.5px var(--fretboard-bg),
+      0 0 0 4.5px var(--color-accent),
+      0 0 0 7px var(--dot-bg);
   }
 
   .fret-cell:focus-visible {
@@ -419,6 +458,10 @@
   @media (prefers-reduced-motion: reduce) {
     .fret-cell:hover .dot {
       transform: none;
+    }
+    .dot.sounding {
+      animation: none;
+      transform: scale(1.12);
     }
   }
 </style>

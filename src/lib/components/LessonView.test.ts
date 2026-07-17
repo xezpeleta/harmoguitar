@@ -742,3 +742,184 @@ describe('LessonView — free-exploration highlight fix', () => {
     expect(container.querySelector('.fretboard-grid')).toBeTruthy()
   })
 })
+
+describe('LessonView — standalone piano Play button', () => {
+  const pianoLesson: Lesson = {
+    id: 'piano-play',
+    slug: 'piano-play',
+    title: 'T',
+    summary: 's',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'piano',
+        octaves: 1,
+        notes: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playNoteMock.mockClear()
+  })
+
+  it('renders a "Play notes" button on a standalone piano block', () => {
+    const { getByRole } = render(LessonView, { lesson: pianoLesson })
+    expect(getByRole('button', { name: /play notes/i })).toBeTruthy()
+  })
+
+  it('plays all 12 notes in ascending order', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: pianoLesson })
+      await fireEvent.click(getByRole('button', { name: /play notes/i }))
+      await vi.advanceTimersByTimeAsync(6000)
+      expect(playNoteMock).toHaveBeenCalledTimes(12)
+      // C4 = midi 60 (first), B4 = midi 71 (last).
+      expect(playNoteMock.mock.calls[0]![0]).toBe(60)
+      expect(playNoteMock.mock.calls[11]![0]).toBe(71)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('sets soundingMidis to the currently-ringing note during play', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: pianoLesson })
+      await fireEvent.click(getByRole('button', { name: /play notes/i }))
+      // First note (C4 = midi 60) rings immediately.
+      await vi.advanceTimersByTimeAsync(0)
+      expect(app.soundingMidis.has(60)).toBe(true)
+      // After the stagger, the second note (C#4 = 61) rings instead.
+      await vi.advanceTimersByTimeAsync(450)
+      expect(app.soundingMidis.has(61)).toBe(true)
+      expect(app.soundingMidis.has(60)).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('clears soundingMidis when playback ends', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: pianoLesson })
+      await fireEvent.click(getByRole('button', { name: /play notes/i }))
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(app.soundingMidis.size).toBe(0)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('toggles to Stop and back', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: pianoLesson })
+      await fireEvent.click(getByRole('button', { name: /play notes/i }))
+      expect(getByRole('button', { name: /stop/i })).toBeTruthy()
+      await fireEvent.click(getByRole('button', { name: /stop/i }))
+      expect(getByRole('button', { name: /play notes/i })).toBeTruthy()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})
+
+describe('LessonView — voicing grip Play makes sound', () => {
+  // Regression: a `clear` widget with a voicing grip had a Play button that
+  // did nothing (selectionNotes returned undefined for `clear`).
+  const gripLesson: Lesson = {
+    id: 'grip-play',
+    slug: 'grip-play',
+    title: 'T',
+    summary: 's',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { clear: true, root: 'C', fretCount: 12 },
+        strings: [6, 5, 4, 3],
+        widgets: ['fretboard'],
+        voicing: [
+          { string: 6, fret: 8 },
+          { string: 4, fret: 10 },
+          { string: 5, fret: 3 },
+          { string: 3, fret: 5 },
+        ],
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playNoteMock.mockClear()
+  })
+
+  it('plays the voicing notes (unique pitches, ascending)', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: gripLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      await vi.advanceTimersByTimeAsync(3000)
+      // 4 voicing positions → 2 unique MIDIs (C3=48, C4=60).
+      expect(playNoteMock).toHaveBeenCalledTimes(2)
+      expect(playNoteMock.mock.calls[0]![0]).toBe(48)
+      expect(playNoteMock.mock.calls[1]![0]).toBe(60)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('rings the matching positions via soundingMidis', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: gripLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      await vi.advanceTimersByTimeAsync(0)
+      // C3 (midi 48) ringing first.
+      expect(app.soundingMidis.has(48)).toBe(true)
+      await vi.advanceTimersByTimeAsync(450)
+      // Then C4 (midi 60).
+      expect(app.soundingMidis.has(60)).toBe(true)
+      expect(app.soundingMidis.has(48)).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})
+
+describe('LessonView — clear widget Play runs the chromatic scale', () => {
+  // A `clear` widget with no voicing used to play nothing. It now runs the
+  // 12-note chromatic scale from its root so Play always makes sound.
+  const clearLesson: Lesson = {
+    id: 'clear-play',
+    slug: 'clear-play',
+    title: 'T',
+    summary: 's',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { clear: true, root: 'C', fretCount: 12 },
+        widgets: ['piano', 'fretboard'],
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playNoteMock.mockClear()
+  })
+
+  it('plays 12 chromatic notes from the root', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: clearLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      await vi.advanceTimersByTimeAsync(7000)
+      expect(playNoteMock).toHaveBeenCalledTimes(12)
+      expect(playNoteMock.mock.calls[0]![0]).toBe(60) // C4
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})

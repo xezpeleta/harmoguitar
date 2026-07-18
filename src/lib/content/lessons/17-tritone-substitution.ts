@@ -14,7 +14,7 @@ export const tritoneSubstitution: Lesson = {
   slug: 'tritone-substitution',
   title: 'Tritone Substitution',
   summary: 'The V7\'s "evil twin" a tritone away — same guide tones, a chromatic descending bass.',
-  minutes: 9,
+  minutes: 13,
   blocks: [
     {
       kind: 'text',
@@ -44,6 +44,12 @@ export const tritoneSubstitution: Lesson = {
       kind: 'text',
       markdown:
         'The **3rd and 7th are the same two notes, just swapped.** {{G}}7\'s 3rd ({{B}}) is {{Db}}7\'s 7th ({{Cb}}); {{G}}7\'s 7th ({{F}}) is {{Db}}7\'s 3rd. Because the guide tones are identical, the two chords serve the same harmonic function — they both want to resolve to {{C}}. The roots ({{G}} and {{Db}}) are a tritone apart, which splits the octave exactly in half, so either root works with those guide tones.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**The tritone can resolve two ways.** The guide-tone tritone ({{B}}–{{F}}) is dissonant and wants to resolve by half step. It can resolve **outward**: {{F}}→{{E}} and {{B}}→{{C}} (giving you G7→C, the normal V→I). Or it can resolve **inward**: {{F}}→{{Gb}} and {{B}}→{{Bb}} (giving you Db7→Gb, the tritone-sub V→I in a different key). Same two notes, two possible resolutions — that is why either dominant (G7 or Db7) can resolve to C. The tritone does not care which root you give it; it just wants to collapse.',
     },
 
     {
@@ -147,13 +153,37 @@ export const tritoneSubstitution: Lesson = {
       markdown:
         'The chromatic descending bass this produces is exactly the **walking bass** sound — and walking bass lines are built from the same ingredients: inversions and passing chords. That is the next idea.',
     },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**The \u201cdevil\u2019s interval.\u201d** The tritone (three whole steps) sits exactly at the centre of the octave and was considered so dissonant that it was banned in medieval church music — they called it *diabolus in musica*. Yet this same interval is the engine of every dominant 7 chord. Jazz embraced what classical music once forbade: Thelonious Monk built his whole sound around the tritone. The most \u201cevil\u201d interval in music became the most important one in jazz.',
+    },
   ],
   sources: [
     {
       author: 'Félix Santos',
       title: 'Master Class de Armonía, Jazz y Blues',
       url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
-      note: 'The “sustitución de tritono” section — the tritone sub mechanics and chromatic bass motion.',
+      note: 'The \u201csustitución de tritono\u201d section — the tritone sub mechanics and chromatic bass motion. Eb7 in place of A7, walking down to D.',
+    },
+    {
+      author: 'Walk That Bass',
+      title: 'Tritone Substitution and Scales',
+      url: 'https://www.youtube.com/watch?v=58hVo6xMg6U',
+      note: 'The altered scale over G7 = Ab melodic minor = same notes as Db Lydian Dominant. So you don\u2019t need to change scales when someone tritone-subs. G7♭5 = Db7♭5 (a chord that is its own tritone sub). Rootless voicings make the sub invisible. ii–V can be tritone-subbed too (Abm7–Db7 for Dm7–G7).',
+    },
+    {
+      author: 'Jeremy Siskind',
+      title: 'Tritone Substitution Deep Dive - Why it Works, How to Use It',
+      url: 'https://www.youtube.com/watch?v=xEcHhps3sEY',
+      note: 'Four reasons it works: (1) enharmonically equivalent 3rds and 7ths (swapped), (2) the tritone can resolve outward (F→E, B→C = G7→C) OR inward (F→Gb, B→Bb = Db7→Gb), (3) chromatic descending bass, (4) shared octatonic/diminished scales. The tritone as the medieval \u201cdevil\u2019s interval\u201d embraced by jazz.',
+    },
+    {
+      author: 'TalkingBass',
+      title: 'Tritone Substitution...Explained! (Jazz Harmony For Bass Guitar)',
+      url: 'https://www.youtube.com/watch?v=1UaEdd33xw0',
+      note: 'Practical bass perspective: the tritone sub creates the chromatic walking-bass line that defines the jazz sound. How to voice the sub on the fretboard and connect it smoothly to the resolution.',
     },
   ],
 }

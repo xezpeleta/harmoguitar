@@ -39,7 +39,8 @@
 29. [Associative Learning: Inversions, Phrases & How to Practice](#29-associative-learning-inversions-phrases--how-to-practice)
 30. [The Fretboard Landscape: Green Lights & Red Tonic](#30-the-fretboard-landscape-green-lights--red-tonic)
 31. [The Diminished Blues Pentatonic](#31-the-diminished-blues-pentatonic)
-32. [Sources](#sources)
+32. [Javier Sánchez: Triads, Upper Structures & Time-Feel](#32-javier-sánchez-triads-upper-structures--time-feel)
+33. [Sources](#sources)
 
 ---
 
@@ -955,6 +956,28 @@ This is not one position. It is a method: wherever a passing diminished chord ap
 
 ---
 
+## 32. Javier Sánchez: Triads, Upper Structures & Time-Feel
+
+Javier Sánchez's masterclass centres on three practical ideas that bridge the gap between *knowing* harmony and *making music* with it: organising triads across the whole neck, reducing complex chords to small upper-structure triads, and treating rhythm/time as the non-negotiable foundation that all harmony sits on.
+
+### Triads across the neck: the seven-position system
+
+A single triad (say G major: G–B–D) is not one shape — it is **three inversions** (root position, 1st inversion with the 3rd on the bottom, 2nd inversion with the 5th on the bottom), each of which repeats up the neck at the octave. That gives roughly **seven discrete homes** for one triad across the fretboard. Javier's organisation principle: learn where every inversion lives, on multiple string sets, so you are never trapped in one box. Once the inversions are mapped, **arpeggios stop being scary scale-patterns and become triads chained together** — the arpeggio tones are the anchors (the chord), and the scale tones between them are the connective tissue that travels from one anchor to the next.
+
+### Upper-structure triads: small chords inside big ones
+
+For a complex chord like Cmaj9 (C–E–G–B–D), the instinct is to hunt for a five- or six-note grip. Javier's shortcut: **if the bass covers the root, you only need the upper structure** — the triad built on the 3rd. Cmaj9 minus the root C is E–G–B–D, which is an Em7. Over a C bass, playing Em7 *is* Cmaj9: same four notes, no stretch, no mud. Go smaller still — just the Em triad (E–G–B) gives you Cmaj7. **The triad you already know is the upper structure of the complex chord.**
+
+The beautiful symmetry: the triad quality **flips** relative to the chord. A major chord's 3rd gives a *minor* triad (Cmaj7 → Em); a minor chord's 3rd gives a *major* triad (Cm7 → E♭); a dominant 7's 3rd gives a *diminished* triad (C7 → E°). The flip is geometric: the 5th of the chord is a minor 3rd above a major 3rd (and a major 3rd above a minor 3rd), so the interval from the 3rd to the 5th always produces the opposite quality. You can also build the triad on the **5th** to get the 5–7–9 extensions (over Cmaj9, a G triad spells G–B–D = 5–7–9).
+
+### Rhythm, time & self-recording
+
+The third pillar: **harmony is useless without time.** A Cmaj7 played late, rushing, or with uneven rhythm is not a Cmaj7 — it is noise that happens to contain the right pitches. Javier's prescription is two habits: always practise with a clock (metronome, drum loop, or backing track), and **record yourself constantly**. While you play you cannot hear yourself objectively — the effort and intention colour your perception. The recording, listened to ten seconds later, tells the truth: the rhythm dragged, the chord was muddy, the transition was late. His loop is **play → record → listen → identify one problem → play again focusing only on that → record again**. Short, honest, frequent cycles compound fast.
+
+Gypsy Jazz is the extreme case: the rhythm part (*la pompe*) is a single percussive strum per beat with almost no harmonic content to hide behind. If your time wobbles, the whole band wobbles. It is the purest test of the principle — and the reason the style is such effective training for time-feel regardless of whether you play jazz manouche.
+
+---
+
 ## Sources
 
 ### Web sources (loaded successfully)
@@ -984,5 +1007,6 @@ Transcripts stored in `/tmp/yt_transcripts/`. Topics covered:
 - `chema_vilchez_how_to_study` — the multisensory/associative practice method: the trap of *mecanicidad* (mechanical repetition), the four memories (auditory/visual/muscular/associative), deriving ~20 voicings from one Cmaj7 via inversions + string-set moves, and building/transposing a phrase dictionary (§29)
 - Pat Metheny (interview/masterclass, widely cited) — the "green lights & red tonic" visualization: seeing every scale tone lit green across the whole neck with the tonic lit red, as the cure for box-thinking and stepwise playing (§30)
 - Félix Santos (YouTube class) — the diminished blues pentatonic: over a passing dim7 in a blues, keep the major pentatonic of the preceding chord and treat the dim root as an appoggiatura — slide from below ascending (omit the upper neighbour), slide from above descending (keep it) (§31)
+- Javier Sánchez (YouTube masterclass) — triads across the neck (the seven-position inversion system and arpeggio-as-anchor improvising), upper-structure triads (play the triad on the 3rd over a root bass to voice a complex chord; the quality-flip rule), and rhythm/time/self-recording as the foundation (metronome + recorder loop, Gypsy Jazz la pompe as the purest time-feel test) (§32)
 
 > Note: Several additional pages (jazzguitar.be, proguitar.com, guitarwiz.app) were attempted but timed out; their content was reconstructed from Google search snippets and the sources above. All factual claims (intervals, chord formulas, scale formulas, diatonic sequences) are standard, well-established music theory and were cross-checked across multiple sources.

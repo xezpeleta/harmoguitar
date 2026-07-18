@@ -9,10 +9,13 @@
  * landscape visualization (Lesson 4). Lessons 16–28 cover the full deep jazz
  * harmony path of §15–§28 — secondary dominants, tritone substitution, voice
  * leading & guide tones, passing chords & inversions, comping voicings,
- * pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
- * chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
- * harmonic & melodic minor modes, and reharmonization. Lessons 29–31 are the
- * mastery & practice capstones — associative voicing inversions, the phrase
+ * pentatonics & blue notes, the diminished blues pentatonic, the minor ii–V–i,
+ * the altered scale, borrowed chords & modal mixture, chord-scale theory,
+ * modal jazz & quartal harmony, harmonic & melodic minor modes, and
+ * reharmonization. Lessons 30–32 are the Javier Sánchez technique block —
+ * upper-structure triads, triads across the neck, and rhythm/time/self-
+ * recording (RESEARCH.md §32). Lessons 33–35 are the Chema Vílchez mastery
+ * & practice capstones — associative voicing inversions, the phrase
  * dictionary, and the multisensory practice method (RESEARCH.md §29).
  */
 import type { Lesson } from '$lib/content/schema'
@@ -45,13 +48,17 @@ import { chordScaleTheory } from './26-chord-scale-theory'
 import { modalJazz } from './27-modal-jazz-quartal'
 import { harmonicMelodicMinor } from './28-harmonic-melodic-minor'
 import { reharmonization } from './29-reharmonization'
-import { associativeVoicingInversions } from './30-associative-voicing-inversions'
-import { phraseDictionary } from './31-phrase-dictionary'
-import { howToPractice } from './32-how-to-practice'
+import { upperStructureTriads } from './30-upper-structure-triads'
+import { triadsAcrossTheNeck } from './31-triads-across-the-neck'
+import { rhythmTimeSelfRecording } from './32-rhythm-time-self-recording'
+import { associativeVoicingInversions } from './33-associative-voicing-inversions'
+import { phraseDictionary } from './34-phrase-dictionary'
+import { howToPractice } from './35-how-to-practice'
 
 /**
  * The learning path, in order. Adding a lesson = adding an entry here.
- * Source: RESEARCH.md §1–§14 (foundations) + §15–§28 (jazz) + §29 (practice).
+ * Source: RESEARCH.md §1–§14 (foundations) + §15–§28 (jazz) + §29 (Chema
+ * practice) + §32 (Javier technique).
  */
 export const LESSONS: readonly Lesson[] = [
   notesFretboard,
@@ -83,6 +90,9 @@ export const LESSONS: readonly Lesson[] = [
   modalJazz,
   harmonicMelodicMinor,
   reharmonization,
+  upperStructureTriads,
+  triadsAcrossTheNeck,
+  rhythmTimeSelfRecording,
   associativeVoicingInversions,
   phraseDictionary,
   howToPractice,

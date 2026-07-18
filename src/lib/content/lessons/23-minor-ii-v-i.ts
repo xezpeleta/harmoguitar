@@ -13,7 +13,7 @@ export const minorIIVi: Lesson = {
   slug: 'the-minor-ii-v-i',
   title: 'The Minor ii–V–i',
   summary: 'The dark twin of the ii–V–I — half-diminished ii, altered V7, minor tonic. The sound of a hundred jazz ballads.',
-  minutes: 12,
+  minutes: 16,
   blocks: [
     {
       kind: 'text',
@@ -144,9 +144,41 @@ export const minorIIVi: Lesson = {
     },
     {
       kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Go rootless.** Once you can play the basic grips, **drop the bass note** from each chord. The bassist has the root covered — and without it, your three-note shapes become far more flexible: you can change the top-note melody, add rhythms, and move between inversions freely. A static four-note grip is a campfire chord; a rootless three-note shape is a comping instrument. Start with the 3rd and 7th (the guide tones), then add one colour note on top — that is your melody.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Pentatonic of the 5th for a modern sound.** Instead of playing {{B}} minor pentatonic over the {{B}}m7♭5, try the pentatonic built on the **5th of the chord** — {{F#}} minor pentatonic. It contains the 9th ({{C#}}), a note the straight {{B}} minor pentatonic lacks, giving you a more colourful, modern line. The same trick works on the tonic: {{E}} minor pentatonic over {{A}}m7 gives you the 9th ({{B}}) and 11th ({{D}}) — an {{A}}m9 sound without playing the root. Pentatonics a half-step apart (shifting up one fret per chord) also produce a strikingly modern, chromatic effect across the whole progression.',
+    },
+    {
+      kind: 'callout',
       variant: 'note',
       markdown:
         'The **altered scale** over the V7 is the single most powerful tool for this progression — and it has a deep connection to the tritone substitution you learned in Lesson 16. That is the next lesson.',
+    },
+  ],
+  sources: [
+    {
+      author: 'Jens Larsen',
+      title: 'Minor II V I - 3 Levels You Want To Know',
+      url: 'https://www.youtube.com/watch?v=LO8f79Eh6EE',
+      note: 'Start with basic grips, then go rootless (drop the bass note) for three-note flexibility. Add the 4th note back as a top-note melody, not bass. Altered scale over the V7 (gets ♭5 and ♭13). Be practical: pick a few easy options and be creative, not all options. Comping = listening to the soloist too.',
+    },
+    {
+      author: 'QJamTracks (Rob)',
+      title: 'Remarkable way to improvise over the ii-V-I with chromatic pentatonic shifts',
+      url: 'https://www.youtube.com/watch?v=KbPvJyA7XHM',
+      note: 'Play the minor pentatonic of the 5th degree over a m7 chord (Am pent over Dm7) to get the 9th — a more modern, colourful sound. Half-step pentatonic shifts across the progression. Altered scale over altered dominants.',
+    },
+    {
+      author: 'Jazz Guitar Lessons (Marc-André Séguin)',
+      title: 'How to: Improvisation on ii-V-I Progression (2-5-1) with Pentatonics',
+      url: 'https://www.youtube.com/watch?v=JnBocHVRLaA',
+      note: 'Three pentatonics a half-step apart (Am → B♭m → Bm) over a ii-V-I = very modern sound, simple to execute. Bm pentatonic over Cmaj7 gives a Lydian (#11) sound. Pentatonics as \u201cfresh air\u201d alongside your normal scales and arpeggios.',
     },
   ],
 }

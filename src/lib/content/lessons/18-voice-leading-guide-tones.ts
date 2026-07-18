@@ -141,4 +141,12 @@ export const voiceLeadingGuideTones: Lesson = {
         'Once you think in guide tones, substitutions stop being "different chords" and become **different roots under the same two notes.** That is the whole secret of jazz harmony on the guitar — and it leads directly to the next lesson: keeping those guide tones while you walk the bass through inversions and passing chords.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The “horn player’s secret” — arpeggiating guide tones (3rds & 7ths) as the backbone of jazz soloing.',
+    },
+  ],
 }

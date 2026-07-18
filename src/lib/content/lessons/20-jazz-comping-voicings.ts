@@ -179,4 +179,12 @@ export const jazzCompingVoicings: Lesson = {
         '**Learning strategy:** learn Drop 2 on the **middle string set (5-4-3-2)** first, all 4 inversions, for maj7, dom7, and m7. That is 12 shapes that will cover most of your comping. Then expand to the other string sets, add m7♭5 and dim7, then add Drop 3. Do not try to learn all 60 at once — build the core, then grow.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The “acordes cuatríadas y tensiones” section — shell + extension voicings and Drop 2 / Drop 3 grips.',
+    },
+  ],
 }

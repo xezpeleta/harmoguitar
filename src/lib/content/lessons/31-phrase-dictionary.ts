@@ -140,4 +140,12 @@ export const phraseDictionary: Lesson = {
         'A dictionary is useless if you never *speak* from it. Do not let the collecting become a substitute for playing. Learn a phrase, sing it, transpose it, drop it into a real solo over a backing track — then, and only then, add the next one. A small dictionary you actually *use* beats a huge one you only admire.',
     },
   ],
+  sources: [
+    {
+      author: 'Chema Vílchez',
+      title: 'Master Class: cómo estudiar y salir de la mecanicidad',
+      url: 'https://www.youtube.com/watch?v=6ccY37fyxVo',
+      note: 'The “diccionario de frases” — building and transposing a vocabulary of learned licks.',
+    },
+  ],
 }

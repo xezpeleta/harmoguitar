@@ -148,4 +148,12 @@ export const tritoneSubstitution: Lesson = {
         'The chromatic descending bass this produces is exactly the **walking bass** sound — and walking bass lines are built from the same ingredients: inversions and passing chords. That is the next idea.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The “sustitución de tritono” section — the tritone sub mechanics and chromatic bass motion.',
+    },
+  ],
 }

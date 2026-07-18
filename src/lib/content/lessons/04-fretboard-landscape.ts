@@ -163,4 +163,11 @@ export const fretboardLandscape: Lesson = {
         'This image is the foundation of everything that follows. When you learn minor scales, modes, and pentatonics in the lessons ahead, do not learn them as new boxes — ask *"where are the green lights now, and which one is red?"* The landscape changes colour; the method of seeing it stays the same. One neck, one map, home always lit red.',
     },
   ],
+  sources: [
+    {
+      author: 'Pat Metheny',
+      title: 'Green lights & red tonic visualization (widely cited)',
+      note: 'Metheny described seeing every scale tone lit green across the whole neck with the tonic lit red — a concept referenced across multiple interviews and masterclasses.',
+    },
+  ],
 }

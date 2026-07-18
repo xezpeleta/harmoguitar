@@ -138,4 +138,12 @@ export const pentatonicBlueNotes: Lesson = {
         'Félix Santos\'s parting advice applies to all of it: **stop thinking statically.** A bar of {{A}}7 is not one chord — it is four beats of harmonic opportunity. Find an inversion, walk the bass, slip a passing chord, lean on a blue note. Make the guitar sound like it is playing itself.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The “pentatónicas y las verdaderas blue notes” section — pentatonics as raw material and blue notes as passing tones.',
+    },
+  ],
 }

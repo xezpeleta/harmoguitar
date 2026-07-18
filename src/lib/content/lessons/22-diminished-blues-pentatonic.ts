@@ -196,4 +196,13 @@ export const diminishedBluesPentatonic: Lesson = {
         'Do not overuse it. A passing diminished chord is *passing* — it lasts a beat or two. The slide is a moment of tension that resolves back into the next chord. If you linger on the diminished sound, it stops passing and starts sounding like you are lost. In, slide, out.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Escala Pentatónica Disminuida (tip)',
+      url: 'https://youtu.be/AlPwybkGECM',
+      timestamp: '01:01',
+      note: 'Constructing the diminished blues pentatonic: slide into the dim root from below ascending, from above descending.',
+    },
+  ],
 }

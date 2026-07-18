@@ -253,6 +253,20 @@ export type Block =
       caption?: string
     }
 
+/** A source attribution for a lesson (video, article, masterclass, …). */
+export interface LessonSource {
+  /** Who created the source (e.g. "Félix Santos"). */
+  author: string
+  /** Title of the video or article. */
+  title: string
+  /** Full URL to the source (optional — some concepts are widely cited). */
+  url?: string
+  /** Optional timestamp or section within the source (e.g. "05:14"). */
+  timestamp?: string
+  /** Optional note on what this source contributed to the lesson. */
+  note?: string
+}
+
 /** A single lesson in the learning path. */
 export interface Lesson {
   /** Stable identifier (e.g. "notes-fretboard"). */
@@ -267,4 +281,6 @@ export interface Lesson {
   minutes: number
   /** The lesson body, rendered top-to-bottom. */
   blocks: Block[]
+  /** Optional source attributions rendered as a footer before navigation. */
+  sources?: LessonSource[]
 }

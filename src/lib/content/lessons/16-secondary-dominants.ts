@@ -168,4 +168,12 @@ export const secondaryDominants: Lesson = {
         'Try it: comp {{C}} – {{E}}7 – {{A}}m – {{F}}. The {{E}}7 is the only non-diatonic chord, but it makes the progression sound far more "jazzy" than the diatonic {{C}} – {{A}}m – {{D}}m – {{G}}. One borrowed note, a world of difference.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The secondary dominants section — turning a diatonic minor into a dominant to push toward a target chord.',
+    },
+  ],
 }

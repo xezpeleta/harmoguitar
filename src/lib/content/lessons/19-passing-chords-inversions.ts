@@ -148,4 +148,12 @@ export const passingChordsInversions: Lesson = {
         'This is also the harmonic side of the **blue note** idea you will meet in the Pentatonics & Blue Notes lesson: when a melody hits a slippery chromatic "blue" note, the chord underneath is very often one of these **diminished passing chords**. The melody and the harmony walk together.',
     },
   ],
+  sources: [
+    {
+      author: 'Félix Santos',
+      title: 'Master Class de Armonía, Jazz y Blues',
+      url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
+      note: 'The “develop the chord” idea — moving a dominant through inversions, connected by diminished passing chords.',
+    },
+  ],
 }

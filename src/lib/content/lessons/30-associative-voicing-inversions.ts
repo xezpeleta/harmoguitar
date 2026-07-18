@@ -178,4 +178,12 @@ export const associativeVoicingInversions: Lesson = {
         'Do not try to learn all twenty voicings at once — that is exactly the rote, mechanical trap the next lesson warns against. Learn **the seed and the two moves** (rotate the bass tone; hop a note to a neighbour). Then *generate* inversions on demand, on the string set you happen to need, in the key that is playing. The point of association is that you can rebuild the list yourself — so you never have to store it whole.',
     },
   ],
+  sources: [
+    {
+      author: 'Chema Vílchez',
+      title: 'Master Class: cómo estudiar y salir de la mecanicidad',
+      url: 'https://www.youtube.com/watch?v=6ccY37fyxVo',
+      note: 'The “20 chords in 5 minutes” idea — deriving ~20 voicings from one Cmaj7 via inversions + string-set moves.',
+    },
+  ],
 }

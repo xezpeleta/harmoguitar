@@ -190,4 +190,12 @@ export const howToPractice: Lesson = {
         '**The whole course in one line:** stop moving your fingers up and down — start *hearing, seeing, and connecting*. The harmony you have learned is a small set of movable maps; the method above is how those maps become *music in your hands*. Go slowly, sing everything, and let the widgets do what they are built for — linking the sound, the shape, and the name into one thing you can actually play.',
     },
   ],
+  sources: [
+    {
+      author: 'Chema Vílchez',
+      title: 'Master Class: cómo estudiar y salir de la mecanicidad',
+      url: 'https://www.youtube.com/watch?v=6ccY37fyxVo',
+      note: 'The multisensory method — the trap of mecanicidad and the four memories (auditory, visual, muscular, associative).',
+    },
+  ],
 }

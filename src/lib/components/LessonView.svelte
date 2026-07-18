@@ -696,6 +696,32 @@
     {/each}
   </div>
 
+  {#if lesson.sources && lesson.sources.length > 0}
+    <section class="lesson-sources" aria-label="Sources and further viewing">
+      <h2 class="sources-heading">Sources & further viewing</h2>
+      <ul class="sources-list">
+        {#each lesson.sources as src (src.author + src.title)}
+          <li class="source-item">
+            <span class="source-author">{src.author}</span>
+            {#if src.url}
+              <a
+                class="source-link"
+                href={src.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >{src.title}{#if src.timestamp}<span class="source-ts"> · {src.timestamp}</span>{/if}</a>
+            {:else}
+              <span class="source-title">{src.title}{#if src.timestamp}<span class="source-ts"> · {src.timestamp}</span>{/if}</span>
+            {/if}
+            {#if src.note}
+              <span class="source-note">{src.note}</span>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    </section>
+  {/if}
+
   <footer class="lesson-foot">
     <button
       type="button"
@@ -1028,6 +1054,60 @@
   }
 
   /* Footer */
+  .lesson-sources {
+    margin-top: 2.5rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.6rem;
+    background: var(--color-raised);
+    border: 1px solid var(--color-border);
+  }
+  .sources-heading {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin: 0 0 0.6rem;
+  }
+  .sources-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .source-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .source-author {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  .source-link {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .source-link:hover {
+    text-decoration: underline;
+  }
+  .source-title {
+    color: var(--color-text);
+  }
+  .source-ts {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+  .source-note {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    width: 100%;
+  }
   .lesson-foot {
     margin-top: 2.5rem;
     padding-top: 1.5rem;

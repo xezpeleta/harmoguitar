@@ -14,7 +14,7 @@ export const alteredScale: Lesson = {
   slug: 'the-altered-scale',
   title: 'The Altered Scale',
   summary: 'Every alteration of a dominant chord in one scale — ♭9, ♯9, ♭5, ♯5 — and why they all resolve by half-step.',
-  minutes: 11,
+  minutes: 15,
   blocks: [
     {
       kind: 'text',
@@ -70,6 +70,12 @@ export const alteredScale: Lesson = {
       variant: 'tip',
       markdown:
         'The third view is the **fastest mental shortcut** on the bandstand: if you see a {{G}}7alt and you freeze, just play {{Db}}7 material ({{Db}} Mixolydian, {{Db}} arpeggios, {{Db}} blues licks). The notes are the same. You are never more than a tritone away from the right scale.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Only one 3rd.** The altered scale looks like it has both a minor 3rd (the ♯9) and a major 3rd — but functionally there is only **one 3rd** (the major 3rd, {{B}}). The ♯9 is an *upper extension*, not a second 3rd. A chord can only have one 3rd; the ♯9 is a colour tone stacked above it. This is a common source of confusion: the scale *contains* both {{Bb}} and {{B}}, but only {{B}} defines the chord as major-quality.',
     },
 
     {
@@ -131,9 +137,41 @@ export const alteredScale: Lesson = {
     },
     {
       kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**No avoid notes.** Unlike Mixolydian (which has an avoid note — the 4th, which clashes with the 3rd), the altered scale has **no avoid notes at all**. Every note is either a chord tone or an altered extension that resolves. You can rest on any note without clashing. This is one reason it is so popular: you cannot play a \u201cwrong\u201d note in the altered scale, only one that has not resolved yet.',
+    },
+    {
+      kind: 'callout',
       variant: 'tip',
       markdown:
         '**Practice tip:** learn the altered scale as "{{G}} to {{G}} from {{Ab}} melodic minor" first. Then practice resolving each altered tone into the tonic (♭9→5th, ♭5→root, ♯9→3rd, ♯5→3rd). When you can *hear* the half-step landings, you will never need to think about the formula again — your ear will guide you.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Every note except the root wants to resolve.** This is the key to making the altered scale sound musical instead of like a maths exercise. Do not run the scale up and down — that is just noise. Instead, pick **one altered note** per chord and let it resolve by half-step into the next chord tone. Start with simple three-note licks: one note on the ii, one altered note on the V7, one resolution note on the I. Your line must have **direction** — it should *move toward* the resolution, not wander. A descending altered run that lands on the 5th of the tonic is worth more than a dazzling flurry of notes that goes nowhere.',
+    },
+  ],
+  sources: [
+    {
+      author: 'Jens Larsen',
+      title: 'Altered Scale - Make Sure You Learn This First!',
+      url: 'https://www.youtube.com/watch?v=EfV5QZD5SzA',
+      note: 'Three rules: (1) every note except the root wants to resolve — each has a specific landing spot; (2) altered lines must have direction, moving toward the resolution; (3) start with simple three-note licks (one note per chord). The altered scale has no perfect 5th (replaced by ♭5/♯5).',
+    },
+    {
+      author: 'Richie Zellon',
+      title: 'How to use the Altered Dominant Chord & Scale',
+      url: 'https://www.youtube.com/watch?v=oKZ0sJvt8nA',
+      note: '\u201cAlt\u201d = every upper extension altered (♭9 or ♯9, ♯11, ♭13). Super Locrian = 7th mode of melodic minor; easier to visualise as melodic minor a half-step up. No avoid notes — you can rest on any note. Only one 3rd (the major 3rd); the ♯9 is an upper extension, not a second 3rd. Only use on resolving dominants.',
+    },
+    {
+      author: 'Jared Bork (Sound Guitar Lessons)',
+      title: 'Altered Scales Explained + All 5 altered dominant scale guitar positions',
+      url: 'https://www.youtube.com/watch?v=TZfPooQ0y9E',
+      note: 'Comprehensive walkthrough of the altered scale (also called super Locrian) as a mode of melodic minor, with all 5 fretboard positions. Practical application over dominant chords.',
     },
   ],
 }

@@ -9,12 +9,18 @@ export const bluesAndIIVI: Lesson = {
   slug: 'the-blues-and-ii-v-i',
   title: 'The Blues & the ii–V–I',
   summary: 'The 12-bar blues form and the most important progression in jazz — your gateway to v1.1.',
-  minutes: 14,
+  minutes: 18,
   blocks: [
     {
       kind: 'text',
       markdown:
         'Two forms close out v1: the **12-bar blues** (the foundation of blues, rock, and jazz) and the **ii–V–I** (the engine of jazz harmony). Master these and you are ready for the deep jazz sounds in v1.1.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Why all dominant 7s?** In a blues, the I, IV, and V are *all* played as dominant 7 chords — even the tonic. This is what gives the blues its signature sound: every chord contains a tritone, so every chord has built-in tension. In classical harmony a dominant 7 *must* resolve, but in the blues it just *sits there* as home base. That unresolved tension on a tonic chord is the defining sound of blues and the root of everything that became rock, R&B, and jazz.',
     },
 
     {
@@ -40,6 +46,12 @@ export const bluesAndIIVI: Lesson = {
       kind: 'text',
       markdown:
         'The final V→I ({{C}}7→{{F}}7) is the turnaround that loops to the next chorus.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**The quick-change blues.** The most common variant moves to the IV in **bar 2** (instead of staying on I for 4 bars): I7–IV7–I7–I7. This \u201cquick change\u201d gets the harmony moving sooner and is heard in countless blues and rock songs. The standard form stays on I for 4 bars; the quick change breaks that up early. Both are \u201cthe blues\u201d — the form is flexible.',
     },
     {
       kind: 'widget',
@@ -97,6 +109,18 @@ export const bluesAndIIVI: Lesson = {
         '**I ({{C}}maj7)** = resolution, releases the tension.',
         'The roots move in **4ths** ({{D}}→{{G}}→{{C}}) — the strongest, most "circular" root motion.',
       ],
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**The ii–V–I is a chain of V→I resolutions.** {{D}} is the 5th of {{G}}, and {{G}} is the 5th of {{C}}. So the progression is really two nested dominant-to-tonic moves: D→G (V→I in G) then G→C (V→I in C). Each step is the strongest resolution in music, chained together. That is why the ii–V–I feels so inevitable — it is not one resolution, it is *two in a row*.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**The three functions have substitutes.** The ii–V–I is just the simplest version of a deeper pattern: **pre-dominant → dominant → tonic**. Each function can be served by other chords: the tonic group (I, vi, iii) all feel like rest; the pre-dominant group (ii, IV) both lift gently; the dominant group (V, vii°) both contain the tritone and pull hard. So {{F}}→{{G}}7→{{A}}m works just as well as {{D}}m7→{{G}}7→{{C}}maj7 — it follows the same functional path with different chords. This is why jazz musicians can swap chords freely without losing the progression\u2019s sense of direction.',
     },
 
     {
@@ -176,6 +200,32 @@ export const bluesAndIIVI: Lesson = {
       variant: 'tip',
       markdown:
         'For now, **use the Builder** to explore any chord or scale: pick a root and type, see the formula, fretboard, staff, and intervals, and play it. The best way to internalise this is to *play* it — every day, in a different key.',
+    },
+  ],
+  sources: [
+    {
+      author: 'Marty Music',
+      title: '12 Bar Blues Lesson For Beginners',
+      url: 'https://www.youtube.com/watch?v=XFuXLSIYH7s',
+      note: 'The 12-bar blues as the building blocks of rock and modern music. Three chords (I, IV, V all as dominant 7) over 12 bars. The turnaround (V–IV–I–V) at bars 9–12. Why the blues is the gateway: techniques carry over into everything you play.',
+    },
+    {
+      author: 'JustinGuitar',
+      title: 'How to Play 12 Bar Blues on Guitar for Beginners',
+      url: 'https://www.youtube.com/watch?v=rLm99QI8eWs',
+      note: 'Three variants: standard (4 bars on I), quick change (IV in bar 2), and slow change. Naming chords by scale degrees (1-4-5). The form is sacred — 12 bars, not 11 or 13. Practicing in multiple keys to internalise the changes.',
+    },
+    {
+      author: 'Noah Kellman',
+      title: 'The Most Important Chord Progression in Jazz [Music Theory]',
+      url: 'https://www.youtube.com/watch?v=AkUHZpSdPqk',
+      note: 'The ii-V-I as a chain of V→I resolutions: D is the 5 of G, G is the 5 of C — two nested dominant-to-tonic moves. The diatonic structure gives ii=m7, V=dom7, I=maj7. Voice leading: change as few notes as possible between chords. The 3rd and 7th are the most important notes.',
+    },
+    {
+      author: 'Walk That Bass',
+      title: 'Jazz Piano Tutorial - II-V-I and the Diatonic Function',
+      url: 'https://www.youtube.com/watch?v=Tloy3wGsJ1o',
+      note: 'The three functional groups: tonic (I, iii, vi), pre-dominant (ii, IV), dominant (V, vii°). The tritone (B-F) is what makes dominant chords unstable. Each function has substitutes — any pre-dominant → dominant → tonic progression works (e.g., F→G7→Am). Voice leading: notes stay the same or move by one step.',
     },
   ],
 }

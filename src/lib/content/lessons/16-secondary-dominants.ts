@@ -15,7 +15,7 @@ export const secondaryDominants: Lesson = {
   slug: 'secondary-dominants',
   title: 'Secondary Dominants',
   summary: 'Giving every chord its own V7 — the simplest way to add chromatic pull and forward motion.',
-  minutes: 10,
+  minutes: 14,
   blocks: [
     {
       kind: 'text',
@@ -34,6 +34,18 @@ export const secondaryDominants: Lesson = {
         '**Every major or minor chord in the key can be preceded by its own V7.** That borrowed V7 is the "secondary dominant," written **V7/x** ("five of x"). It tonicizes — temporarily points at — the target chord x, then resolves to it exactly as a normal V7→I would.',
     },
     {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Tonicization, not modulation.** A secondary dominant does not change key. It borrows a V7→I from another key for just one or two chords, then carries on in the original key "as if nothing happened." Think of it as sprinkling herbs on your cooking — a burst of extra flavour that makes the arrival at the target chord feel more important, without actually leaving home. If you *stayed* in the new key, that would be a modulation. A secondary dominant is just a visit.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**The target must be diatonic.** You can only tonicize chords that already belong to your key. In C major you can tonicize {{D}}m, {{E}}m, {{F}}, {{G}}, and {{A}}m — but not {{F#}}m, because {{F#}}m is not a chord in C major. (The vii° cannot be tonicized either, because a diminished chord cannot serve as a tonic.) This is why secondary dominants sound smooth: the resolution chord is already "home" material, so the detour feels like a brief intensification, not a departure.',
+    },
+    {
       kind: 'text',
       markdown: 'In **C major**, the secondary dominants for each diatonic target are:',
     },
@@ -46,6 +58,12 @@ export const secondaryDominants: Lesson = {
         ['V ({{G}})', 'D7 → {{G}}', 'V7/V', '{{F#}} (leading tone to {{G}})'],
         ['vi ({{A}}m)', 'E7 → {{A}}m', 'V7/vi', '{{G#}} (leading tone to {{A}})'],
       ],
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**V7/IV is hiding in plain sight.** The V7 of IV in C major is **{{C}}7** — which is just the I chord with a ♭7 added. So when you play {{C}}7→{{F}}, you are using the I as a secondary dominant of the IV. This is incredibly common in blues and rock: the tonic chord gets a ♭7 not for tension, but to *push* toward the IV. The same chord, two functions: when {{C}}7 resolves to {{F}}, it is V7/IV; when it sits still, it is just I with blues colour.',
     },
 
     {
@@ -167,13 +185,37 @@ export const secondaryDominants: Lesson = {
       markdown:
         'Try it: comp {{C}} – {{E}}7 – {{A}}m – {{F}}. The {{E}}7 is the only non-diatonic chord, but it makes the progression sound far more "jazzy" than the diatonic {{C}} – {{A}}m – {{D}}m – {{G}}. One borrowed note, a world of difference.',
     },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Spotting them in the wild.** When you see a chromatic chord in a chart or a song, the first question to ask is: *what chord comes next?* If the chromatic chord resolves down a 5th into a diatonic chord, it is almost certainly a secondary dominant. Bohemian Rhapsody, I Got Rhythm, and countless standards use them — sometimes subtly (just helping the progression move), sometimes dramatically (marking a new section). The method is always the same: find the chromatic note, find the chord it resolves to, ask "is this its V7?"',
+    },
   ],
   sources: [
     {
       author: 'Félix Santos',
       title: 'Master Class de Armonía, Jazz y Blues',
       url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
-      note: 'The secondary dominants section — turning a diatonic minor into a dominant to push toward a target chord.',
+      note: 'The secondary dominants section — turning a diatonic minor into a dominant to push toward a target chord while staying in the same harmonic region.',
+    },
+    {
+      author: 'MusicTheoryAdvanced',
+      title: 'Secondary Dominants in popular music',
+      url: 'https://www.youtube.com/watch?v=5Mrij-0_I58',
+      note: 'Real-world examples from pop and musical theatre (Bohemian Rhapsody, I Dreamed a Dream). Method for spotting them: find a chromatic chord, look at what follows, ask if it is the V7 of that chord. Subtle uses just help the progression move; dramatic ones mark new sections.',
+    },
+    {
+      author: 'Music Matters',
+      title: 'What is a Secondary Dominant? - Music Theory',
+      url: 'https://www.youtube.com/watch?v=YVQiE441t2M',
+      note: 'The target of a secondary dominant must be a diatonic chord in the home key — you cannot tonicize a chord that does not belong. Tonicization as "sprinkling herbs": adding colour without modulating. All diatonic chords except the vii° can be tonicized.',
+    },
+    {
+      author: 'Jesse Strickland',
+      title: 'What Are Secondary Dominants?',
+      url: 'https://www.youtube.com/watch?v=s1xEl6uTwqg',
+      note: 'Tonicization = making a non-tonic chord feel temporarily like the tonic. The V7/V label encodes three things: which dominant, which key is borrowed from, and where it resolves. V7/IV is special — it is just the I chord with a ♭7. Irregular resolutions (not resolving to the expected target) are common in real music.',
     },
   ],
 }

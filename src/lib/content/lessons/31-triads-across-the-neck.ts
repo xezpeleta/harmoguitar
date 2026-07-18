@@ -15,7 +15,7 @@ export const triadsAcrossTheNeck: Lesson = {
   slug: 'triads-across-the-neck',
   title: 'Triads Across the Neck',
   summary: 'One triad, seven homes. Learn the three inversions per octave and you can voice or arpeggiate any chord in any register.',
-  minutes: 11,
+  minutes: 15,
   blocks: [
     {
       kind: 'text',
@@ -32,6 +32,12 @@ export const triadsAcrossTheNeck: Lesson = {
       kind: 'text',
       markdown:
         'A triad has three notes, so it has three "stacking orders" — which note is on the bottom:',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Slash chords are inversions in disguise.** When you see **{{G}}/{{B}}** on a chart, that is a {{G}} major triad with {{B}} (the 3rd) in the bass — i.e., **1st inversion**. **{{G}}/{{D}}** is {{G}} with {{D}} (the 5th) in the bass — **2nd inversion**. The slash notation is just inversion notation by another name. Once you know this, every slash chord on a lead sheet becomes a triad shape you already have.',
     },
     {
       kind: 'table',
@@ -161,6 +167,18 @@ export const triadsAcrossTheNeck: Lesson = {
       markdown:
         '**The seven-position view.** Practise finding *all three inversions* of one triad in one octave, then slide the whole set up twelve frets and find them again. Do this for {{G}}, then {{C}}, then {{A}}. After a few keys you stop "searching" for a triad — you simply *know* which inversion is under your hand in any position, because you have mapped the lattice.',
     },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Four string sets, twelve shapes.** The fretboard has **four adjacent string sets** (strings 1-2-3, 2-3-4, 3-4-5, 4-5-6). On each string set, a triad has **three inversions** (root, 1st, 2nd). That is **4 × 3 = 12 shapes** total — not dozens. Learn one string set at a time: find all three inversions on strings 1-2-3, then move to 2-3-4, and so on. The shapes on strings 4-5-6 are identical to strings 1-2-3 (same tuning interval), so you really only learn two distinct sets of shapes. Twelve shapes, not infinite.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Minor triads are one fret away.** Once you know the 12 major triad shapes, you know the 12 minor shapes for free: **lower the 3rd by one fret** in any major triad shape, and it becomes minor. The same logic gives you diminished (lower both the 3rd and the 5th) and augmented (raise the 5th). Learn major first; the other qualities are modifications, not new shapes.',
+    },
 
     {
       kind: 'heading',
@@ -206,6 +224,7 @@ export const triadsAcrossTheNeck: Lesson = {
         '**Comp anywhere.** Behind a soloist, you can grab a tiny triad voicing in whatever region of the neck the melody is *not* occupying, staying out of the way.',
         '**Voice-lead effortlessly.** The next chord is just the nearest inversion of the next triad — often one or two fingers move a fret, the rest stay.',
         '**Arpeggios become geography, not patterns.** You stop memorising 6-string arpeggio shapes and start *navigating* between triad inversions you already know.',
+        '**Create space in the mix.** A three-note triad voicing leaves room for the bass, keys, horns, or a second guitar. Big five- and six-note grips muddy the middle register; triads cut through cleanly.',
       ],
     },
   ],
@@ -213,8 +232,25 @@ export const triadsAcrossTheNeck: Lesson = {
     {
       author: 'Javier Sánchez',
       title: 'Masterclass — Tríadas, improvisación, Gypsy Jazz',
-      url: 'https://youtu.be/dQw4w9WgXcQ',
       note: 'The systematic mapping of triad inversions across the neck (siete posiciones) and the arpeggio-as-anchor improvising concept — arpeggio tones as destinations, scale tones as connective tissue.',
+    },
+    {
+      author: 'Samjamguitar',
+      title: 'THE ULTIMATE GUIDE TO GUITAR TRIADS',
+      url: 'https://www.youtube.com/watch?v=eQkfnY2sF-o',
+      note: '12 triad shapes in 4 string sets (3 per set). Slash chords = inversions (G/B = 1st inv, G/D = 2nd inv). Triads as \u201cdestination points,\u201d scales as \u201croads that connect them.\u201d Minor = lower the 3rd one fret from major. Three-note voicings create space in the mix for other instruments.',
+    },
+    {
+      author: 'Davey Jones',
+      title: 'How 3 Chord Inversions Unlock Every Triad on the Guitar Neck',
+      url: 'https://www.youtube.com/watch?v=vVTUWHqlG1s',
+      note: 'Only 3 fundamental chord shapes on guitar (E, A, C/D) — everything else is a variation. Triads are fragments of the full CAGED barre-chord shapes. You do not need the full barre chord — play a \u201cpiece\u201d of it (the triad).',
+    },
+    {
+      author: 'GuitarLessons365',
+      title: 'Major Triad Inversions Across The Guitar Fretboard',
+      url: 'https://www.youtube.com/watch?v=YD4Wn6IinMk',
+      note: 'Closed-position triads (all within one octave). 4 string sets, 3 inversions each. Slash chord notation = inversions. Spelling triads (knowing the notes) is essential — not just memorising shapes. Stack triads to create larger chord forms and soloing ideas.',
     },
   ],
 }

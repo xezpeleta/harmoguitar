@@ -15,7 +15,7 @@ export const fretboardLandscape: Lesson = {
   slug: 'the-fretboard-landscape',
   title: 'The Fretboard Landscape: Green Lights & Red Tonic',
   summary: 'See the whole neck at once: every scale tone lit green, the tonic lit red. The cure for box-thinking — straight from Pat Metheny.',
-  minutes: 10,
+  minutes: 12,
   blocks: [
     {
       kind: 'text',
@@ -23,6 +23,12 @@ export const fretboardLandscape: Lesson = {
         'You just learned what a major scale **is** — seven notes, a pattern of whole and half steps. Now learn to **see** it. Most guitarists learn scales in "boxes" — five or seven little shapes, each covering four frets. They get good at running one box, then freeze when the melody wants to go higher or lower. Pat Metheny described a different picture: when he improvises in a key, he does not see boxes. He sees **every available note in that scale, across the entire neck, lit up like green lights — and the tonic (the root) lit up red.** The neck is not a puzzle of interlocking shapes. It is one continuous landscape of green lights, with red lights marking home.',
     },
 
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        'The neck is **smaller than it looks.** Two facts halve the work. First, **everything repeats at the 12th fret** — the notes from fret 0 to 11 are mirrored exactly from fret 12 to 23, one octave higher. Master the first twelve frets and you have mastered the whole instrument. Second, **standard tuning gives you two {{E}} strings** — the lowest and highest. Whatever you learn on the low {{E}} string you know on the high {{E}} string for free. So the real territory to map is not 6 strings × 15 frets; it is 5 distinct strings × 12 frets — and the octave shapes from Lesson 1 stitch even those together.',
+    },
     {
       kind: 'heading',
       level: 2,
@@ -76,6 +82,12 @@ export const fretboardLandscape: Lesson = {
       kind: 'text',
       markdown:
         'Trying to see all the green lights at once is overwhelming. Break it down **horizontally**. Play the {{C}} major scale up and down a *single string* — you learn the intervals in a line, not a box. Here is the high {{E}} string alone: every green light on it is a C-major note, with the red {{C}}\'s as anchors. Do this for each string until the green lights distribute themselves linearly in your mind.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        'Single-string practice does double duty: it breaks the vertical box habit **and** trains your ear. On one string the intervals unfold one after another — you hear the size of each step in sequence, the way a singer or a horn player does. That linear hearing is the foundation of melodic playing; boxes, by contrast, let your fingers run ahead of your ear.',
     },
     {
       kind: 'widget',
@@ -145,6 +157,17 @@ export const fretboardLandscape: Lesson = {
     {
       kind: 'heading',
       level: 2,
+      text: 'Boxes, CAGED, and the green-lights view',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'You may have heard of the **CAGED system** — five chord shapes (C, A, G, E, D) that tile the fretboard and give you a map of arpeggios and scales in every position. It is a powerful and legitimate tool. So where does it fit with the green-lights image? **Boxes are subsets of the landscape.** Each CAGED shape is a window onto four or five frets of the green field — a convenient fingering cluster inside the larger map. The danger is not the shapes themselves but *thinking* in shapes: when the neck is five disconnected boxes, you cannot jump between them, and you lose sight of the tonic. The green-lights view does not abolish CAGED — it **connects** the boxes into one continuous field, so a shape becomes a place to rest your hand, not a cage for your mind.',
+    },
+
+    {
+      kind: 'heading',
+      level: 2,
       text: 'Why this works',
     },
     {
@@ -168,6 +191,24 @@ export const fretboardLandscape: Lesson = {
       author: 'Pat Metheny',
       title: 'Green lights & red tonic visualization (widely cited)',
       note: 'Metheny described seeing every scale tone lit green across the whole neck with the tonic lit red — a concept referenced across multiple interviews and masterclasses.',
+    },
+    {
+      author: 'BERNTH',
+      title: 'How to INSTANTLY visualize the FULL fretboard!',
+      url: 'https://www.youtube.com/watch?v=kVNIZPXw3Qo',
+      note: 'Two practical simplifications: the 12th-fret repetition (everything mirrors one octave higher, so master frets 0–11) and the low-E/high-E string symmetry (standard tuning gives two identical E strings). Also the “find one note everywhere” exercise using octave shapes.',
+    },
+    {
+      author: 'Steve Stine',
+      title: 'The 1-String Practice Method That Unlocks the Fretboard',
+      url: 'https://www.youtube.com/watch?v=E-H-iTFwJhM',
+      note: 'Why single-string (horizontal) practice trains the ear as well as the fingers: on one string the intervals unfold sequentially, the way a singer or horn player hears them, rather than letting the hand run ahead of the ear inside a vertical box.',
+    },
+    {
+      author: 'Marty Music',
+      title: 'The CAGED System for Guitar – Unlock the Entire Fretboard',
+      url: 'https://www.youtube.com/watch?v=65s8eIkfwNg',
+      note: 'The CAGED system as five chord shapes (C-A-G-E-D) that tile the neck — a legitimate tool for arpeggios and voicings. Positioned here relative to the green-lights view: boxes are fingering clusters inside the larger landscape, useful for the hand but limiting as a mental model.',
     },
   ],
 }

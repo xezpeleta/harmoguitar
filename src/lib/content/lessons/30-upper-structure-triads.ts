@@ -15,7 +15,7 @@ export const upperStructureTriads: Lesson = {
   slug: 'upper-structure-triads',
   title: 'Upper Structure Triads',
   summary: 'Cmaj9 too big? If the bass has the root, your triad on the 3rd IS the chord. The shapes you already know, reused.',
-  minutes: 9,
+  minutes: 13,
   blocks: [
     {
       kind: 'text',
@@ -32,6 +32,12 @@ export const upperStructureTriads: Lesson = {
       kind: 'text',
       markdown:
         'A **{{C}}maj9** is five notes: {{C}} {{E}} {{G}} {{B}} {{D}}. But the {{C}} is the root — let the bass handle it. What is left? {{E}} {{G}} {{B}} {{D}}. That is an **{{E}}m7** chord. So over a {{C}} bass, playing an **{{E}}m7** gives you the *exact* upper structure of {{C}}maj9 — the same four notes, nothing missing, nothing extra. You already know Em7. You just learned Cmaj9 for free.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**A complex chord is two simpler chords stacked.** This is the easiest way to think about upper structures: every extended chord is **two triads combined**. {{C}}maj7 = {{C}} major + {{E}}m (up a major 3rd). {{C}}maj9 = {{C}} major + {{G}} major (up a 5th). {{C}}maj11 = {{C}} major + {{D}} diminished (down a half-step from the next third). The root triad gives the foundation; the upper triad gives the colour. Once you see a chord symbol as *two triads*, the fretboard opens up — you are not searching for a six-note grip, you are placing two shapes you already know.',
     },
     {
       kind: 'widget',
@@ -151,6 +157,18 @@ export const upperStructureTriads: Lesson = {
       kind: 'callout',
       variant: 'tip',
       markdown:
+        '**Invert the upper structure triad for different colours.** The same triad in different inversions puts a different note on top — and the top note is what the ear hears as the melody of the voicing. {{E}}m over {{C}} bass: root position ({{E}} on top) sounds one way; 1st inversion ({{G}} on top) sounds another; 2nd inversion ({{B}} on top) sounds a third way. Same three notes, three distinct colours. This is how jazz pianists get so much variety from the same chord symbol — they are not changing the chord, just flipping the upper structure.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Upper structures and chord-scale pairings.** Which triad works as an upper structure depends on the **chord-scale pairing** — the chord plus the scale you pair it with. A {{C}}maj7 as the I takes {{C}} Ionian; as the IV, it takes {{C}} Lydian. Each scale contains different notes, so different triads become available. The notes in the scale (but not in the chord) are called **tensions** — and tensions are classified as **avoid** (creates a ♭9 above a guide tone, destroying the sound) or **non-avoid** (adds colour without clashing). A valid upper structure triad must contain at least one non-avoid tension. This classification system tells you *why* certain triads work and others do not — it is not guesswork.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
         '**The takeaway from Javier:** stop hunting for giant shapes. Find the triad (or 7th chord) on the 3rd, the 5th, or the 7th of the chord — the shapes you already know — and let the bass carry the root. Every complex chord is a small chord hiding inside it.',
     },
 
@@ -173,8 +191,25 @@ export const upperStructureTriads: Lesson = {
     {
       author: 'Javier Sánchez',
       title: 'Masterclass — Tríadas, improvisación, Gypsy Jazz',
-      url: 'https://youtu.be/dQw4w9WgXcQ',
-      note: 'The "triada sobre el bajo" idea — playing a triad on the 3rd (or 5th) over a root bass to voice a complex chord with three notes instead of five or six.',
+      note: 'The "triada sobre el bajo" idea — playing a triad on the 3rd (or 5th) over a root bass to voice a complex chord with three notes instead of five or six. The quality flips: a major chord\'s upper structure is a minor triad, and vice versa.',
+    },
+    {
+      author: 'Rick Beato',
+      title: 'Upper Structure Triads and Seventh Chords - Explained',
+      url: 'https://www.youtube.com/watch?v=06Db12K8gzg',
+      note: 'Upper structures start at the 7th — build the chord in thirds (1-3-5-7-9), then find triads above the root. For Cmaj7: G major (5-7-9), D major (9-♯11, Lydian), B minor (7-9-11). The upper structure triads of Cmaj7 are the I-IV-V of G major (the Lydian parent). Can be played melodically or harmonically.',
+    },
+    {
+      author: 'mDecks Music',
+      title: 'How to Play Upper Structure Triads? Jazz Piano Chord Voicings',
+      url: 'https://www.youtube.com/watch?v=J8NmmG08M-k',
+      note: 'Upper structure = left hand basic chord + right hand triad containing at least one tension. Chord-scale pairing concept: which triad works depends on the scale paired with the chord. Tensions classified as avoid (♭9 above a guide tone) vs non-avoid. "Like a painter discovering a new colour."',
+    },
+    {
+      author: 'Piano Lesson with Warren',
+      title: 'Upper Structure Triads - Easy Method For Learning Extended Chords',
+      url: 'https://www.youtube.com/watch?v=PiGV63PDY9w',
+      note: 'A complex chord = two simpler triads stacked: Cmaj7 = C + Em (up a 3rd), Cmaj9 = C + G (up a 5th), Cmaj11 = C + dim (down a half-step). Inverting the upper structure triad gives different voicing colours from the same chord symbol.',
     },
   ],
 }

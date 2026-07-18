@@ -13,7 +13,7 @@ export const jazzCompingVoicings: Lesson = {
   slug: 'jazz-comping-voicings',
   title: 'Jazz Comping Voicings',
   summary: 'Why 6-string barre chords muddy the mix — and the 4-note shapes that sound instantly professional.',
-  minutes: 10,
+  minutes: 14,
   blocks: [
     {
       kind: 'text',
@@ -120,6 +120,12 @@ export const jazzCompingVoicings: Lesson = {
         'The most important comping system in jazz guitar is **Drop 2**. Start with a closed-position 7th chord (four notes stacked in thirds), take the **2nd-highest note and drop it an octave**, and the chord spreads across **four adjacent strings** in a playable, open-sounding shape.',
     },
     {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Why \u201cdrop\u201d at all? Close vs open position.** A closed-position 7th chord stacks all four notes within a single octave — tight, compact, and on guitar often **physically unplayable** (the frets are too wide for your fingers). Dropping a note down an octave creates an **open-position** voicing that spans *more* than an octave — suddenly the notes are far enough apart to fit on four adjacent strings. That is the whole point of Drop 2: it makes dense piano harmony playable on a guitar neck. Count \u201c1, 2\u201d from the **highest** note down — the 2nd note from the top is the one you drop.',
+    },
+    {
       kind: 'list',
       items: [
         'For each 7th-chord type (maj7, dom7, m7, m7♭5, dim7) there are **4 inversions** of the Drop 2 voicing (root, 1st, 2nd, 3rd).',
@@ -178,13 +184,43 @@ export const jazzCompingVoicings: Lesson = {
       markdown:
         '**Learning strategy:** learn Drop 2 on the **middle string set (5-4-3-2)** first, all 4 inversions, for maj7, dom7, and m7. That is 12 shapes that will cover most of your comping. Then expand to the other string sets, add m7♭5 and dim7, then add Drop 3. Do not try to learn all 60 at once — build the core, then grow.',
     },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**The \u201c9th replaces root\u201d superpower.** Once you know your Drop 2 shapes, you can unlock extensions for free. Take a {{C}}m7 voicing, find the root ({{C}}), and replace it with the 9th ({{D}}) — you now have {{C}}m9. But look closely: that {{C}}m9 voicing is *also* an {{Eb}}maj7 voicing (the same four notes rearranged). So if you know your maj7 Drop 2s, you already know your m9 Drop 2s. The same trick turns {{F}}7 into {{F}}9, which is also an {{A}}m7♭5. **One shape, multiple chords** — this is why you should never blindly memorise 60 inversions. Learn what each note *is* against the root, and one grip becomes three chords.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Learn through songs, not inversions.** The biggest mistake is drilling Drop 2 inversions in isolation — you memorise shapes you never use. Instead, pick one song ({{Autumn Leaves}} is the classic) and learn only the 4 chord types it needs: m7, dom7, maj7, and m7♭5. Play them through the progression until the voice leading feels natural. You internalise the shapes *because the song demands them*, not because a chart told you to. Then the same shapes transfer to every other jazz standard.',
+    },
   ],
   sources: [
     {
       author: 'Félix Santos',
       title: 'Master Class de Armonía, Jazz y Blues',
       url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
-      note: 'The “acordes cuatríadas y tensiones” section — shell + extension voicings and Drop 2 / Drop 3 grips.',
+      note: 'The \u201cacordes cuatríadas y tensiones\u201d section — shell + extension voicings and Drop 2 / Drop 3 grips, including the A13 \u201cmoney note\u201d grip.',
+    },
+    {
+      author: 'Jens Larsen',
+      title: 'The Most Powerful System For Jazz Chords',
+      url: 'https://www.youtube.com/watch?v=EGgaHggR5U4',
+      note: 'Drop 2 spans more than an octave (open position) vs standard inversions (close position, often unplayable on guitar). The \u201c9th replaces root\u201d superpower: Cm9 = Ebmaj7, F9 = Am7♭5 — one shape, multiple chords. Learn through a song (Autumn Leaves), not endless inversions. The bassist covers the root, so the lowest note may be the 5th.',
+    },
+    {
+      author: 'Jamie Holroyd',
+      title: 'Jazz Guitar Chords - How to Play Drop 2 and 3 Chords on Guitar',
+      url: 'https://www.youtube.com/watch?v=m2TgqgNM5bk',
+      note: 'Drop 2 = drop the 2nd note from the top down an octave, starting from close-position stacked thirds. Four inversions on the top four strings (7th, root, 3rd, or 5th on top). The same interval formulas apply to the inner string set (5-4-3-2).',
+    },
+    {
+      author: 'Jared Bork (Sound Guitar Lessons)',
+      title: 'Drop Chords Guitar Lesson - Drop 2 & Drop 3 voicings',
+      url: 'https://www.youtube.com/watch?v=wmwznh1g19M',
+      note: 'Guitarist-friendly explanation: count \u201c1, 2\u201d from the highest note down to find which note to drop. Close position (within an octave) becomes open position (spans more than an octave). A trick to identify whether any seventh-chord shape is Drop 2 or Drop 3.',
     },
   ],
 }

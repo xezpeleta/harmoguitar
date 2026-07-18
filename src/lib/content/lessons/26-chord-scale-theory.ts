@@ -13,12 +13,18 @@ export const chordScaleTheory: Lesson = {
   slug: 'chord-scale-theory',
   title: 'Chord-Scale Theory',
   summary: 'The jazz improviser\'s map: which scale fits which chord, and why some notes are "avoid" notes.',
-  minutes: 11,
+  minutes: 15,
   blocks: [
     {
       kind: 'text',
       markdown:
         '**Chord-scale theory** (CST) is the jazz approach to improvisation. Instead of thinking "what notes can I play over this chord?", you think "what **scale** contains this chord?" — then improvise with that scale. The chord is the vertical snapshot; the scale is the horizontal palette you draw lines from.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Modes are the same notes heard differently.** The seven modes of the major scale are not seven new scales to memorise — they are **one scale started on each of its seven degrees**. {{C}} Ionian, {{D}} Dorian, {{E}} Phrygian, {{F}} Lydian, {{G}} Mixolydian, {{A}} Aeolian, {{B}} Locrian are all the same seven notes. The chord you are playing over determines which note feels like the root, and that changes the sound entirely. So practising your major scales in all keys *is* practising your modes — you just have not named them yet.',
     },
 
     {
@@ -93,6 +99,12 @@ export const chordScaleTheory: Lesson = {
       markdown:
         'These aren\'t "wrong" notes — they\'re **tension notes.** Use them on purpose, resolved by step. The only truly "wrong" note in jazz is one played timidly. Every note in every scale has been used by someone, somewhere, to great effect.',
     },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Context decides the scale, not just the chord symbol.** A {{C}}maj7 could take {{C}} Ionian or {{C}} Lydian — but which one? The answer is **where the chord sits in the key**. If {{C}}maj7 is the **I** of the key, Ionian is the default. If {{C}}maj7 is the **IV** of the key (e.g., in {{G}} major), reach for Lydian, because the natural 4 of {{C}} Ionian ({{F}}) clashes with the key\'s {{F#}}. The chord symbol tells you the chord; the **key signature** tells you the scale. Always read the chord in the context of the key around it.',
+    },
 
     {
       kind: 'heading',
@@ -115,6 +127,32 @@ export const chordScaleTheory: Lesson = {
       variant: 'tip',
       markdown:
         '**Practice method:** pick a ii–V–I (e.g., {{D}}m7 – {{G}}7 – {{C}}maj7). For each chord, play its arpeggio (1-3-5-7), then its scale, then improvise — but always land on a chord tone (3rd or 7th) when the chord changes. This "target tone" approach is the bridge from theory to musical soloing.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Melodic minor: the hidden engine of jazz.** If there is one scale that stands above the rest in jazz, it is **melodic minor**. It generates seven distinct modes, each mapped to a different chord type: the 1st mode is minor-major 7, the 4th is Lydian dominant (♯11), the 5th gives the altered sound (♭13), and the 7th is the altered scale itself. One melodic-minor idea can be played over **every chord in a ii–V–I** by starting it on a different chord tone — the 3rd of the ii, the ♭9 of the V, the root of the I. This "universal sound hack" is why melodic minor is the backbone of modern jazz improvisation.',
+    },
+  ],
+  sources: [
+    {
+      author: 'Jared Bork (Sound Guitar Lessons)',
+      title: 'Jazz Scales for Every Chord Type (ULTIMATE GUIDE)',
+      url: 'https://www.youtube.com/watch?v=4-rv7cdwLW8',
+      note: 'Comprehensive guide mapping scales to chord types. Default for maj7 = major scale, but use Lydian when the chord is the IV of the key. maj6/maj7/maj9/maj13 are interchangeable. Context (where the chord sits in the key) determines the right scale.',
+    },
+    {
+      author: 'Richard Pavlidis',
+      title: 'Beginner Chord Scale Theory',
+      url: 'https://www.youtube.com/watch?v=4vnxP8-J4ik',
+      note: 'Introduction to CST: which scale to improvise over which chord. Modes are the major scale started on different degrees — same notes, different sound. Common progressions (ii-V-I, I-vi-ii-V) practised with parent-scale modes.',
+    },
+    {
+      author: 'Nathan Borton',
+      title: 'Most Important Scale for Jazz Improv (& How To Use It)',
+      url: 'https://www.youtube.com/watch?v=254rxlvBwtY',
+      note: 'Melodic minor as jazz\'s most important scale. Seven diatonic chords (one per mode): mMaj7, m7♭5, maj7♯5♯11, 7♯11, 9♭13, m7♭5♮9, m7♭5. The \u201cuniversal sound hack\u201d: one melodic-minor idea over every chord of a ii-V-I by starting on different chord tones (3rd of ii, ♭9 of V, root of i).',
     },
   ],
 }

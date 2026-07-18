@@ -17,7 +17,7 @@ export const diminishedBluesPentatonic: Lesson = {
   slug: 'the-diminished-blues-pentatonic',
   title: 'The Diminished Blues Pentatonic',
   summary: 'A passing diminished chord in a blues? Skip the square arpeggio — keep the pentatonic and slide into the dim root.',
-  minutes: 9,
+  minutes: 13,
   blocks: [
     {
       kind: 'text',
@@ -173,6 +173,12 @@ export const diminishedBluesPentatonic: Lesson = {
       markdown:
         'Notice what the two versions share: **{{F#}}** and **{{A}}** are chord tones of *both* {{D}} major pentatonic and {{D#}}dim7. The pentatonic and the arpeggio overlap on the 3rd and 5th of the diminished chord — so most of the line is already “correct” over the dim7. The only negotiation is the root itself, and that is exactly the note the slide rules handle. This is why the trick works: you are not fighting the chord, you are bluesing your way into it.',
     },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Why a \u201cparent scale\u201d will not work here.** A diminished 7 chord does not belong to any major or minor key — it is a creature of chromatic harmony. So you cannot just \u201cplay in the key\u201d over it; the moment the dim7 arrives, your parent scale contains a wrong note. This is the one place where scale-thinking breaks down and **arpeggio-thinking** takes over: most players just outline the chord tones. The Félix Santos trick is clever precisely because it is a *workaround* — it keeps you inside a blues vocabulary (the pentatonic) while sneaking the diminished root in as a passing slide, so you never have to \u201cswitch modes\u201d for a chord that lasts one beat.',
+    },
 
     {
       kind: 'heading',
@@ -195,6 +201,12 @@ export const diminishedBluesPentatonic: Lesson = {
       markdown:
         'Do not overuse it. A passing diminished chord is *passing* — it lasts a beat or two. The slide is a moment of tension that resolves back into the next chord. If you linger on the diminished sound, it stops passing and starts sounding like you are lost. In, slide, out.',
     },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Train your ear with the \u201chalf-step-below\u201d trick.** Josh Smith (Guitar World) recommends a simple exercise: in *any* song — not just blues — throw a diminished chord a half-step below whatever chord you are going to. Play {{G}} → {{Eb}}dim7 → {{E}}m in *Knockin\u2019 on Heaven\u2019s Door*. Do it until your ear expects the slide. Because diminished chords are symmetric ({{Eb}}dim7 = {{A}}dim7 = {{Gb}}dim7 — same four notes), you always have an inversion within reach: find the one closest to where your hand already is, and slide. The symmetry means you never have to jump across the neck.',
+    },
   ],
   sources: [
     {
@@ -202,7 +214,25 @@ export const diminishedBluesPentatonic: Lesson = {
       title: 'Escala Pentatónica Disminuida (tip)',
       url: 'https://youtu.be/AlPwybkGECM',
       timestamp: '01:01',
-      note: 'Constructing the diminished blues pentatonic: slide into the dim root from below ascending, from above descending.',
+      note: 'Constructing the diminished blues pentatonic: keep the major pentatonic of the preceding chord and slide into the dim root from below ascending, from above descending.',
+    },
+    {
+      author: 'Josh Smith (Guitar World)',
+      title: 'More on using diminished shapes in a blues solo',
+      url: 'https://www.youtube.com/watch?v=FoQhiW1ZkuU',
+      note: 'Using diminished to connect to the V (A → E via Eb dim). Diminished symmetry in practice: Eb dim = A dim = Gb dim — find the closest inversion. The \u201chalf-step-below\u201d ear-training trick: throw a dim chord below any target, in any song (even Knockin\u2019 on Heaven\u2019s Door).',
+    },
+    {
+      author: 'Active Melody (Brian)',
+      title: 'Playing the Chord Changes By Yourself - How to Play Over Diminished Chords',
+      url: 'https://www.youtube.com/watch?v=HOKe2MD-228',
+      note: 'Playing sophisticated lead with no jam track by implying chords through triad notes. Three uses of diminished chords in blues. The D9/Am triad connection (same shape, different bass = different chord). Chromatic walk-downs using pentatonic overlaid with chord shapes.',
+    },
+    {
+      author: 'Jared Bork (Sound Guitar Lessons)',
+      title: 'Next Level Soloing Over Chord Changes | Diminished',
+      url: 'https://www.youtube.com/watch?v=FqujeZdYNqY',
+      note: 'Why a \u201cparent scale\u201d fails over a dim7: it belongs to no key, so scale-thinking breaks down and arpeggio-thinking takes over. Diminished chords appear in all styles, not just jazz (Beatles on Ed Sullivan). When in doubt, just arpeggiate the chord tones.',
     },
   ],
 }

@@ -14,7 +14,7 @@ export const passingChordsInversions: Lesson = {
   slug: 'passing-chords-inversions-walking-bass',
   title: 'Passing Chords, Inversions & Walking Bass',
   summary: 'Stop sitting still: move a chord through its inversions and connect them with diminished passing chords.',
-  minutes: 11,
+  minutes: 15,
   blocks: [
     {
       kind: 'text',
@@ -58,6 +58,12 @@ export const passingChordsInversions: Lesson = {
       kind: 'text',
       markdown:
         'To move smoothly between inversions, insert a **diminished 7 chord a semitone away** from your target. Because the dim7 sits just one fret above or below, your hand *slides* into the inversion — chromatic motion, no jumps. The dim7 is a **passing chord**: it is not a destination, just a slippery texture that connects two real chords.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**A diminished passing chord is secretly a dominant.** A {{C#}}dim7 resolving to {{D}}m is not random slipperiness — it is functioning as an **{{A}}7** (the V of Dm) in disguise. The dim7 shares the guide tones of A7, so the ear hears a dominant resolving to its tonic. The rule of thumb: **a dim7 resolves by moving up a half step to the next chord** ({{C#}}dim7 → {{D}}m). You do not need to analyse it — just think \u201cone fret below my target\u201d and slide up.',
     },
     {
       kind: 'widget',
@@ -113,6 +119,22 @@ export const passingChordsInversions: Lesson = {
       markdown:
         'Instead of strumming one {{A}}7 for a whole bar, play **step 1 → 2 → 3** across the bar. The bass walks ({{A}} → {{Bb}} → {{C#}}), the harmony stays "A7-ish," and suddenly you are accompanying *yourself*. Add steps 4–7 over the next bars and you have climbed the whole neck. This is the essence of chord-melody and walking-bass comping.',
     },
+    {
+      kind: 'heading',
+      level: 2,
+      text: 'Upper and lower neighbours',
+    },
+    {
+      kind: 'text',
+      markdown:
+        'The diminished passing chord is one instance of a broader idea: the **neighbour chord**. Before any target chord, you can play the same chord shape **one fret above** (the upper neighbour) or **one fret below** (the lower neighbour), then slide into the target. This works for full chord shapes, not just diminished chords — slide a dominant grip up or down a fret and resolve back. You hear it constantly in blues: *Stormy Monday* lives on this trick.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Same chord, different name.** A {{G#}}7 and an {{Ab}}7 are enharmonically the same four notes — but we name them by *which way they resolve*. {{G#}}7 resolves **up** a half step to {{A}}7; {{Ab}}7 resolves **down** a half step to {{G}}7. The chord is identical; only the direction of motion gives it its name. This is why thinking \u201capproach from above\u201d or \u201capproach from below\u201d is more useful than memorising chord names.',
+    },
 
     {
       kind: 'heading',
@@ -143,6 +165,12 @@ export const passingChordsInversions: Lesson = {
     },
     {
       kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**How to build a walking bass, step by step.** (1) Play just the **roots** in time. (2) Play the **chord and the root** separately — bass note, then chord — to train your thumb to work independently. (3) Add a **triplet feel**: bass-chord-bass on each beat, giving that sloppy, swinging walk. (4) **Approach each root from one fret below** (chromatic lower neighbour). (5) Approach from **one fret above**. (6–8) **Mix** above and below, and start using **diatonic** approaches (scale-wise, sometimes a whole step) instead of only chromatic. The golden fingering rule: *the finger that frets the bass note must also fret the approach note* — otherwise you cannot form the chord in time.',
+    },
+    {
+      kind: 'callout',
       variant: 'note',
       markdown:
         'This is also the harmonic side of the **blue note** idea you will meet in the Pentatonics & Blue Notes lesson: when a melody hits a slippery chromatic "blue" note, the chord underneath is very often one of these **diminished passing chords**. The melody and the harmony walk together.',
@@ -153,7 +181,25 @@ export const passingChordsInversions: Lesson = {
       author: 'Félix Santos',
       title: 'Master Class de Armonía, Jazz y Blues',
       url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
-      note: 'The “develop the chord” idea — moving a dominant through inversions, connected by diminished passing chords.',
+      note: 'The \u201cdevelop the chord\u201d idea — moving a dominant through inversions, connected by diminished passing chords, to create a self-accompanying walking-bass texture.',
+    },
+    {
+      author: 'Jens Larsen',
+      title: 'Jazz Chords: Every Type of Passing Chord You Need To Know',
+      url: 'https://www.youtube.com/watch?v=8T19eMddqXs',
+      note: 'Diminished passing chords function as dominants (C#dim7 = A7 resolving to Dm); the rule \u201cresolve up a half step\u201d; chromatic baseline is the main reason it works. Chromatic vs diatonic passing chords. Counter-movement (chord up, melody down). G#7 and Ab7 are the same chord named by resolution direction.',
+    },
+    {
+      author: 'Jazz Guitar Lessons (Marc-André Séguin)',
+      title: 'Jazz Guitar: Walking Bass Lines with Chords',
+      url: 'https://www.youtube.com/watch?v=0O6QHWL7ORc',
+      note: 'Step-by-step walking bass method: roots only → chord+bass separated → triplet feel (bass-chord-bass) → chromatic approach from below → from above → mixed. The finger that frets the bass must also fret the approach note. Diatonic (scale-wise) approaches as an alternative to chromatic.',
+    },
+    {
+      author: 'swiftlessons (Rob)',
+      title: 'Jazz Blues Passing Chords & Substitutions Explained',
+      url: 'https://www.youtube.com/watch?v=whgHzQTYL0o',
+      note: 'Upper and lower neighbour concept as the unifying idea: approach any chord from a half-step above or below. Stormy Monday as the classic blues example. Diminished passing chord from IV→I analysed as a lower-neighbour walk-up. 3-6-2-5-1 jazz turnaround added to blues.',
     },
   ],
 }

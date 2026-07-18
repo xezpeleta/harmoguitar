@@ -15,7 +15,7 @@ export const rhythmTimeSelfRecording: Lesson = {
   slug: 'rhythm-time-self-recording',
   title: 'Rhythm, Time & Self-Recording',
   summary: 'Harmony without time is just notes. Practise with a click, record yourself, and let the playback be your honest teacher.',
-  minutes: 8,
+  minutes: 12,
   blocks: [
     {
       kind: 'text',
@@ -35,6 +35,18 @@ export const rhythmTimeSelfRecording: Lesson = {
     },
     {
       kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**You steal the rhythm from the metronome.** A metronome is not just a test — it is a *model*. By playing against a steady external pulse, you gradually internalise that steadiness. Your inner clock learns to mimic the click. This is why musicians who grew up playing with other people (who had good time) tend to have good time themselves — they stole it from their bandmates. The metronome is the bandmate who never rushes and never drags.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Keep the guitar simple when learning time exercises.** When you are working on rhythm, do not also try to learn a new chord or lick. Play a single note, an open string, or one simple chord. The point is to focus 100% of your attention on the *timing*, not on your fingers. Once your time is solid, add complexity — but never both at once.',
+    },
+    {
+      kind: 'callout',
       variant: 'tip',
       markdown:
         '**Three ways to put a clock under your practice:**\n\n1. **Metronome** — pure tempo, no harmony. Hardest, because there is nothing to hide behind. Start here for new material.\n2. **Drum loop** — tempo + feel. Good for working on groove and comping rhythm.\n3. **Backing track** — tempo + harmony. Best for applying a concept in a musical context, but easiest to hide mistakes in. Use last, once the concept is solid.',
@@ -43,6 +55,12 @@ export const rhythmTimeSelfRecording: Lesson = {
       kind: 'text',
       markdown:
         'When you practise a new voicing or progression, set the metronome **slowly** — slow enough that you can think about each move. Speed comes from accuracy, never from effort. A common mistake is to crank the tempo to "feel" productive; you only bake in the mistakes.',
+    },
+    {
+      kind: 'callout',
+      variant: 'warning',
+      markdown:
+        '**Slow is harder than fast.** It sounds counterintuitive, but playing at 40 BPM is an *advanced* skill. At slow tempos, the gap between clicks is so long that you instinctively rush ahead, trying to anticipate the next beat — and you land early. At fast tempos, the clicks come so quickly that they carry you along. The metronome at 60 BPM (a clock\'s second hand) is a good starting point because the pulse is built into us. But do not avoid slow tempos — they expose your inner clock. If you can hold 40 BPM steady, your time is excellent.',
     },
 
     {
@@ -77,6 +95,12 @@ export const rhythmTimeSelfRecording: Lesson = {
       kind: 'text',
       markdown:
         'This is the single most important habit in the lesson. **While you play, you cannot hear yourself objectively.** Your attention is on producing the sound, not on judging it. The physical act of fretting, the effort, the intention — all of it colours your perception. You think you nailed the passage. The recording, listened to ten seconds later, tells you the truth: the rhythm dragged, the chord was muddy, the transition was late.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Recording gives you a tangible product — and a confidence boost.** Regular practice ends with "yeah, I practised well today" and nothing to show for it. Recording ends with a *thing*: a take you can play for friends, share with a collaborator, or compare to last week\'s. And it is not just about catching mistakes — sometimes you listen back and realise you sound *good*. That confidence boost is real, and it fuels the next session. The recording is your honest teacher, but it is also your cheerleader.',
     },
     {
       kind: 'callout',
@@ -160,8 +184,25 @@ export const rhythmTimeSelfRecording: Lesson = {
     {
       author: 'Javier Sánchez',
       title: 'Masterclass — Tríadas, improvisación, Gypsy Jazz',
-      url: 'https://youtu.be/dQw4w9WgXcQ',
       note: 'The insistence on metronome-and-recording practice, the "play → record → listen → fix one thing" loop, and the Gypsy Jazz la pompe as the purest test of time-feel.',
+    },
+    {
+      author: 'Jens Larsen',
+      title: 'Metronome on 2 & 4 - How to get started practicing 2&4 swing',
+      url: 'https://www.youtube.com/watch?v=7cEjm9Sj9AU',
+      note: 'Metronome on 2&4 is the first exercise everyone should try. Tempo is doubled (set 66 = 132 BPM). Process: emphasize beat 1, foot on 1&3 (heavy beats where chords change), then add chords → melody → solo. Barry Harris recommends foot on 1&3 for faster tempos. The metronome trains your inner clock and subdivision.',
+    },
+    {
+      author: 'JustinGuitar',
+      title: 'How to Record Yourself Playing Guitar',
+      url: 'https://www.youtube.com/watch?v=tV9lLqj84PE',
+      note: 'Recording is \u201cone of the most powerful tools to accelerate your guitar progress.\u201d Benefits: hear mistakes (timing, rushing, bends, repetitive licks), confidence boost when you sound good, a tangible product at the end of practice (vs nothing to show), collaboration (send track to a singer), songwriting. Covers gear: dynamic vs condenser mics, audio interfaces, headphones.',
+    },
+    {
+      author: 'Good Guitarist',
+      title: '4 EASY Ways To Use A Metronome And Practice Guitar',
+      url: 'https://www.youtube.com/watch?v=xdIk_nBMXwk',
+      note: '\u201cSteal the rhythm from the metronome.\u201d Keep guitar simple when learning time (single note, open string). 60 BPM = clock\'s second hand (built into us). Slow is harder than fast — you rush ahead to anticipate the click; 40 BPM is advanced. Exercises: all 4 beats → 1&3 → 2&4 → subdivide (down-up). Count rhythm first without metronome, then add it.',
     },
   ],
 }

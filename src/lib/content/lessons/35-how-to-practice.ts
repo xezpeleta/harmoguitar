@@ -16,7 +16,7 @@ export const howToPractice: Lesson = {
   slug: 'how-to-practice',
   title: 'How to Practice: The Multisensory Method',
   summary: 'Why running scales up and down keeps you stuck — and the multisensory, associative method that actually makes things stick.',
-  minutes: 10,
+  minutes: 14,
   blocks: [
     {
       kind: 'text',
@@ -88,6 +88,18 @@ export const howToPractice: Lesson = {
       markdown:
         'This is the deepest layer and the most neglected. Play a scale or a phrase **slowly**, and **sing the note you are fingering** as it sounds. The goal is not speed or a flashy solo — it is to weld your *ear* to your *fingers* until you can hear a melody in your head and your hands simply find it. Every **Play** button in this course exists for this: it sounds each note in turn and lights the place it lives, so you can match your voice to what you see and hear.',
     },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Your body is a pitch thermometer.** When you sing, you can *feel* where a pitch sits: low notes resonate in your chest, high notes rise toward your head. That physical sensation is a second channel for hearing — a mercury thermometer for pitch. When you practise singing what you play, you are not just training your voice; you are building a bodily map of high and low that makes the fretboard feel like sound rather than geometry.',
+    },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**Every great player is an ear player.** The fretboard is terrible long-term storage — patterns you drill today evaporate in days if you stop. But the mind\'s ear is permanent: you could not forget *Stairway to Heaven* if you tried. The goal of practice is to push information *all the way* from your fingers into your mind\'s ear, where it cannot atrophy. If you can audiate a line — hear it clearly in your head before you play it — it is yours forever. If it only lives in your fingers, it is already slipping away.',
+    },
 
     {
       kind: 'heading',
@@ -143,6 +155,12 @@ export const howToPractice: Lesson = {
     },
     {
       kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Mental practice is real.** A Harvard study split amateur pianists into three groups: one did not practise, one practised daily, and one only *thought* about practising for the same duration. After a week, the no-practice group did not improve. But the mental-practice group improved **nearly as much as the physical-practice group**. fMRI scans show that mental practice engages many of the same motor-cortex areas as physical practice. You can rehearse fingerings on your forearm, audiate a melody on the train, or visualise a chord shape before bed — and it *counts*. The fingers are only half the instrument; the mind is the other half.',
+    },
+    {
+      kind: 'callout',
       variant: 'tip',
       markdown:
         'Whenever you meet a new chord, scale, or phrase, ask the associative question: *“What do I already know that this is one move away from?”* Invert it. Shift a note to a neighbour string. Slide it up the neck. The new thing is never isolated — it is a rotation of an old one, and rotation is what memory hangs on.',
@@ -174,13 +192,13 @@ export const howToPractice: Lesson = {
       kind: 'list',
       ordered: true,
       items: [
-        '**Pick one thing** — a chord, a scale position, a single phrase. Not five. One.',
+        '**Pick one thing** — a chord, a scale position, a single phrase. Not five. One. Be specific: not “play better jazz guitar,” but “use arpeggios from the 3rd in my solos.”',
         '**See it whole.** Picture the full shape on the neck before you touch the guitar. Use the widgets to confirm the map.',
-        '**Sing it.** Play it slowly and voice each note. If you cannot sing it, slow down until you can.',
+        '**Sing it.** Play it slowly and voice each note. If you cannot sing it, slow down until you can. Feel the pitch rise and fall in your body.',
         '**Jump, don’t ladder.** Move between distant notes of the shape, not just neighbours. Break the mechanical path.',
         '**Relax.** Minimum force. Check jaw, shoulders, wrist.',
         '**Associate.** Invert it, shift a note, transpose it one key. Glue it to what you already know.',
-        '**Use it.** Drop it into a real progression or backing track within the same session. A thing unplayed is a thing unlearned.',
+        '**Use it.** Drop it into a real progression or backing track within the same session. A thing unplayed is a thing unlearned. A solo is a story — make sure your phrases connect, not copy-paste.',
       ],
     },
     {
@@ -196,6 +214,24 @@ export const howToPractice: Lesson = {
       title: 'Master Class: cómo estudiar y salir de la mecanicidad',
       url: 'https://www.youtube.com/watch?v=6ccY37fyxVo',
       note: 'The multisensory method — the trap of mecanicidad and the four memories (auditory, visual, muscular, associative).',
+    },
+    {
+      author: 'Adam Neely',
+      title: 'How to Practice Music (without your instrument)',
+      url: 'https://www.youtube.com/watch?v=Xr8WSJiECdM',
+      note: 'Mental practice is real: Harvard study showed pianists who only thought about practicing improved nearly as much as those who physically practiced. fMRI shows same motor-cortex areas engage. “Audiation” = hearing music in your mind’s ear (like visualization for sound). Practice fingerings on your forearm as a stand-in. Bobby McFerrin moves his fingers while singing.',
+    },
+    {
+      author: 'marbinmusic',
+      title: 'This Ear Training Method Will Make You a GREAT Player',
+      url: 'https://www.youtube.com/watch?v=UN1Ms06hDbI',
+      note: 'Ear training is not about passing interval quizzes — it’s about playing what you hear over chords. Your body is a “mercury thermometer for pitch”: feel low notes in your chest, high notes in your head. Every great player is an ear player. The fretboard is bad long-term storage (patterns atrophy); the mind’s ear is permanent (Stairway to Heaven won’t disappear). Goal: push information all the way to long-term musical memory via audiation.',
+    },
+    {
+      author: 'Jens Larsen',
+      title: 'What Is Effective Jazz Practice And Are You Wasting Your Time?',
+      url: 'https://www.youtube.com/watch?v=PB8orBQMIwQ',
+      note: 'Ask: what EXACTLY do you want to improve? (not just “play better jazz guitar”). Know what each exercise teaches you (diatonic triads = scale flexibility, picking, fretboard knowledge, harmony). Playing songs is the most important exercise — a solo is a story with beginning, middle, end; phrases must connect, not copy-paste. Record your practice and track progress; evaluate if exercises are actually helping.',
     },
   ],
 }

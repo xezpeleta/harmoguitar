@@ -14,7 +14,7 @@ export const voiceLeadingGuideTones: Lesson = {
   slug: 'voice-leading-and-guide-tones',
   title: 'Voice Leading & Guide Tones',
   summary: 'Moving between chords with the least motion — and why the 3rd & 7th are all you really need.',
-  minutes: 10,
+  minutes: 14,
   blocks: [
     {
       kind: 'text',
@@ -37,6 +37,12 @@ export const voiceLeadingGuideTones: Lesson = {
         '**The 3rd and 7th (guide tones) are paramount.** They define the chord; the 5th — and often the root — can be omitted.',
       ],
     },
+    {
+      kind: 'callout',
+      variant: 'tip',
+      markdown:
+        '**The bass is free.** The rules of voice leading apply to the *inner voices* — the 3rds, 7ths, and colour tones. The bass is an independent voice: it can leap by a 4th or 5th (the circle-of-fifths root motion) while the upper voices glide by half steps. This is why inversions exist — not as ends in themselves, but as tools to keep the upper voices smooth while the bass does whatever it needs to do.',
+    },
 
     {
       kind: 'heading',
@@ -47,6 +53,12 @@ export const voiceLeadingGuideTones: Lesson = {
       kind: 'text',
       markdown:
         'Of a chord\'s four notes, only **two really matter**: the **3rd** (which says major or minor) and the **7th** (which says the color — maj7, dom7, m7…). The root just names the chord; the 5th is usually a perfect 5th and adds almost no information. Jazz players call the 3rd and 7th the **guide tones** — they *guide* the harmony and the voice leading.',
+    },
+    {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Why not the root or the 5th?** When you are improvising, the root is the *least* useful note — the bass player is already playing it, and the comping instrument probably is too. The 5th is a filler note: it is almost always a perfect 5th and tells you nothing about whether the chord is major, minor, or dominant. The **3rd tells you the quality** (major or minor); the **7th tells you the flavour** (maj7, dom7, m7). So 3rds and 7ths give you the *maximum harmonic information* with the *minimum number of notes*. That is why horn players — who can only play one note at a time — live on guide tones.',
     },
     {
       kind: 'widget',
@@ -106,6 +118,12 @@ export const voiceLeadingGuideTones: Lesson = {
         'When a horn player lands on the **3rd and 7th of each chord in turn**, the listener *hears* the harmony shift — even with no accompanist. The guide tones are so characteristic that outlining them melodically is enough to imply the whole progression. This is why transcribing bebop solos reveals so many 3rds and 7ths on strong beats.',
     },
     {
+      kind: 'callout',
+      variant: 'note',
+      markdown:
+        '**Guide-tone lines as compound melody.** When you connect 3→7→3→7 across a progression, you create a hidden melodic line *beneath* your solo surface. This is called **compound melody** — a single-note line that implies two melodies at once (your actual melody on top, the guide-tone line underneath). Charlie Parker was a master of this: in *Blues for Alice*, the surface melody dances around, but the guide tones (3rds and 7ths on strong beats) tell the whole harmonic story. Bach did the same thing centuries earlier. Practice landing guide tones *on or near the downbeat* of each chord — they become signposts that your ear navigates by.',
+    },
+    {
       kind: 'widget',
       selection: { chordType: 'm7', root: 'D' },
       widgets: ['fretboard', 'staff'],
@@ -146,7 +164,25 @@ export const voiceLeadingGuideTones: Lesson = {
       author: 'Félix Santos',
       title: 'Master Class de Armonía, Jazz y Blues',
       url: 'https://www.youtube.com/watch?v=1C0mF-utIlI',
-      note: 'The “horn player’s secret” — arpeggiating guide tones (3rds & 7ths) as the backbone of jazz soloing.',
+      note: 'The \u201chorn player\u2019s secret\u201d — arpeggiating guide tones (3rds & 7ths) as the backbone of jazz soloing, so the harmony is felt even with no accompanist.',
+    },
+    {
+      author: 'Berklee Online',
+      title: 'Music Theory Fundamentals: The Rules of Voice Leading',
+      url: 'https://www.youtube.com/watch?v=gvFiHUkhraE',
+      note: 'Three rules: use common tones, move by half/whole step, avoid leaps greater than a third. The bass is an independent voice that can move freely while upper voices stay smooth. Inversions are tools for voice leading, not ends in themselves.',
+    },
+    {
+      author: 'Scott Paddock',
+      title: 'VOICE LEADING EXPLAINED',
+      url: 'https://www.youtube.com/watch?v=aEMI19UmN20',
+      note: 'Two rules for horn players: (1) move to the closest note possible, (2) give as much information about the chord as possible. The root is least useful (bassist already plays it); the 5th is filler. The 3rd tells quality (major/minor); the 7th tells flavour (maj7/dom7/m7). 3rd→7th or 7th→3rd by half step = maximum information.',
+    },
+    {
+      author: 'Jeremy Siskind',
+      title: '5 Levels of Guidetone Lines (Jazz Improvisation Tutorial)',
+      url: 'https://www.youtube.com/watch?v=0hQXFADTjtY',
+      note: 'Guide-tone lines as compound melody — a single-note line that implies a second melody beneath the surface (3→7→3→7 on strong beats). Charlie Parker\u2019s Blues for Alice as a masterclass. Three practice methods: hit guide tones on downbeats, use as top notes of phrases, use as bottom notes.',
     },
   ],
 }

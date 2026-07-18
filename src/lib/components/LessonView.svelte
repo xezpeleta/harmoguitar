@@ -312,6 +312,20 @@
       playOpenStrings(play, block)
       return
     }
+    if (play?.kind === 'phrase') {
+      // An ordered melodic line: play the block's own voicing positions in
+      // array order (not sorted), lighting each dot as it sounds.
+      const midis = voicingMidis(block)
+      if (midis.length === 0) {
+        playBlockSelection(block)
+        return
+      }
+      playNoteSequence(block, midis, {
+        stagger: play.stagger,
+        duration: play.duration,
+      })
+      return
+    }
     if (play?.kind === 'intervals-from-root') {
       stopPlayback()
       playingBlock = block

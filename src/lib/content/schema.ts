@@ -133,6 +133,20 @@ export type WidgetPlay =
       /** Beats per chord (default 2). */
       beatsPerChord?: number
     }
+  | {
+      /**
+       * Play a melodic phrase (an ordered line) note-by-note in sequence,
+       * lighting each fret position as it sounds. The phrase notes come from
+       * the block's own `voicing` array, played in array order — so the dots
+       * you mark are the lick, heard in the order you notated them. Use for
+       * the "phrase dictionary" idea: see the shape, hear the line, sing it.
+       */
+      kind: 'phrase'
+      /** Seconds between successive notes (default 0.35). */
+      stagger?: number
+      /** Seconds each note rings (default max(0.5, stagger × 1.3)). */
+      duration?: number
+    }
 
 /** A callout variant, controlling its colour/affordance. */
 export type CalloutVariant = 'tip' | 'note' | 'warning'

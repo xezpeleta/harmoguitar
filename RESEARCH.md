@@ -36,7 +36,8 @@
 26. [Reharmonization & Substitutions Overview](#26-reharmonization--substitutions-overview)
 27. [Recommended Learning Path](#27-recommended-learning-path)
 28. [Pentatonics & Blue Notes in Practice](#28-pentatonics--blue-notes-in-practice)
-29. [Sources](#sources)
+29. [Associative Learning: Inversions, Phrases & How to Practice](#29-associative-learning-inversions-phrases--how-to-practice)
+30. [Sources](#sources)
 
 ---
 
@@ -874,6 +875,34 @@ Melody and harmony mirror each other. When the melody leans on a blue note, the 
 
 ---
 
+## 29. Associative Learning: Inversions, Phrases & How to Practice
+
+This section distills a Chema Vílchez masterclass on *how to study* rather than *what to study*. Its thesis: most players stall not from lack of information but from **mecanicidad** — mechanical, disconnected repetition (running a scale or arpeggio up and down until the fingers move fast but the ear, eye, and mind are not engaged). The way out is a **multisensory, associative** method that stores every learned thing along several paths at once.
+
+### The four memories
+Practise so that each thing you learn is recorded in more than one kind of memory:
+
+- **Auditory** — you can *hear* the note or line in your head before you play it. Train it by **singing what you play**: play slowly and voice each note. If you cannot sing it, you do not yet *know* it.
+- **Visual** — you *see* the whole pattern on the neck, not just the note under your finger. Picture the full scale/chord shape and practise **jumping intervals** (leaping to a distant scale tone) instead of always stepping to the neighbouring degree.
+- **Muscular** — your hands know the shape with the **minimum tension**. Practise relaxed; use only the force needed (the "bottle at 10% of your grip" image). Tension practised in is tension played out, and is the enemy of speed, tone, and stamina — the "effortless mastery" that looks like talent but is really relaxed, well-trained hands.
+- **Associative** — each new thing is **glued to something already known**, so it is never isolated. Derive, do not memorise.
+
+### Associative chord learning: 20 voicings from one seed
+Take a single chord (e.g. **Cmaj7** = C E G B) on a string set (5-4-3-2) and apply two repeated moves:
+
+1. **Rotate the bass tone** — put each chord tone in the bass in turn (root, 3rd, 5th, 7th). Same four notes, four inversions. Five voicings (root + 4 inversions) for the price of one.
+2. **Hop a note to a neighbour string** — move the top note (e.g. the 7th on string 2) to string 1 (same pitch class, an octave up). The chord is unchanged but now lives on a new string set (5-4-3-1), spawning a *second* family of four inversions.
+
+Repeat the hop on other tones and each rearrangement opens another string set (5-4-3-1, 5-4-2-1, 5-3-2-1, 6-4-3-2…). **Four inversions × a handful of string sets ≈ twenty voicings, all derived from the one seed** — not twenty things to remember, but one method applied twenty times. Since the movable forms have no open strings, the whole set transposes up the neck unchanged: one set of twenty, twelve places.
+
+### The phrase dictionary
+Improvisers are not inventing every note — they recombine an assimilated **vocabulary of phrases** (short, learned melodic units), each anchored to a scale *position*. Build your own dictionary: when a phrase catches your ear, notate it and **label the position it lives in**. Then **transpose the same fingering** to other positions (same fingers, same shape, new key) — one learned idea serves in every key. The discipline is to *vary and recombine*, not to hoard: ten variants of one connected idea beat ten unrelated licks, and a phrase stuck in one key is half a phrase.
+
+### Why this maps to interactive widgets
+A textbook can name a chord or scale; it cannot *sound* it, *light* it on the neck, or let you *move* it to every key. The multisensory method demands that the **sound, the shape, and the name arrive together** — see the note on the neck, hear it ring, find it under a finger, and voice it. Playable, clickable fretboard/piano widgets with per-note sounding highlights and transposition steppers are not decoration; they are the method, built into the lesson. They forge the audio-visual link that turns "I read it" into "I own it."
+
+---
+
 ## Sources
 
 ### Web sources (loaded successfully)
@@ -900,5 +929,6 @@ Transcripts stored in `/tmp/yt_transcripts/`. Topics covered:
 - `quartal_harmony_so_what` — quartal/stacked-fourth voicings, the So What chord, parallel motion, modal comping
 - `berklee_modal_scales` — the 7 modes: formulas, characteristic notes, major vs minor modes (Lydian/Mixolydian; Dorian/Phrygian/Aeolian/Locrian)
 - `modes_complete_breakdown` — modes by shifting the tonic through the diatonic scale; ear-training each mode's color
+- `chema_vilchez_how_to_study` — the multisensory/associative practice method: the trap of *mecanicidad* (mechanical repetition), the four memories (auditory/visual/muscular/associative), deriving ~20 voicings from one Cmaj7 via inversions + string-set moves, and building/transposing a phrase dictionary (§29)
 
 > Note: Several additional pages (jazzguitar.be, proguitar.com, guitarwiz.app) were attempted but timed out; their content was reconstructed from Google search snippets and the sources above. All factual claims (intervals, chord formulas, scale formulas, diatonic sequences) are standard, well-established music theory and were cross-checked across multiple sources.

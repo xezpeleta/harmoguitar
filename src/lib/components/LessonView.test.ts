@@ -923,3 +923,94 @@ describe('LessonView — clear widget Play runs the chromatic scale', () => {
     }
   })
 })
+
+describe('LessonView — phrase Play (ordered lick)', () => {
+  // A short C-major phrase: 1-2-3-4-5-7-6-5 (C D E F G B A G).
+  // Positions (string,fret): (4,10)(4,12)(3,9)(3,10)(3,12)(2,12)(2,10)(3,12).
+  const phraseLesson: Lesson = {
+    id: 'phrase-test',
+    slug: 'phrase-test',
+    title: 'Phrase Test',
+    summary: 's',
+    minutes: 5,
+    blocks: [
+      {
+        kind: 'widget',
+        selection: { scaleType: 'major', root: 'C' },
+        widgets: ['fretboard', 'staff'],
+        voicing: [
+          { string: 4, fret: 10, label: '1' },
+          { string: 4, fret: 12, label: '2' },
+          { string: 3, fret: 9, label: '3' },
+          { string: 3, fret: 10, label: '4' },
+          { string: 3, fret: 12, label: '5' },
+          { string: 2, fret: 12, label: '7' },
+          { string: 2, fret: 10, label: '6' },
+          { string: 3, fret: 12, label: '5' },
+        ],
+        play: { kind: 'phrase', stagger: 0.3 },
+      },
+    ],
+  }
+
+  beforeEach(() => {
+    playNoteMock.mockClear()
+  })
+
+  it('plays the phrase notes in array order (not sorted)', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: phraseLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(playNoteMock).toHaveBeenCalledTimes(8)
+      // Order is the notated phrase: C4 D4 E4 F4 G4 B4 A4 G4.
+      const midis = playNoteMock.mock.calls.map((c) => c[0])
+      expect(midis).toEqual([60, 62, 64, 65, 67, 71, 69, 67])
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('lights each note in turn via soundingMidis', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: phraseLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      // First note (C4 = 60) rings immediately.
+      await vi.advanceTimersByTimeAsync(0)
+      expect(app.soundingMidis.has(60)).toBe(true)
+      // Second note (D4 = 62) after the stagger.
+      await vi.advanceTimersByTimeAsync(300)
+      expect(app.soundingMidis.has(62)).toBe(true)
+      expect(app.soundingMidis.has(60)).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('clears soundingMidis when the phrase ends', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: phraseLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(app.soundingMidis.size).toBe(0)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('toggles to Stop and back', async () => {
+    vi.useFakeTimers()
+    try {
+      const { getByRole } = render(LessonView, { lesson: phraseLesson })
+      await fireEvent.click(getByRole('button', { name: /^▶ Play$/ }))
+      expect(getByRole('button', { name: /stop/i })).toBeTruthy()
+      await fireEvent.click(getByRole('button', { name: /stop/i }))
+      expect(getByRole('button', { name: /^▶ Play$/ })).toBeTruthy()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+})

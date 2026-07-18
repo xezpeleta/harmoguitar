@@ -11,6 +11,9 @@
  * comping voicings, pentatonics & blue notes, the minor ii–V–i, the altered
  * scale, borrowed chords & modal mixture, chord-scale theory, modal jazz &
  * quartal harmony, harmonic & melodic minor modes, and reharmonization.
+ * Lessons 28–30 are the mastery & practice capstones — associative voicing
+ * inversions, the phrase dictionary, and the multisensory practice method
+ * (RESEARCH.md §29).
  */
 import type { Lesson } from '$lib/content/schema'
 import { notesFretboard } from './01-notes-fretboard'
@@ -40,6 +43,9 @@ import { chordScaleTheory } from './24-chord-scale-theory'
 import { modalJazz } from './25-modal-jazz-quartal'
 import { harmonicMelodicMinor } from './26-harmonic-melodic-minor'
 import { reharmonization } from './27-reharmonization'
+import { associativeVoicingInversions } from './28-associative-voicing-inversions'
+import { phraseDictionary } from './29-phrase-dictionary'
+import { howToPractice } from './30-how-to-practice'
 
 /**
  * The learning path, in order. Adding a lesson = adding an entry here.
@@ -73,6 +79,9 @@ export const LESSONS: readonly Lesson[] = [
   modalJazz,
   harmonicMelodicMinor,
   reharmonization,
+  associativeVoicingInversions,
+  phraseDictionary,
+  howToPractice,
 ]
 
 /** Look up a lesson by its slug (for hash-route resolution). */

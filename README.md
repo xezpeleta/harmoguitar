@@ -37,7 +37,7 @@ Pick a root note and a chord or scale type; everything updates in sync:
 - **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
   synthesized pluck — no audio files)
 
-### Structured lessons (27 lessons)
+### Structured lessons (30 lessons)
 
 A guided path from first principles through deep jazz harmony, each lesson
 embedding live interactive widgets:
@@ -69,6 +69,9 @@ embedding live interactive widgets:
 25. Modal jazz & quartal harmony
 26. Harmonic & melodic minor modes
 27. Reharmonization & substitutions
+28. Associative voicing inversions
+29. The phrase dictionary
+30. How to practice: the multisensory method
 
 Progress is saved to `localStorage` (optional; degrades gracefully).
 
@@ -98,7 +101,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (413 tests, ~91% statement coverage) |
+| Testing | Vitest (417 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 
@@ -113,7 +116,7 @@ src/
 │   ├── services/        # Audio engine + progress tracking
 │   ├── components/      # Fretboard, Staff, IntervalWheel, CircleOfFifths,
 │   │                    #   NoteBadge, Nav, Layout, LessonView
-│   ├── content/         # Lesson schema + 27 authored lessons
+│   ├── content/         # Lesson schema + 30 authored lessons
 │   └── utils/           # Colors, markdown renderer, VexFlow bridge
 ├── routes/              # Home, Lessons, Lesson, Builder
 ├── App.svelte           # Hash-based router + route → component mapping
@@ -172,12 +175,17 @@ substitution, voice leading & guide tones, passing chords & inversions (with
 walking bass), jazz comping voicings (shell + extension, Drop 2 / Drop 3),
 pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
 chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
-harmonic & melodic minor modes, and reharmonization. 27 lessons
+harmonic & melodic minor modes, and reharmonization; plus the mastery &
+practice capstones — associative voicing inversions, the phrase dictionary,
+and the multisensory practice method. 30 lessons
 total. Includes **progression playback** (hear any chord sequence in time),
 **fretboard voicing markers** (diagram exact grips), **open-string playback**
 (strum strings 6→1 with per-string highlighting), **+/− steppers** (cycle the
-root note or shift the fretboard window), and cross-instrument highlighting
-(click a piano key or fret and the note lights up everywhere).
+root note or shift the fretboard window), **phrase playback** (hear an ordered
+lick note-by-note with each dot lighting as it sounds), **sounding-note
+rings** (a pulsing accent on the exact fret/key ringing now), and
+cross-instrument highlighting (click a piano key or fret and the note lights
+up everywhere).
 
 **Planned:**
 - Movable-Do solfège alongside fixed-Do

@@ -35,8 +35,9 @@
     <h1>Lessons</h1>
     <p class="lede">
       A guided path from the notes on the fretboard to functional harmony, the
-      ii–V–I, and deep jazz harmony. Each lesson pairs concise theory with live,
-      interactive fretboards, staves, and wheels.
+      ii–V–I, and deep jazz harmony — finishing with how to actually *practise*
+      it all. Each lesson pairs concise theory with live, interactive
+      fretboards, staves, and wheels you can play and hear.
     </p>
   </header>
 
@@ -83,7 +84,7 @@
   <footer class="total">
     <span>≈ {totalMinutes} minutes total</span>
     <span class="dot">·</span>
-    <span>{LESSONS.length} lessons · foundations → jazz harmony</span>
+    <span>{LESSONS.length} lessons · foundations → jazz harmony → how to practise</span>
   </footer>
 </section>
 

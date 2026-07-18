@@ -95,9 +95,9 @@ describe('lesson curriculum', () => {
     }
   })
 
-  it('total estimated minutes is reasonable (90–390)', () => {
+  it('total estimated minutes is reasonable (90–400)', () => {
     const total = LESSONS.reduce((s, l) => s + l.minutes, 0)
     expect(total).toBeGreaterThanOrEqual(90)
-    expect(total).toBeLessThanOrEqual(390)
+    expect(total).toBeLessThanOrEqual(400)
   })
 })

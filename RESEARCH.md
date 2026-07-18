@@ -37,7 +37,8 @@
 27. [Recommended Learning Path](#27-recommended-learning-path)
 28. [Pentatonics & Blue Notes in Practice](#28-pentatonics--blue-notes-in-practice)
 29. [Associative Learning: Inversions, Phrases & How to Practice](#29-associative-learning-inversions-phrases--how-to-practice)
-30. [Sources](#sources)
+30. [The Fretboard Landscape: Green Lights & Red Tonic](#30-the-fretboard-landscape-green-lights--red-tonic)
+31. [Sources](#sources)
 
 ---
 
@@ -903,6 +904,31 @@ A textbook can name a chord or scale; it cannot *sound* it, *light* it on the ne
 
 ---
 
+## 30. The Fretboard Landscape: Green Lights & Red Tonic
+
+Most guitarists learn scales as "boxes" — five or seven finger patterns, each covering a four-fret region. They get fluent inside one box, then stall the moment a melodic line wants to travel higher or lower: the shape ends, the map blanks out, and the player either shifts clumsily to the next box or retreats to where they feel safe. Pat Metheny described a fundamentally different way of seeing the neck. When he improvises in a key, he does not see boxes at all — he sees **every available note in that scale, across the entire fretboard, lit up like green lights**, with the **tonic (the root) lit up red**. The neck is not a puzzle of interlocking shapes; it is one continuous landscape of green lights, with red lights marking home.
+
+This single image dissolves three problems at once:
+
+1. **Box confinement.** If the whole neck is lit, you are never trapped in four frets. You can move freely up and down because every green light is available — there is no "edge of the shape" to fall off.
+2. **Stepwise playing.** Boxes train you to shuffle to the next-door note, which sounds like an exercise. When every available note is visible at once, you naturally pick interesting jumps — wide intervals that sound like music, not drills. **Jump, don't walk.**
+3. **Losing the root.** The red lights are always on. Wherever you wander in the green field, you can see the nearest red light and resolve there. A solo feels lost when the player has lost the tonic; the red map prevents that.
+
+### How to build the image
+
+The landscape is built progressively, not absorbed all at once:
+
+- **Map the red lights first.** Find every occurrence of the tonic on the fretboard — not by hunting, but by instant recall (the octave shapes from Lesson 1 are how the red lights connect across strings). These red anchors are the safety net: if you get lost mid-phrase, aim for the nearest red light and you are home.
+- **Light up the green, one string at a time.** Play the scale up and down a *single string* — this teaches the intervals in a line, not a box. Repeat on each string until the green lights distribute themselves linearly in your mind.
+- **Compare to the piano-key view.** A pianist in C major does not think in boxes — they see all the white keys laid out and can jump from a low C to a high G because the layout is obvious. The green-lights image turns the guitar neck into that same kind of keyboard: a single field of available notes, not a maze of shapes.
+- **Jump, don't walk.** Pick any two lit spots and connect them directly — low C on string 6 up to high G on string 1, down to mid E on string 4. You can only make these jumps if you see the lights; if you see boxes, you are stuck walking.
+
+### Why it transfers to every key
+
+Cycle the root and the *entire landscape* re-colours — the green field shifts, the red anchors relocate, but the map stays one connected piece. You are not learning twelve sets of boxes; you are learning one landscape that relocates. The method of seeing — green field, red home — is invariant; only the colours change. This is why the green-lights image is taught immediately after the major scale (Lesson 4), before any box habits form: it gives every subsequent scale, mode, and pentatonic a single visual framework. When you learn minor scales or modes later, you do not learn new boxes — you ask *"where are the green lights now, and which one is red?"* The landscape changes colour; the method of seeing it stays the same.
+
+---
+
 ## Sources
 
 ### Web sources (loaded successfully)
@@ -930,5 +956,6 @@ Transcripts stored in `/tmp/yt_transcripts/`. Topics covered:
 - `berklee_modal_scales` — the 7 modes: formulas, characteristic notes, major vs minor modes (Lydian/Mixolydian; Dorian/Phrygian/Aeolian/Locrian)
 - `modes_complete_breakdown` — modes by shifting the tonic through the diatonic scale; ear-training each mode's color
 - `chema_vilchez_how_to_study` — the multisensory/associative practice method: the trap of *mecanicidad* (mechanical repetition), the four memories (auditory/visual/muscular/associative), deriving ~20 voicings from one Cmaj7 via inversions + string-set moves, and building/transposing a phrase dictionary (§29)
+- Pat Metheny (interview/masterclass, widely cited) — the "green lights & red tonic" visualization: seeing every scale tone lit green across the whole neck with the tonic lit red, as the cure for box-thinking and stepwise playing (§30)
 
 > Note: Several additional pages (jazzguitar.be, proguitar.com, guitarwiz.app) were attempted but timed out; their content was reconstructed from Google search snippets and the sources above. All factual claims (intervals, chord formulas, scale formulas, diatonic sequences) are standard, well-established music theory and were cross-checked across multiple sources.

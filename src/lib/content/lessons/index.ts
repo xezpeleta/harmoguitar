@@ -5,56 +5,58 @@
  * navigation is derived from this list, so reordering or inserting a lesson
  * is just moving an entry in the array — no manual link surgery.
  *
- * Foundations (lessons 1–14) map to RESEARCH.md §1–§14. Lessons 15–27 cover
- * the full deep jazz harmony path of §15–§28 — secondary dominants, tritone
- * substitution, voice leading & guide tones, passing chords & inversions,
- * comping voicings, pentatonics & blue notes, the minor ii–V–i, the altered
- * scale, borrowed chords & modal mixture, chord-scale theory, modal jazz &
- * quartal harmony, harmonic & melodic minor modes, and reharmonization.
- * Lessons 28–30 are the mastery & practice capstones — associative voicing
- * inversions, the phrase dictionary, and the multisensory practice method
- * (RESEARCH.md §29).
+ * Foundations (lessons 1–15) map to RESEARCH.md §1–§14 plus the fretboard-
+ * landscape visualization (Lesson 4). Lessons 16–28 cover the full deep jazz
+ * harmony path of §15–§28 — secondary dominants, tritone substitution, voice
+ * leading & guide tones, passing chords & inversions, comping voicings,
+ * pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
+ * chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
+ * harmonic & melodic minor modes, and reharmonization. Lessons 29–31 are the
+ * mastery & practice capstones — associative voicing inversions, the phrase
+ * dictionary, and the multisensory practice method (RESEARCH.md §29).
  */
 import type { Lesson } from '$lib/content/schema'
 import { notesFretboard } from './01-notes-fretboard'
 import { intervals } from './02-intervals'
 import { majorScale } from './03-major-scale'
-import { minorScales } from './04-minor-scales'
-import { modes } from './05-modes'
-import { triads } from './06-triads'
-import { seventhChords } from './07-seventh-chords'
-import { extendedChords } from './08-extended-chords'
-import { diatonicHarmony } from './09-diatonic-harmony'
-import { functionalHarmony } from './10-functional-harmony'
-import { circleOfFifths } from './11-circle-of-fifths'
-import { progressions } from './12-progressions'
-import { cadences } from './13-cadences'
-import { bluesAndIIVI } from './14-blues-ii-v-i'
-import { secondaryDominants } from './15-secondary-dominants'
-import { tritoneSubstitution } from './16-tritone-substitution'
-import { voiceLeadingGuideTones } from './17-voice-leading-guide-tones'
-import { passingChordsInversions } from './18-passing-chords-inversions'
-import { jazzCompingVoicings } from './19-jazz-comping-voicings'
-import { pentatonicBlueNotes } from './20-pentatonic-blue-notes'
-import { minorIIVi } from './21-minor-ii-v-i'
-import { alteredScale } from './22-altered-scale'
-import { borrowedChords } from './23-borrowed-chords'
-import { chordScaleTheory } from './24-chord-scale-theory'
-import { modalJazz } from './25-modal-jazz-quartal'
-import { harmonicMelodicMinor } from './26-harmonic-melodic-minor'
-import { reharmonization } from './27-reharmonization'
-import { associativeVoicingInversions } from './28-associative-voicing-inversions'
-import { phraseDictionary } from './29-phrase-dictionary'
-import { howToPractice } from './30-how-to-practice'
+import { fretboardLandscape } from './04-fretboard-landscape'
+import { minorScales } from './05-minor-scales'
+import { modes } from './06-modes'
+import { triads } from './07-triads'
+import { seventhChords } from './08-seventh-chords'
+import { extendedChords } from './09-extended-chords'
+import { diatonicHarmony } from './10-diatonic-harmony'
+import { functionalHarmony } from './11-functional-harmony'
+import { circleOfFifths } from './12-circle-of-fifths'
+import { progressions } from './13-progressions'
+import { cadences } from './14-cadences'
+import { bluesAndIIVI } from './15-blues-ii-v-i'
+import { secondaryDominants } from './16-secondary-dominants'
+import { tritoneSubstitution } from './17-tritone-substitution'
+import { voiceLeadingGuideTones } from './18-voice-leading-guide-tones'
+import { passingChordsInversions } from './19-passing-chords-inversions'
+import { jazzCompingVoicings } from './20-jazz-comping-voicings'
+import { pentatonicBlueNotes } from './21-pentatonic-blue-notes'
+import { minorIIVi } from './22-minor-ii-v-i'
+import { alteredScale } from './23-altered-scale'
+import { borrowedChords } from './24-borrowed-chords'
+import { chordScaleTheory } from './25-chord-scale-theory'
+import { modalJazz } from './26-modal-jazz-quartal'
+import { harmonicMelodicMinor } from './27-harmonic-melodic-minor'
+import { reharmonization } from './28-reharmonization'
+import { associativeVoicingInversions } from './29-associative-voicing-inversions'
+import { phraseDictionary } from './30-phrase-dictionary'
+import { howToPractice } from './31-how-to-practice'
 
 /**
  * The learning path, in order. Adding a lesson = adding an entry here.
- * Source: RESEARCH.md §1–§14 (foundations) + §15–§28 (jazz).
+ * Source: RESEARCH.md §1–§14 (foundations) + §15–§28 (jazz) + §29 (practice).
  */
 export const LESSONS: readonly Lesson[] = [
   notesFretboard,
   intervals,
   majorScale,
+  fretboardLandscape,
   minorScales,
   modes,
   triads,

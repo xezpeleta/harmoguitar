@@ -95,6 +95,15 @@ export interface WidgetSelection {
    * the "find any note" explorer.
    */
   followRoot?: boolean
+  /**
+   * The Metheny "green lights & red tonic" visualization: every scale tone
+   * lights up **green** across the whole neck, and the root (tonic) lights up
+   * **red**. Flattens the multi-hue pitch-class palette into a two-colour
+   * landscape — green = available note, red = home — so the neck reads as one
+   * connected map instead of interlocking boxes. Pairs with a root stepper to
+   * re-key the whole landscape instantly.
+   */
+  greenLights?: boolean
 }
 
 /**

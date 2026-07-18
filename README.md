@@ -37,7 +37,7 @@ Pick a root note and a chord or scale type; everything updates in sync:
 - **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
   synthesized pluck — no audio files)
 
-### Structured lessons (30 lessons)
+### Structured lessons (31 lessons)
 
 A guided path from first principles through deep jazz harmony, each lesson
 embedding live interactive widgets:
@@ -45,33 +45,34 @@ embedding live interactive widgets:
 1. Notes & the fretboard
 2. Intervals
 3. The major scale
-4. Minor scales
-5. Modes of the major scale
-6. Triads
-7. Seventh chords
-8. Extended & altered chords
-9. Diatonic harmony
-10. Functional harmony
-11. Circle of fifths
-12. Progressions & Roman numerals
-13. Cadences & turnarounds
-14. The blues & ii–V–I
-15. Secondary dominants
-16. Tritone substitution
-17. Voice leading & guide tones
-18. Passing chords, inversions & walking bass
-19. Jazz comping voicings
-20. Pentatonics & blue notes
-21. The minor ii–V–i
-22. The altered scale
-23. Borrowed chords & modal mixture
-24. Chord-scale theory
-25. Modal jazz & quartal harmony
-26. Harmonic & melodic minor modes
-27. Reharmonization & substitutions
-28. Associative voicing inversions
-29. The phrase dictionary
-30. How to practice: the multisensory method
+4. The fretboard landscape: green lights & red tonic
+5. Minor scales
+6. Modes of the major scale
+7. Triads
+8. Seventh chords
+9. Extended & altered chords
+10. Diatonic harmony
+11. Functional harmony
+12. Circle of fifths
+13. Progressions & Roman numerals
+14. Cadences & turnarounds
+15. The blues & ii–V–I
+16. Secondary dominants
+17. Tritone substitution
+18. Voice leading & guide tones
+19. Passing chords, inversions & walking bass
+20. Jazz comping voicings
+21. Pentatonics & blue notes
+22. The minor ii–V–i
+23. The altered scale
+24. Borrowed chords & modal mixture
+25. Chord-scale theory
+26. Modal jazz & quartal harmony
+27. Harmonic & melodic minor modes
+28. Reharmonization & substitutions
+29. Associative voicing inversions
+30. The phrase dictionary
+31. How to practice: the multisensory method
 
 Progress is saved to `localStorage` (optional; degrades gracefully).
 
@@ -101,7 +102,7 @@ side by side, with playback controls.
 | Staff notation | VexFlow 5 (lazy-loaded) |
 | Diagrams | D3 v7 (`arc()` math; Svelte owns the DOM) |
 | Audio | Web Audio API (synthesized, no samples) |
-| Testing | Vitest (417 tests, ~91% statement coverage) |
+| Testing | Vitest (421 tests, ~91% statement coverage) |
 | CI/CD | GitHub Actions (lint → typecheck → test → build → deploy) |
 | Hosting | GitHub Pages (static, `.nojekyll`) |
 
@@ -177,13 +178,15 @@ pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
 chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
 harmonic & melodic minor modes, and reharmonization; plus the mastery &
 practice capstones — associative voicing inversions, the phrase dictionary,
-and the multisensory practice method. 30 lessons
+and the multisensory practice method. 31 lessons
 total. Includes **progression playback** (hear any chord sequence in time),
 **fretboard voicing markers** (diagram exact grips), **open-string playback**
 (strum strings 6→1 with per-string highlighting), **+/− steppers** (cycle the
 root note or shift the fretboard window), **phrase playback** (hear an ordered
 lick note-by-note with each dot lighting as it sounds), **sounding-note
-rings** (a pulsing accent on the exact fret/key ringing now), and
+rings** (a pulsing accent on the exact fret/key ringing now),
+**green-lights & red-tonic visualization** (the Metheny whole-neck landscape:
+every scale tone lit green, the tonic lit red — the cure for box-thinking), and
 cross-instrument highlighting (click a piano key or fret and the note lights
 up everywhere).
 

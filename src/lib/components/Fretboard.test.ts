@@ -185,3 +185,41 @@ describe('Fretboard.svelte', () => {
     expect(screen.getByRole('group', { name: 'Interactive fretboard' })).toBeInTheDocument()
   })
 })
+
+describe('Fretboard.svelte — greenLights mode', () => {
+  beforeEach(() => {
+    app.reset()
+  })
+  afterEach(cleanup)
+
+  it('colors the root red and other scale tones green', () => {
+    render(Fretboard, {
+      props: {
+        fretCount: 1,
+        highlightNotes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+        rootNote: 'C',
+        greenLights: true,
+      },
+    })
+    // String 2 fret 1 = C (root) → red (#d62828)
+    const rootCell = screen.getByLabelText('String 2 fret 1: C')
+    expect(rootCell.getAttribute('style') ?? '').toContain('#d62828')
+    // String 4 fret 0 = D (non-root) → green (#43a047)
+    const dCell = screen.getByLabelText('String 4 fret 0: D')
+    expect(dCell.getAttribute('style') ?? '').toContain('#43a047')
+  })
+
+  it('without greenLights, non-root tones use the pitch-class palette (D = orange)', () => {
+    render(Fretboard, {
+      props: {
+        fretCount: 1,
+        highlightNotes: ['C', 'D'],
+        rootNote: 'C',
+      },
+    })
+    // String 4 fret 0 = D → orange (#f77f00), not green
+    const dCell = screen.getByLabelText('String 4 fret 0: D')
+    expect(dCell.getAttribute('style') ?? '').toContain('#f77f00')
+    expect(dCell.getAttribute('style') ?? '').not.toContain('#43a047')
+  })
+})

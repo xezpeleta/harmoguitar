@@ -214,3 +214,43 @@ describe('Piano.svelte', () => {
     expect(keys.every((k) => k.getAttribute('aria-pressed') === 'true')).toBe(true)
   })
 })
+
+describe('Piano.svelte — greenLights mode', () => {
+  beforeEach(() => {
+    app.reset()
+  })
+  afterEach(cleanup)
+
+  it('colors the root red and other scale tones green', () => {
+    render(Piano, {
+      props: {
+        octaves: 1,
+        highlightNotes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+        rootNote: 'C',
+        greenLights: true,
+      },
+    })
+    // C (root) → red
+    const cKey = screen.getByLabelText('C (pitch class 0)')
+    const cDot = cKey.querySelector('.dot')
+    expect(cDot?.getAttribute('style') ?? '').toContain('#d62828')
+    // D (non-root) → green
+    const dKey = screen.getByLabelText('D (pitch class 2)')
+    const dDot = dKey.querySelector('.dot')
+    expect(dDot?.getAttribute('style') ?? '').toContain('#43a047')
+  })
+
+  it('without greenLights, uses the pitch-class palette (D = orange)', () => {
+    render(Piano, {
+      props: {
+        octaves: 1,
+        highlightNotes: ['C', 'D'],
+        rootNote: 'C',
+      },
+    })
+    const dKey = screen.getByLabelText('D (pitch class 2)')
+    const dDot = dKey.querySelector('.dot')
+    expect(dDot?.getAttribute('style') ?? '').toContain('#f77f00')
+    expect(dDot?.getAttribute('style') ?? '').not.toContain('#43a047')
+  })
+})

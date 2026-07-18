@@ -146,6 +146,7 @@
   /** Root note for a widget block's own selection (`undefined` → store root). */
   function selectionRoot(s: WidgetSelection): NoteName | undefined {
     if (s.clear || s.showAllNotes) return undefined
+    if (s.followRoot) return app.rootNote
     return s.root ?? app.rootNote
   }
 
@@ -635,6 +636,7 @@
                     markPositions={fretMarks(block)}
                     highlightNotes={isProgressingHere(block) ? undefined : selectionNotes(block.selection)}
                     rootNote={isProgressingHere(block) ? undefined : selectionRoot(block.selection)}
+                    greenLights={block.selection.greenLights}
                   />
                 </div>
               {:else if w === 'staff'}
@@ -646,7 +648,7 @@
                 </div>
               {:else if w === 'piano'}
                 <div class="widget-cell">
-                  <Piano />
+                  <Piano greenLights={block.selection.greenLights} />
                 </div>
               {:else if w === 'interval-wheel'}
                 <div class="widget-cell wheel-cell">

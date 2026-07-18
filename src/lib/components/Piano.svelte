@@ -50,6 +50,12 @@
     preferFlats?: boolean
     /** Fired on click with the note + midi. Defaults to playing + toggling. */
     onselectnote?: (note: NoteName, midi: number) => void
+    /**
+     * "Green lights & red tonic" mode: override the per-pitch-class palette so
+     * every highlighted (non-root) key is green and the root is red — the
+     * pianist's view of a single key's worth of "available notes."
+     */
+    greenLights?: boolean
   }
 
   let {
@@ -60,6 +66,7 @@
     showSolfege,
     preferFlats,
     onselectnote,
+    greenLights,
   }: Props = $props()
 
   /** True when an explicit note set was given (standalone reference mode). */
@@ -111,6 +118,11 @@
     return app.soundingMidis.has(midi)
   }
   function keyColors(pc: number): { bg: string; fg: string } {
+    if (greenLights) {
+      // Two-colour landscape: root = red, every other scale tone = green.
+      const bg = isRoot(pc) ? '#d62828' : '#43a047'
+      return { bg, fg: readableForeground(bg) }
+    }
     const bg = noteColor(displayNote(pc))
     return { bg, fg: readableForeground(bg) }
   }

@@ -38,6 +38,12 @@
     strings?: number[]
     /** First fret to show (0 = include open strings). Default 0. */
     startFret?: number
+    /**
+     * "Green lights & red tonic" mode: override the per-pitch-class palette so
+     * every highlighted (non-root) position is green and the root is red. The
+     * neck reads as a two-colour landscape — green = available, red = home.
+     */
+    greenLights?: boolean
   }
 
   let {
@@ -51,6 +57,7 @@
     markPositions,
     strings,
     startFret,
+    greenLights,
   }: Props = $props()
 
   // Reactive props with store fallbacks (override when provided).
@@ -184,6 +191,11 @@
 
   /** CSS color values for a highlighted position's dot. */
   function dotColors(pos: FretPosition): { bg: string; fg: string } {
+    if (greenLights) {
+      // Two-colour landscape: root = red, every other scale tone = green.
+      const bg = isRoot(pos) ? '#d62828' : '#43a047'
+      return { bg, fg: readableForeground(bg) }
+    }
     const note = displayNote(pos)
     const bg = noteColor(note)
     return { bg, fg: readableForeground(bg) }

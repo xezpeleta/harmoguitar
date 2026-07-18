@@ -38,7 +38,8 @@
 28. [Pentatonics & Blue Notes in Practice](#28-pentatonics--blue-notes-in-practice)
 29. [Associative Learning: Inversions, Phrases & How to Practice](#29-associative-learning-inversions-phrases--how-to-practice)
 30. [The Fretboard Landscape: Green Lights & Red Tonic](#30-the-fretboard-landscape-green-lights--red-tonic)
-31. [Sources](#sources)
+31. [The Diminished Blues Pentatonic](#31-the-diminished-blues-pentatonic)
+32. [Sources](#sources)
 
 ---
 
@@ -929,6 +930,31 @@ Cycle the root and the *entire landscape* re-colours — the green field shifts,
 
 ---
 
+## 31. The Diminished Blues Pentatonic
+
+A recurring soloing question in blues and jazz: **what do you play over a passing diminished chord?** You are grooving on a D9, soloing in D major pentatonic, and the progression moves to a passing D♯dim7 a half-step up — there and gone in a beat or two. The reflex is to switch to a straight D♯ diminished arpeggio (D♯ F♯ A C). It is mathematically correct, but it sounds rigid and *square* — four equal chord tones with no blues in it. Félix Santos's alternative is not a new scale but a **treatment** of the pentatonic you were already playing.
+
+### The construction
+
+Keep the **major pentatonic of the preceding chord** (D major pentatonic: D E F♯ A B) under your fingers and treat the diminished root (D♯) as a **blues appoggiatura** — a note you slide into and immediately leave. The direction of the slide depends on the direction of the line:
+
+- **Ascending** — slide into D♯ from a half-step *below* (D → D♯), and **omit the E** (the pentatonic note just above). The D♯ gets the slide emphasis; the clash note above it never sounds.
+- **Descending** — flip the rule: **keep the E** and slide *down* into D♯ from a half-step *above* (E → D♯). The former clash note is now your approach note, so it earns its place.
+
+The ascending line becomes D → D♯ → F♯ → A → B → D (the E dropped, the D♯ slid into from below). The descending line falls through the pentatonic — F♯ → E → D → B → A → F♯ → E — and only at the end slides E → D♯ (the dim root approached from above). Direction determines treatment: up = from below, down = from above.
+
+### Why it works
+
+A straight diminished arpeggio sounds classical because it is *all chord tones, all the time* — no passing tension, no slide. The blues, by contrast, is built on pentatonic shapes decorated with slides and half-step approaches. By keeping the pentatonic and redirecting one note into the diminished root, you get the harmonic tension the dim7 demands *without abandoning the blues vocabulary*.
+
+The trick is harmonically grounded too: the pentatonic and the arpeggio overlap on the 3rd and 5th of the diminished chord (F♯ and A are chord tones of both D major pentatonic and D♯dim7). So most of the line is already "correct" over the dim7 — the only negotiation is the root itself, and that is exactly the note the slide rules handle.
+
+### It generalises
+
+This is not one position. It is a method: wherever a passing diminished chord appears, grab the major pentatonic of the chord right before it and apply the two slide rules. The same fingering relocates to any string set — an A groove moving to A♯dim7 uses the A major pentatonic shape with the same omit-above / keep-above rules, just shifted down a fourth. One method, every position.
+
+---
+
 ## Sources
 
 ### Web sources (loaded successfully)
@@ -957,5 +983,6 @@ Transcripts stored in `/tmp/yt_transcripts/`. Topics covered:
 - `modes_complete_breakdown` — modes by shifting the tonic through the diatonic scale; ear-training each mode's color
 - `chema_vilchez_how_to_study` — the multisensory/associative practice method: the trap of *mecanicidad* (mechanical repetition), the four memories (auditory/visual/muscular/associative), deriving ~20 voicings from one Cmaj7 via inversions + string-set moves, and building/transposing a phrase dictionary (§29)
 - Pat Metheny (interview/masterclass, widely cited) — the "green lights & red tonic" visualization: seeing every scale tone lit green across the whole neck with the tonic lit red, as the cure for box-thinking and stepwise playing (§30)
+- Félix Santos (YouTube class) — the diminished blues pentatonic: over a passing dim7 in a blues, keep the major pentatonic of the preceding chord and treat the dim root as an appoggiatura — slide from below ascending (omit the upper neighbour), slide from above descending (keep it) (§31)
 
 > Note: Several additional pages (jazzguitar.be, proguitar.com, guitarwiz.app) were attempted but timed out; their content was reconstructed from Google search snippets and the sources above. All factual claims (intervals, chord formulas, scale formulas, diatonic sequences) are standard, well-established music theory and were cross-checked across multiple sources.

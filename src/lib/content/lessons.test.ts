@@ -18,8 +18,8 @@ const VALID_WIDGETS: WidgetKind[] = [
 ]
 
 describe('lesson curriculum', () => {
-  it('has 31 lessons', () => {
-    expect(LESSONS.length).toBe(31)
+  it('has 32 lessons', () => {
+    expect(LESSONS.length).toBe(32)
   })
 
   it('every lesson has a non-empty id, slug, title, summary', () => {

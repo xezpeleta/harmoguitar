@@ -37,7 +37,7 @@ Pick a root note and a chord or scale type; everything updates in sync:
 - **Audio playback** — strum, arpeggiate, or play as a scale (Web Audio API,
   synthesized pluck — no audio files)
 
-### Structured lessons (31 lessons)
+### Structured lessons (32 lessons)
 
 A guided path from first principles through deep jazz harmony, each lesson
 embedding live interactive widgets:
@@ -63,16 +63,17 @@ embedding live interactive widgets:
 19. Passing chords, inversions & walking bass
 20. Jazz comping voicings
 21. Pentatonics & blue notes
-22. The minor ii–V–i
-23. The altered scale
-24. Borrowed chords & modal mixture
-25. Chord-scale theory
-26. Modal jazz & quartal harmony
-27. Harmonic & melodic minor modes
-28. Reharmonization & substitutions
-29. Associative voicing inversions
-30. The phrase dictionary
-31. How to practice: the multisensory method
+22. The diminished blues pentatonic
+23. The minor ii–V–i
+24. The altered scale
+25. Borrowed chords & modal mixture
+26. Chord-scale theory
+27. Modal jazz & quartal harmony
+28. Harmonic & melodic minor modes
+29. Reharmonization & substitutions
+30. Associative voicing inversions
+31. The phrase dictionary
+32. How to practice: the multisensory method
 
 Progress is saved to `localStorage` (optional; degrades gracefully).
 
@@ -178,7 +179,7 @@ pentatonics & blue notes, the minor ii–V–i, the altered scale, borrowed
 chords & modal mixture, chord-scale theory, modal jazz & quartal harmony,
 harmonic & melodic minor modes, and reharmonization; plus the mastery &
 practice capstones — associative voicing inversions, the phrase dictionary,
-and the multisensory practice method. 31 lessons
+and the multisensory practice method. 32 lessons
 total. Includes **progression playback** (hear any chord sequence in time),
 **fretboard voicing markers** (diagram exact grips), **open-string playback**
 (strum strings 6→1 with per-string highlighting), **+/− steppers** (cycle the

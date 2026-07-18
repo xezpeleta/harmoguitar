@@ -37,16 +37,17 @@ import { voiceLeadingGuideTones } from './18-voice-leading-guide-tones'
 import { passingChordsInversions } from './19-passing-chords-inversions'
 import { jazzCompingVoicings } from './20-jazz-comping-voicings'
 import { pentatonicBlueNotes } from './21-pentatonic-blue-notes'
-import { minorIIVi } from './22-minor-ii-v-i'
-import { alteredScale } from './23-altered-scale'
-import { borrowedChords } from './24-borrowed-chords'
-import { chordScaleTheory } from './25-chord-scale-theory'
-import { modalJazz } from './26-modal-jazz-quartal'
-import { harmonicMelodicMinor } from './27-harmonic-melodic-minor'
-import { reharmonization } from './28-reharmonization'
-import { associativeVoicingInversions } from './29-associative-voicing-inversions'
-import { phraseDictionary } from './30-phrase-dictionary'
-import { howToPractice } from './31-how-to-practice'
+import { diminishedBluesPentatonic } from './22-diminished-blues-pentatonic'
+import { minorIIVi } from './23-minor-ii-v-i'
+import { alteredScale } from './24-altered-scale'
+import { borrowedChords } from './25-borrowed-chords'
+import { chordScaleTheory } from './26-chord-scale-theory'
+import { modalJazz } from './27-modal-jazz-quartal'
+import { harmonicMelodicMinor } from './28-harmonic-melodic-minor'
+import { reharmonization } from './29-reharmonization'
+import { associativeVoicingInversions } from './30-associative-voicing-inversions'
+import { phraseDictionary } from './31-phrase-dictionary'
+import { howToPractice } from './32-how-to-practice'
 
 /**
  * The learning path, in order. Adding a lesson = adding an entry here.
@@ -74,6 +75,7 @@ export const LESSONS: readonly Lesson[] = [
   passingChordsInversions,
   jazzCompingVoicings,
   pentatonicBlueNotes,
+  diminishedBluesPentatonic,
   minorIIVi,
   alteredScale,
   borrowedChords,
